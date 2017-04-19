@@ -1,6 +1,6 @@
 # Snippets
 
-Chrome extension that provides advanced snippet managment
+Chrome extension that provides advanced snippet management
 
 ## This is a WIP
 
