@@ -4,7 +4,12 @@ class Logger {
     this.handler = handler
   }
 
-  
+  /**
+   * NOTE: This function is for internal use
+   * Calls the `handler` (most likely `console`) using the `level` and passing input
+   * @param  {string} level The logging level (like `warn`)
+   * @param  {string} input The content to give to `console[level]`
+   */
   _callConsole(level, input) {
     evalInWindow(`console.${functionName}('[${this.prefix}] ${input}')`)
   }
