@@ -5,7 +5,8 @@ const minifycss = require('gulp-minify-css')
 const jshint = require('gulp-jshint')
 const uglify = require('gulp-uglify')
 const zip = require('gulp-zip')
-const webpack = require('webpack-stream')
+const webpackStream = require('webpack-stream')
+const webpack = require('webpack')
 const pump = require('pump')
 const babel = require('gulp-babel')
 
@@ -23,6 +24,9 @@ gulp.task('copy', function() {
 		.pipe(gulp.dest('build/icons'));
 	gulp.src('src/_locales/**')
 		.pipe(gulp.dest('build/_locales'));
+	// Copy the devtools.js file, because it doesn't get processed by webpack
+	gulp.src('src/devtools.js')
+		.pipe(gulp.dest('build/devtools.js'))
 	return gulp.src('src/manifest.json')
 		.pipe(gulp.dest('build'));
 });
@@ -43,13 +47,11 @@ gulp.task('jshint', function() {
 
 // Build scripts, creating source maps
 gulp.task('scripts', ['jshint'], function(cb) {
+	// Pump is used to correctly dipslay errors
   pump([
     gulp.src('src/**/*.js'),
-    babel({
-      presets: 'es2015'
-    }),
-    webpack(),
-    //uglify(),
+    webpackStream(require('./webpack.config.js'), webpack),
+    uglify(),
     gulp.dest('build')
   ], cb)
 });

@@ -1,14 +1,28 @@
 const path = require('path')
 
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+
+function relativePath(subURL) {
+  return path.resolve(__dirname, subURL)
+}
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src/panel.js'),
+  entry: relativePath('src/panel.js'),
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: relativePath('build'),
     filename: 'panel.min.js'
   },
-  plugins: [
-    new UglifyJSPlugin()
-  ]
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        include: relativePath('src'),
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015']
+          }
+        }
+      }
+    ]
+  }
 }
