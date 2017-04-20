@@ -11,7 +11,7 @@ class Logger {
    * @param  {string} input The content to give to `console[level]`
    */
   _callConsole(level, input) {
-    handler[level](`[${this.prefix}] ${input}`)
+    this.handler[level](`[${this.prefix}] ${input}`)
   }
 
   log() {
