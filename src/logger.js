@@ -1,7 +1,7 @@
 class Logger {
   constructor(prefix, handler) {
     this.prefix = prefix
-    this.handler = handler
+    this.handler = handler || console
   }
 
   /**
@@ -11,7 +11,7 @@ class Logger {
    * @param  {string} input The content to give to `console[level]`
    */
   _callConsole(level, input) {
-    evalInWindow(`console.${functionName}('[${this.prefix}] ${input}')`)
+    handler[level](`[${this.prefix}] ${input}`)
   }
 
   log() {
