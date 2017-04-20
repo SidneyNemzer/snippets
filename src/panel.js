@@ -4,6 +4,12 @@ function evalInWindow(string) {
   chrome.devtools.inspectedWindow.eval(string)
 }
 
+class PanelConsole {
+  log(input) {
+    evalInWindow('console.log(' + input + ')')
+  }
+}
 
+const logger = new Logger('panel', new PanelConsole())
 
-const logger = new Logger('panel')
+logger.log('Testing')
