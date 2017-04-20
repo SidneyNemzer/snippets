@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/SidneyNemzer/snippets#readme",
   "devDependencies": {
+    "uglify-js": "^2.8.22",
+    "uglifyjs-webpack-plugin": "^0.4.3",
     "webpack": "^2.4.1"
   }
 }
