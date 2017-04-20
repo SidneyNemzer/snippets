@@ -26,7 +26,7 @@ gulp.task('copy', function() {
 		.pipe(gulp.dest('build/_locales'));
 	// Copy the devtools.js file, because it doesn't get processed by webpack
 	gulp.src('src/devtools.js')
-		.pipe(gulp.dest('build/devtools.js'))
+		.pipe(gulp.dest('build'))
 	return gulp.src('src/manifest.json')
 		.pipe(gulp.dest('build'));
 });
