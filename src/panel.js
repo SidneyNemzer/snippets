@@ -12,4 +12,13 @@ class PanelConsole {
 
 const logger = new Logger('panel', new PanelConsole())
 
-logger.log('sub b')
+logger.log('Initializing...')
+
+try {
+ace.edit('editor')
+
+} catch (exception) {
+  // TODO Switch to logger.error when error is implemented in logger
+  logger.log('Error!')
+  logger.log(exception)
+}
