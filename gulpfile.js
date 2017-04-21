@@ -8,7 +8,6 @@ const zip = require('gulp-zip')
 const webpackStream = require('webpack-stream')
 const webpack = require('webpack')
 const pump = require('pump')
-const babel = require('gulp-babel')
 
 // Delete the files in the build directory
 gulp.task('clean', function() {
@@ -27,6 +26,9 @@ gulp.task('copy', function() {
 	// Copy the devtools.js file, because it doesn't get processed by webpack
 	gulp.src('src/devtools.js')
 		.pipe(gulp.dest('build'))
+	// Copy Ace's src-min from ./node_modules into ./build
+	gulp.src('node_modules/ace-builds/src-min/**')
+		.pipe(gulp.dest('build/ace'))
 	return gulp.src('src/manifest.json')
 		.pipe(gulp.dest('build'));
 });
@@ -61,6 +63,10 @@ gulp.task('styles', function() {
 // 	return gulp.src('src/styles/**/*.css')
 // 		.pipe(minifycss({root: 'src/styles', keepSpecialComments: 0}))
 // 		.pipe(gulp.dest('build/styles'));
+	// Copy the lone CSS file
+	// (This will change once more css is used)
+	gulp.src('src/style.css')
+		.pipe(gulp.dest('build'))
 	return gulp.src('src/styles/**')
 		.pipe(gulp.dest('build/styles'));
 });
