@@ -11,6 +11,7 @@ module.exports = {
     path: relativePath('build'),
     filename: 'panel.min.js'
   },
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
