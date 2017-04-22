@@ -7,6 +7,8 @@ import ReactDOM from 'react-dom'
 import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 
+import 'style.css'
+
 function evalInWindow(string) {
   chrome.devtools.inspectedWindow.eval(string)
 }

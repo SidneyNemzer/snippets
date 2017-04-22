@@ -60,10 +60,11 @@ gulp.task('styles', function() {
 // 	return gulp.src('src/styles/**/*.css')
 // 		.pipe(minifycss({root: 'src/styles', keepSpecialComments: 0}))
 // 		.pipe(gulp.dest('build/styles'));
+
 	// Copy the lone CSS file
 	// (This will change once more css is used)
-	gulp.src('src/style.css')
-		.pipe(gulp.dest('build'))
+	// gulp.src('src/style.css')
+	// 	.pipe(gulp.dest('build'))
 	return gulp.src('src/styles/**')
 		.pipe(gulp.dest('build/styles'));
 });
