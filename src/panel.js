@@ -1,13 +1,16 @@
+// Debug
 import Logger from './logger'
 
+// React
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-// import brace from 'brace'
+// Ace Editor
 import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 
-import 'style.css'
+// Style
+import './style.css'
 
 function evalInWindow(string) {
   chrome.devtools.inspectedWindow.eval(string)
