@@ -26,9 +26,6 @@ gulp.task('copy', function() {
 	// Copy the devtools.js file, because it doesn't get processed by webpack
 	gulp.src('src/devtools.js')
 		.pipe(gulp.dest('build'))
-	// Copy Ace's src-min from ./node_modules into ./build
-	gulp.src('node_modules/ace-builds/src-min/**')
-		.pipe(gulp.dest('build/ace'))
 	return gulp.src('src/manifest.json')
 		.pipe(gulp.dest('build'));
 });
