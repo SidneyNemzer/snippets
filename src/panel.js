@@ -1,9 +1,10 @@
 import Logger from './logger'
-import React from 'react'
-import { render } from 'react-dom'
-import brace from 'brace'
-import AceEditor from 'react-ace'
 
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+// import brace from 'brace'
+import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 
 function evalInWindow(string) {
@@ -22,7 +23,7 @@ logger.log('Initializing...')
 
 try {
 
-  render(
+  ReactDOM.render(
     <AceEditor
       mode="javascript"
       onChange={newValue => logger.log(newValue)}
