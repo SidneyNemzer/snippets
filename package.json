@@ -39,7 +39,7 @@
     "webpack-stream": "^3.2.0"
   },
   "dependencies": {
-    "logger": "git+https://github.com/SidneyNemzer/logger.git",
+    "logger": "git+https://github.com/SidneyNemzer/logger.git#0.1.0",
     "react": "^15.5.4",
     "react-ace": "^4.2.1",
     "react-dom": "^15.5.4"
