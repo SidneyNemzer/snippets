@@ -33,6 +33,8 @@ try {
       mode="javascript"
       onChange={newValue => logger.log(newValue)}
       name="editor"
+      height="100vh"
+      width="100%"
     />,
     document.getElementById('root')
   )
