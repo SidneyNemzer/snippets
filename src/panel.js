@@ -19,14 +19,14 @@ function evalInWindow(string) {
 
 const logger = new Logger('panel')
 
-logger.log('Initializing...')
+logger.debug('Initializing...')
 
 try {
 
   ReactDOM.render(
     <AceEditor
       mode="javascript"
-      onChange={newValue => logger.log(newValue)}
+      onChange={newValue => logger.debug(newValue)}
       name="editor"
       height="100vh"
       width="100%"
@@ -37,6 +37,6 @@ try {
 
 } catch (exception) {
   // TODO Switch to logger.error when error is implemented in logger
-  logger.log('Error!')
-  logger.log(exception)
+  logger.debug('Error!')
+  logger.debug(exception)
 }
