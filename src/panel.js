@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom'
 // Ace Editor
 import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
+import 'brace/theme/github'
 
 // Style
 import './style.css'
@@ -35,6 +36,7 @@ try {
       name="editor"
       height="100vh"
       width="100%"
+      theme="github"
     />,
     document.getElementById('root')
   )
