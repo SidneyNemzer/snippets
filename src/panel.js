@@ -1,5 +1,5 @@
 // Debug
-import Logger from './logger'
+import Logger from 'logger'
 
 // React
 import React from 'react'
