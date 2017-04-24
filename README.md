@@ -1,6 +1,6 @@
 # Snippets
 
-Chrome extension that provides advanced snippet management
+Chrome extension that syncs snippets to browsers that you're logged into
 
 > **Status: Pre-MVP**  
 > I'm still implementing MVP features. Check back in a week or two for a working version.
@@ -19,6 +19,12 @@ Chrome extension that provides advanced snippet management
   - [ ] Rename snippets
 - [ ] Data
   - [ ] Store snippets in Chrome Sync storage
+
+## FAQ
+
+### Q: Why doesn't this use the snippets that are built-into chrome?
+
+A: Chrome obviously doesn't sync those snippets itself. And unfortunately, Chrome doesn't allow extensions to access those snippets in any way. So I'm just re-implementing snippets myself.
 
 ## Installing
 
