@@ -14,6 +14,8 @@ It's not ready yet :(
 
 ## Developing
 
+### Getting a local copy of the repo
+
 > Disclaimer: I'm not looking for contributions at the moment
 
 1. Clone the repo
@@ -29,3 +31,9 @@ npm i
 ```
 
 3. Done! Get Developing!
+
+### Roadmap
+
+Here's the MVP mockup:
+
+![MVP Mockup](docs/mockup_MVP.png)
