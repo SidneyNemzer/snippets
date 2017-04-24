@@ -18,25 +18,16 @@ function evalInWindow(string) {
 }
 
 const logger = new Logger('panel')
-
 logger.debug('Initializing...')
 
-try {
-
-  ReactDOM.render(
-    <AceEditor
-      mode="javascript"
-      onChange={newValue => logger.debug(newValue)}
-      name="editor"
-      height="100vh"
-      width="100%"
-      theme="github"
-    />,
-    document.getElementById('root')
-  )
-
-} catch (exception) {
-  // TODO Switch to logger.error when error is implemented in logger
-  logger.debug('Error!')
-  logger.debug(exception)
-}
+ReactDOM.render(
+  <AceEditor
+    mode="javascript"
+    onChange={newValue => logger.debug(newValue)}
+    name="editor"
+    height="100vh"
+    width="100%"
+    theme="github"
+  />,
+  document.getElementById('root')
+)
