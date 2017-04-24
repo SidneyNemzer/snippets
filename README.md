@@ -16,8 +16,7 @@ Chrome extension that provides advanced snippet management
 - [ ] User Interface
   - [ ] Create snippets
   - [ ] Select snippet to edit
-  - [ ] Rename snippet
-  - [ ] Create snippet
+  - [ ] Rename snippets
 - [ ] Data
   - [ ] Store snippets in Chrome Sync storage
 
@@ -25,7 +24,7 @@ Chrome extension that provides advanced snippet management
 
 This extension isn't ready yet!
 
-It will be installed from the Chrome Web Store once it's done
+It will be availible on the Chrome Web Store once it's done
 
 ## Developing
 
