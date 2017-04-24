@@ -38,13 +38,14 @@ gulp.task('html', function() {
 });
 
 // Lint Javascript files with JSHint
-gulp.task('jshint', function() {
-	return gulp.src('src/scripts/*.js')
-		.pipe(jshint())
-		.pipe(jshint.reporter('default'));
-});
+// TODO Enable this (needs to work with React)
+// gulp.task('jshint', function() {
+// 	return gulp.src('src/scripts/*.js')
+// 		.pipe(jshint())
+// 		.pipe(jshint.reporter('default'));
+// });
 
-// Build scripts, creating source maps
+// Build scripts into a single file with Webpack and UglifyJS
 gulp.task('scripts', ['jshint'], function(cb) {
 	// Pump is used to correctly dipslay errors
   pump([
