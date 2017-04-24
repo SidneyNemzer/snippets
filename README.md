@@ -2,19 +2,32 @@
 
 Chrome extension that provides advanced snippet management
 
-## This is a WIP
+> **Status: Pre-MVP**  
+> I'm still implementing MVP features. Check back in a week or two for a working version.
 
-Check back in a week or two for the beta version
+## MVP
+
+### Mockup
+
+![MVP Mockup](docs/mockup_MVP.png)
+
+### Planned Features
+
+- [ ] User Interface
+  - [ ] Create snippets
+  - [ ] Select snippet to edit
+  - [ ] Rename snippet
+  - [ ] Create snippet
+- [ ] Data
+  - [ ] Store snippets in Chrome Sync storage
 
 ## Installing
 
-This extension *will be* installed from the Chrome Web Store.
+This extension isn't ready yet!
 
-It's not ready yet :(
+It will be installed from the Chrome Web Store once it's done
 
 ## Developing
-
-### Getting a local copy of the repo
 
 > Disclaimer: I'm not looking for contributions at the moment
 
@@ -31,9 +44,3 @@ npm i
 ```
 
 3. Done! Get Developing!
-
-### Roadmap
-
-Here's the MVP mockup:
-
-![MVP Mockup](docs/mockup_MVP.png)
