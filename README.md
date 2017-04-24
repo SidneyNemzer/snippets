@@ -14,6 +14,8 @@ It's not ready yet :(
 
 ## Developing
 
+> Disclaimer: I'm not looking for contributions at the moment
+
 1. Clone the repo
 
 ```bash
@@ -27,5 +29,3 @@ npm i
 ```
 
 3. Done! Get Developing!
-
-> Disclaimer: I'm not looking for contributions at the moment
