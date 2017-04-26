@@ -5,5 +5,9 @@
   "description": "Advanced snippet manager",
   "version": "0.1.0",
 
-  "devtools_page": "devtools.html"  
+  "devtools_page": "devtools.html",
+
+  "permissions": [
+    "storage"
+  ]
 }
