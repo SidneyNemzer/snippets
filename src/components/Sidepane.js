@@ -8,7 +8,10 @@ class Sidepane extends React.Component {
     return (
       <div className="sidepane">
         <CreateSnippetButton />
-        <SnippetList />
+        <SnippetList
+          snippets={this.props.snippets}
+          selectedSnippet={this.props.selectedSnippet}
+        />
       </div>
     )
   }
