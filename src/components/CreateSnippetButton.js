@@ -11,3 +11,5 @@ class CreateSnippetButton extends React.Component {
     )
   }
 }
+
+export default CreateSnippetButton
