@@ -10,12 +10,7 @@ function evalInWindow(string) {
 const logger = new Logger('panel')
 logger.debug('Initializing...')
 
-// TODO Display a loading icon in the list while stuff is loading
-const snippets = chrome.storage.local.get('snippets', function (snippets) {
-  ReactDOM.render(
-    <App
-      snippets=snippets
-    />,
-    document.getElementById('root')
-  )
-})
+ReactDOM.render(
+  <App/>,
+  document.getElementById('root')
+)
