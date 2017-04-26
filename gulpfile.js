@@ -46,7 +46,7 @@ gulp.task('html', function() {
 // });
 
 // Build scripts into a single file with Webpack and UglifyJS
-gulp.task('scripts', ['jshint'], function(cb) {
+gulp.task('scripts', /* ['jshint'],*/ function(cb) {
 	// Pump is used to correctly dipslay errors
   pump([
     gulp.src('src/**/*.js'),
