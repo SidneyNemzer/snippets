@@ -21,11 +21,13 @@ class App extends React.Component {
     }
 
     this.selectSnippet = this.selectSnippet.bind(this)
-    // this.createSnippet = this.createSnippet.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
     this.updateSnippetName = this.updateSnippetName.bind(this)
+    this.handleEditorChange = this.handleEditorChange.bind(this)
+    // this.createSnippet = this.createSnippet.bind(this)
     // this.deleteSnippet = this.deleteSnippet.bind(this)
     // this.reloadSnippets = this.reloadSnippets.bind(this)
-    //
+
     // this.reloadSnippets()
   }
 
@@ -65,18 +67,25 @@ class App extends React.Component {
       previousState.snippets[snippetID].name = newName
       return previousState
     })
+  }
 
-    // this.setState({
-    //   snippets: {
-    //     [snippetID]: snippet
-    //   }
-    // })
+  handleKeyPress(event) {
+    if (event.key === 's' && event.ctrlKey) {
+      // TODO save snippet to Chrome storage
+    }
+  }
+
+  handleEditorChange(newValue) {
+    this.setState(function (previousState) {
+      previousState.snippets[this.state.selectedSnippet].content = newValue
+      return previousState
+    })
   }
 
   // deleteSnippet() {
   //
   // }
-  
+
   // reloadSnippets() {
   //   // TODO Display a loading icon in the list while stuff is loading
   //   // TODO Use sync storage
@@ -102,7 +111,9 @@ class App extends React.Component {
           height="100vh"
           width="90%"
           theme="github"
-          value={this.state.snippets[this.state.selectedSnippet].content }
+          value={this.state.snippets[this.state.selectedSnippet].content}
+          onKeyPress={this.handleKeyPress}
+          onChange={this.handleEditorChange}
         />
       </div>
     )
