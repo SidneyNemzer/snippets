@@ -35,32 +35,37 @@ class SnippetRow extends React.Component {
   }
 
   handleBlur() {
+    this.props.updateName(this.state.currentInput)
     this.setState({
       isRenaming: false
     })
   }
 
   handleKeyPress(event) {
+    // End the rename when 'enter' is hit
     if (event.key === 'Enter') {
       this.nameInput.blur()
     }
   }
 
   componentDidUpdate() {
+    // If we just added the <input>...
     if (this.state.isRenaming && this.state.startingRename) {
+      // Select and focus it
       this.nameInput.select()
       this.nameInput.focus()
     }
   }
 
   render() {
+    // Figure out what classes the container div needs
     let classes = 'snippet-row'
     if (this.props.selected) {
       classes += ' selected'
     }
 
     // If we need to display the <input>
-    // to change the name
+    // to change the name...
     if (this.state.isRenaming) {
       return (
         <div
@@ -81,7 +86,7 @@ class SnippetRow extends React.Component {
       )
     }
 
-    // If we need to display the name
+    // If we need to display the name...
     return (
       <div
         className={classes}

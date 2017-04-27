@@ -11,6 +11,13 @@ class SnippetList extends React.Component {
           name={this.props.snippets[snippetID].name}
           key={snippetID}
           selectSelf={() => this.props.selectSnippet(snippetID)}
+          updateName={
+            newName => {
+              const newSnippets = this.props.snippets.slice()
+              newSnippets[snippetID].name = newName
+              this.props.updateSnippet(snippetID, newSnippets)
+            }
+          }
         />
       )
     })

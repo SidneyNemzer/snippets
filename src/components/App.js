@@ -16,12 +16,13 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-      selectedSnippet: this.props.selectedSnippet
+      selectedSnippet: this.props.selectedSnippet,
+      snippets: this.props.snippets
     }
 
     this.selectSnippet = this.selectSnippet.bind(this)
     // this.createSnippet = this.createSnippet.bind(this)
-    // this.updateSnippet = this.updateSnippet.bind(this)
+    this.updateSnippetName = this.updateSnippetName.bind(this)
     // this.deleteSnippet = this.deleteSnippet.bind(this)
     // this.reloadSnippets = this.reloadSnippets.bind(this)
     //
@@ -58,11 +59,19 @@ class App extends React.Component {
   //     })
   //   })
   // }
-  //
-  // updateSnippet() {
-  //
-  // }
-  //
+
+  updateSnippetName(snippetID, snippet) {
+    this.setState(function (previousState) {
+      previousState.
+    })
+
+    // this.setState({
+    //   snippets: {
+    //     [snippetID]: snippet
+    //   }
+    // })
+  }
+
   // deleteSnippet() {
   //
   // }
@@ -81,9 +90,10 @@ class App extends React.Component {
     return (
       <div className="app">
         <Sidepane
-          snippets={this.props.snippets}
+          snippets={this.state.snippets}
           selectedSnippet={this.state.selectedSnippet}
           selectSnippet={this.selectSnippet}
+          updateSnippet={this.updateSnippet}
         />
         <AceEditor
           mode="javascript"
@@ -91,7 +101,7 @@ class App extends React.Component {
           height="100vh"
           width="90%"
           theme="github"
-          value={this.props.snippets[this.state.selectedSnippet].content }
+          value={this.state.snippets[this.state.selectedSnippet].content }
         />
       </div>
     )
