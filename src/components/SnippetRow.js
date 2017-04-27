@@ -6,20 +6,87 @@ class SnippetRow extends React.Component {
   constructor(props) {
     super(props)
 
-    this.logger = new Logger('SnippetRow ' + this.props.key)
+    this.logger = new Logger('SnippetRow')
+
+    this.state = {
+      isRenaming: false,
+      startingRename: false
+    }
+
+    this.startRename = this.startRename.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleBlur = this.handleBlur.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
   }
+
+  startRename() {
+    this.setState({
+      isRenaming: true,
+      startingRename: true,
+      currentInput: this.props.name
+    })
+  }
+
+  handleChange(event) {
+    this.setState({
+      currentInput: event.target.value,
+      startingRename: false
+    })
+  }
+
+  handleBlur() {
+    this.setState({
+      isRenaming: false
+    })
+  }
+
+  handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      this.nameInput.blur()
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.state.isRenaming && this.state.startingRename) {
+      this.nameInput.select()
+      this.nameInput.focus()
+    }
+  }
+
   render() {
     let classes = 'snippet-row'
     if (this.props.selected) {
       classes += ' selected'
     }
 
-    this.logger.debug('Selected: ' + this.props.selected)
-    this.logger.debug('Classes: ' + classes)
+    // If we need to display the <input>
+    // to change the name
+    if (this.state.isRenaming) {
+      return (
+        <div
+          className={classes}
+          // Allow a row to be selected if it isn't already
+          onClick={!this.props.selected ? this.props.selectSelf : null}
+          // Allow the name to be edited if the row is selected
+          onDoubleClick={this.props.selected ? this.startRename : null}
+        >
+          <input
+            ref={input => this.nameInput = input}
+            value={this.state.currentInput}
+            onChange={this.handleChange}
+            onBlur={this.handleBlur}
+            onKeyPress={this.handleKeyPress}
+          />
+        </div>
+      )
+    }
 
+    // If we need to display the name
     return (
       <div
         className={classes}
+        onClick={!this.props.selected ? this.props.selectSelf : null}
+        onDoubleClick={this.props.selected ? this.startRename : null}
       >
         {this.props.name}
       </div>
