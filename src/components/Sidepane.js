@@ -12,7 +12,7 @@ class Sidepane extends React.Component {
           snippets={this.props.snippets}
           selectedSnippet={this.props.selectedSnippet}
           selectSnippet={this.props.selectSnippet}
-          updateSnippet={this.props.updateSnippet}
+          updateSnippetName={this.props.updateSnippetName}
         />
       </div>
     )

@@ -60,9 +60,10 @@ class App extends React.Component {
   //   })
   // }
 
-  updateSnippetName(snippetID, snippet) {
+  updateSnippetName(snippetID, newName) {
     this.setState(function (previousState) {
-      previousState.
+      previousState.snippets[snippetID].name = newName
+      return previousState
     })
 
     // this.setState({
@@ -75,7 +76,7 @@ class App extends React.Component {
   // deleteSnippet() {
   //
   // }
-  //
+  
   // reloadSnippets() {
   //   // TODO Display a loading icon in the list while stuff is loading
   //   // TODO Use sync storage
@@ -93,7 +94,7 @@ class App extends React.Component {
           snippets={this.state.snippets}
           selectedSnippet={this.state.selectedSnippet}
           selectSnippet={this.selectSnippet}
-          updateSnippet={this.updateSnippet}
+          updateSnippetName={this.updateSnippetName}
         />
         <AceEditor
           mode="javascript"
