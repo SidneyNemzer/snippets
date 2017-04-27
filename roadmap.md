@@ -1,13 +1,13 @@
 # Table of Contents
 
-1. [Minimum Viable Product](#MVP)
-2. [0.2.0](#0.2.0)
-3. Next few versions
-4. In the future
+1. [Minimum Viable Product](#mvp)
+2. [0.2.0](#020)
+3. [Next few versions](#next-few-versions)
+4. [In the future](#in-the-future)
 
 # MVP
 
-#### *0.1.0*
+### *0.1.0*
 
 The Minimum Viable Product for *Snippets*
 
@@ -38,3 +38,8 @@ The Minimum Viable Product for *Snippets*
 * Allow snippet to be easily run in the console
 
 # In the future
+
+* Add popup page (the page that appears when you click the extension badge in the top right)
+  * Allow snippets to be run, reordered, renamed, or opened from there
+  * Allow creation of key-bindings
+  * Allow creation of shortcut urls (to use in bookmarks)?
