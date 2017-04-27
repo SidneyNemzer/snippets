@@ -5,7 +5,7 @@ Chrome extension that syncs snippets to browsers that you're logged into
 > **Status: Pre-MVP**  
 > I'm still implementing MVP features. Check back in a week or two for a working version.
 
-[View the MVP](MVP.md)
+[View the MVP in the roadmap file](roadmap.md)
 
 ## Installing
 
