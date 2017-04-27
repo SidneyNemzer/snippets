@@ -9,13 +9,16 @@ const webpackStream = require('webpack-stream')
 const webpack = require('webpack')
 const pump = require('pump')
 
+// TODO Extract todos from files with gulp-todo
+// I know this isn't irony, but it's something like that
+
 // Delete the files in the build directory
 gulp.task('clean', function() {
 	return gulp.src('build/*', {read: false})
 		.pipe(clean());
 });
 
-// Copy static folders to build directory
+// Copy static folders and files to build directory
 gulp.task('copy', function() {
 	gulp.src('src/fonts/**')
 		.pipe(gulp.dest('build/fonts'));
@@ -48,6 +51,7 @@ gulp.task('html', function() {
 // Build scripts into a single file with Webpack and UglifyJS
 gulp.task('scripts', /* ['jshint'],*/ function(cb) {
 	// Pump is used to correctly dipslay errors
+	// TODO Add sourcemaps with gulp-sourcemaps
   pump([
     gulp.src('src/**/*.js'),
     webpackStream(require('./webpack.config.js'), webpack),
