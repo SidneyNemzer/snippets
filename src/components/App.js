@@ -12,26 +12,28 @@ import '../style.css'
 const logger = new Logger('App')
 
 class App extends React.Component {
-  // constructor() {
-  //   super()
-  //
-  //   // this.state = {
-  //   //   snippets: {}
-  //   // }
-  //   //
-  //   // this.openSnippet = this.openSnippet.bind(this)
-  //   // this.createSnippet = this.createSnippet.bind(this)
-  //   // this.updateSnippet = this.updateSnippet.bind(this)
-  //   // this.deleteSnippet = this.deleteSnippet.bind(this)
-  //   // this.reloadSnippets = this.reloadSnippets.bind(this)
-  //   //
-  //   // this.reloadSnippets()
-  // }
+  constructor(props) {
+    super(props)
 
-  // openSnippet() {
-  //
-  // }
-  //
+    this.state = {
+      selectedSnippet: this.props.selectedSnippet
+    }
+
+    this.selectSnippet = this.selectSnippet.bind(this)
+    // this.createSnippet = this.createSnippet.bind(this)
+    // this.updateSnippet = this.updateSnippet.bind(this)
+    // this.deleteSnippet = this.deleteSnippet.bind(this)
+    // this.reloadSnippets = this.reloadSnippets.bind(this)
+    //
+    // this.reloadSnippets()
+  }
+
+  selectSnippet(snippetID) {
+    this.setState({
+      selectedSnippet: snippetID
+    })
+  }
+
   // createSnippet() {
   //   logger.debug('Creating snippet')
   //   chrome.storage.local.get('lastSnippetID', function (lastID) {
@@ -77,18 +79,19 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="app">
         <Sidepane
           snippets={this.props.snippets}
-          selectedSnippet={this.props.selectedSnippet}
+          selectedSnippet={this.state.selectedSnippet}
+          selectSnippet={this.selectSnippet}
         />
         <AceEditor
           mode="javascript"
           name="editor"
           height="100vh"
-          width="100%"
+          width="90%"
           theme="github"
-          value={this.props.snippets[this.props.selectedSnippet].content }
+          value={this.props.snippets[this.state.selectedSnippet].content }
         />
       </div>
     )
