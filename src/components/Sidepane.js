@@ -11,6 +11,7 @@ class Sidepane extends React.Component {
         <SnippetList
           snippets={this.props.snippets}
           selectedSnippet={this.props.selectedSnippet}
+          selectSnippet={this.props.selectSnippet}
         />
       </div>
     )
