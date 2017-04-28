@@ -28,10 +28,19 @@ const snippets = {
   }
 }
 
-ReactDOM.render(
-  <App
-    snippets={snippets}
-    selectedSnippet={'1'}
-  />,
-  document.getElementById('root')
-)
+try {
+  ReactDOM.render(
+    <App
+      snippets={snippets}
+      selectedSnippet={'1'}
+    />,
+    document.getElementById('root')
+  )
+} catch (error) {
+  const rootElement = document.getElementById('root')
+  rootElement.innerHTML = '<h1>Critical Error!</h1>' +
+                          '<p>Sorry, an error occurred :(</p>' +
+                          '<p>' + error + '</p>'
+  console.error('Critical error!')
+  console.error(error)
+}
