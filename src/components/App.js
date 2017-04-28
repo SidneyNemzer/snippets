@@ -17,7 +17,8 @@ class App extends React.Component {
 
     this.state = {
       selectedSnippet: null,
-      snippets: {}
+      snippets: {},
+      nextId: 0
     }
 
     this.selectSnippet = this.selectSnippet.bind(this)
@@ -26,7 +27,8 @@ class App extends React.Component {
     this.handleEditorChange = this.handleEditorChange.bind(this)
     this.saveSnippetToStorage = this.saveSnippetToStorage.bind(this)
     this.resetSnippets = this.resetSnippets.bind(this)
-    // this.createSnippet = this.createSnippet.bind(this)
+    this.createSnippet = this.createSnippet.bind(this)
+    this.getNextId = this.getNextId.bind(this)
     // this.deleteSnippet = this.deleteSnippet.bind(this)
 
     function onDataLoadFail(error) {
@@ -42,25 +44,37 @@ class App extends React.Component {
 
     try {
       const resetSnippets = this.resetSnippets
-      chrome.storage.sync.get('snippets', function (storage) {
+      const setState = this.setState
+      chrome.storage.sync.get(null, function (storage) {
         if (chrome.runtime.lastError) {
           onDataLoadFail(chrome.runtime.lastError)
           return
         }
 
         resetSnippets(storage.snippets)
+        setState({
+          nextId: storage.nextId
+        })
       })
     } catch (error) {
       onDataLoadFail(error)
     }
+  }
 
-    // this.reloadSnippets()
+  getNextId() {
+    const nextId = this.state.nextId
+    const setState = this.setState
+    chrome.storage.sync.set({
+      nextId: nextId + 1
+    }, function () {
+      setState({
+        nextId: nextId + 1
+      })
+    })
+    return nextId
   }
 
   resetSnippets(snippets) {
-    logger.info('resetting snippets with the following snippets:')
-    logger.info(snippets)
-
     const newState = {
       snippets: snippets
     }
@@ -76,8 +90,6 @@ class App extends React.Component {
       newState.selectedSnippet = Object.keys(newState.snippets)[0]
     }
 
-    logger.info('resetting snippets with the following state:')
-    logger.info(newState)
     this.setState(newState)
   }
 
@@ -87,30 +99,17 @@ class App extends React.Component {
     })
   }
 
-  // createSnippet() {
-  //   logger.debug('Creating snippet')
-  //   chrome.storage.local.get('lastSnippetID', function (lastID) {
-  //     const nextID = lastID + 1
-  //
-  //     chrome.storage.local.set({
-  //       snippets: {
-  //         nextID: {
-  //           name: '',
-  //           content: ''
-  //         }
-  //       }
-  //     }, function () {
-  //       this.setState({
-  //         snippets: {
-  //           nextID: {
-  //             name: '',
-  //             content: ''
-  //           }
-  //         }
-  //       })
-  //     })
-  //   })
-  // }
+  createSnippet() {
+    const id = this.getNextId()
+    this.setState(function (previousState) {
+      previousState.snippets[id] = {
+        name: 'New Snippet #' + id,
+        content: ''
+      }
+
+      return previousState
+    })
+  }
 
   updateSnippetName(snippetID, newName) {
     this.setState(function (previousState) {
@@ -158,6 +157,7 @@ class App extends React.Component {
           selectedSnippet={this.state.selectedSnippet}
           selectSnippet={this.selectSnippet}
           updateSnippetName={this.updateSnippetName}
+          createSnippet={this.createSnippet}
         />
         <AceEditor
           mode="javascript"

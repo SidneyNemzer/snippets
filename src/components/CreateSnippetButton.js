@@ -5,6 +5,7 @@ class CreateSnippetButton extends React.Component {
     return (
       <button
         className="create"
+        onClick={this.props.createSnippet}
       >
         Create Snippet
       </button>
