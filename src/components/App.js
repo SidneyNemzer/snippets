@@ -16,8 +16,8 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-      selectedSnippet: this.props.selectedSnippet,
-      snippets: this.props.snippets
+      selectedSnippet: null,
+      snippets: {}
     }
 
     this.selectSnippet = this.selectSnippet.bind(this)
@@ -25,11 +25,55 @@ class App extends React.Component {
     this.updateSnippetName = this.updateSnippetName.bind(this)
     this.handleEditorChange = this.handleEditorChange.bind(this)
     this.saveSnippetToStorage = this.saveSnippetToStorage.bind(this)
+    this.resetSnippets = this.resetSnippets.bind(this)
     // this.createSnippet = this.createSnippet.bind(this)
     // this.deleteSnippet = this.deleteSnippet.bind(this)
     // this.reloadSnippets = this.reloadSnippets.bind(this)
 
+    function onDataLoadFail(error) {
+      logger.error('Failed to load snippets from sync storage')
+      logger.error(error)
+      this.resetSnippets({
+        '0': {
+          name: 'Error',
+          content: "Uh oh! Couldn't load snippets from Chrome storage. \n" + error
+        }
+      })
+    }
+
+    try {
+      chrome.storage.sync.get('snippets', function (snippets) {
+        if (chrome.runtime.lastError) {
+          onDataLoadFail(chrome.runtime.lastError)
+          return
+        }
+
+        this.resetSnippets(snippets)
+      })
+    } catch (error) {
+      onDataLoadFail(error)
+    }
+
     // this.reloadSnippets()
+  }
+
+  resetSnippets(snippets) {
+    const newState = {
+      snippets: snippets
+    }
+    if (Object.keys(newState.snippets).length === 0) {
+      newState.snippets = {
+        '0': {
+          name: 'New Snippet',
+          content: 'console.log(\'Welcome to Snippets!\')'
+        }
+      }
+    }
+    if (!this.state.selectedSnippet || !newState.snippets[this.state.selectedSnippet]) {
+      newState.selectedSnippet = Object.keys(newState.snippets)[0]
+    }
+
+    this.setState(newState)
   }
 
   selectSnippet(snippetID) {
@@ -72,7 +116,9 @@ class App extends React.Component {
 
   saveSnippetToStorage(snippetID) {
     chrome.storage.sync.set({
-      [snippetID]: this.state.snippets[snippetID]
+      snippets: {
+        [snippetID]: this.state.snippets[snippetID]
+      }
     })
   }
 
@@ -118,7 +164,7 @@ class App extends React.Component {
           height="100vh"
           width="90%"
           theme="github"
-          value={this.state.snippets[this.state.selectedSnippet].content}
+          value={this.state.selectedSnippet ? this.state.snippets[this.state.selectedSnippet].content : ''}
           onKeyPress={this.handleKeyPress}
           onChange={this.handleEditorChange}
         />
