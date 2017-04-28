@@ -24,6 +24,7 @@ class App extends React.Component {
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.updateSnippetName = this.updateSnippetName.bind(this)
     this.handleEditorChange = this.handleEditorChange.bind(this)
+    this.saveSnippetToStorage = this.saveSnippetToStorage.bind(this)
     // this.createSnippet = this.createSnippet.bind(this)
     // this.deleteSnippet = this.deleteSnippet.bind(this)
     // this.reloadSnippets = this.reloadSnippets.bind(this)
@@ -69,9 +70,15 @@ class App extends React.Component {
     })
   }
 
+  saveSnippetToStorage(snippetID) {
+    chrome.storage.sync.set({
+      [snippetID]: this.state.snippets[snippetID]
+    })
+  }
+
   handleKeyPress(event) {
     if (event.key === 's' && event.ctrlKey) {
-      // TODO save snippet to Chrome storage
+      saveSnippetToStorage(this.state.selectedSnippet)
     }
   }
 
