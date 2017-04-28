@@ -28,7 +28,6 @@ class App extends React.Component {
     this.resetSnippets = this.resetSnippets.bind(this)
     // this.createSnippet = this.createSnippet.bind(this)
     // this.deleteSnippet = this.deleteSnippet.bind(this)
-    // this.reloadSnippets = this.reloadSnippets.bind(this)
 
     function onDataLoadFail(error) {
       logger.error('Failed to load snippets from sync storage')
@@ -42,13 +41,14 @@ class App extends React.Component {
     }
 
     try {
-      chrome.storage.sync.get('snippets', function (snippets) {
+      const resetSnippets = this.resetSnippets
+      chrome.storage.sync.get('snippets', function (storage) {
         if (chrome.runtime.lastError) {
           onDataLoadFail(chrome.runtime.lastError)
           return
         }
 
-        this.resetSnippets(snippets)
+        resetSnippets(storage.snippets)
       })
     } catch (error) {
       onDataLoadFail(error)
@@ -58,6 +58,9 @@ class App extends React.Component {
   }
 
   resetSnippets(snippets) {
+    logger.info('resetting snippets with the following snippets:')
+    logger.info(snippets)
+
     const newState = {
       snippets: snippets
     }
@@ -73,6 +76,8 @@ class App extends React.Component {
       newState.selectedSnippet = Object.keys(newState.snippets)[0]
     }
 
+    logger.info('resetting snippets with the following state:')
+    logger.info(newState)
     this.setState(newState)
   }
 
@@ -123,8 +128,11 @@ class App extends React.Component {
   }
 
   handleKeyPress(event) {
+    logger.info("Got div's keypress")
+    logger.info('key: ' + event.key)
     if (event.key === 's' && event.ctrlKey) {
-      saveSnippetToStorage(this.state.selectedSnippet)
+      logger.info('saving snippet!')
+      this.saveSnippetToStorage(this.state.selectedSnippet)
     }
   }
 
@@ -139,19 +147,12 @@ class App extends React.Component {
   //
   // }
 
-  // reloadSnippets() {
-  //   // TODO Display a loading icon in the list while stuff is loading
-  //   // TODO Use sync storage
-  //   chrome.storage.local.get('snippets', function (snippets) {
-  //     this.setState({
-  //       snippets: snippets
-  //     })
-  //   })
-  // }
-
   render() {
     return (
-      <div className="app">
+      <div
+        className="app"
+        onKeyDown={this.handleKeyPress}
+      >
         <Sidepane
           snippets={this.state.snippets}
           selectedSnippet={this.state.selectedSnippet}
@@ -164,8 +165,12 @@ class App extends React.Component {
           height="100vh"
           width="90%"
           theme="github"
-          value={this.state.selectedSnippet ? this.state.snippets[this.state.selectedSnippet].content : ''}
-          onKeyPress={this.handleKeyPress}
+          value={
+            this.state.selectedSnippet
+              ? this.state.snippets[this.state.selectedSnippet].content
+              : 'Please select or create a snippet!'
+          }
+          readOnly={!this.state.selectedSnippet}
           onChange={this.handleEditorChange}
         />
       </div>
