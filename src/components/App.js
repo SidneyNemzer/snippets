@@ -43,19 +43,20 @@ class App extends React.Component {
     }
 
     try {
-      const resetSnippets = this.resetSnippets
-      const setState = this.setState
       chrome.storage.sync.get(null, function (storage) {
         if (chrome.runtime.lastError) {
           onDataLoadFail(chrome.runtime.lastError)
           return
         }
 
-        resetSnippets(storage.snippets)
-        setState({
+        logger.info('Loaded Chrome storage:')
+        logger.info(storage)
+
+        this.resetSnippets(storage.snippets)
+        this.setState({
           nextId: storage.nextId
         })
-      })
+      }.bind(this))
     } catch (error) {
       onDataLoadFail(error)
     }
@@ -63,14 +64,15 @@ class App extends React.Component {
 
   getNextId() {
     const nextId = this.state.nextId
-    const setState = this.setState
+
     chrome.storage.sync.set({
       nextId: nextId + 1
     }, function () {
-      setState({
+      this.setState({
         nextId: nextId + 1
       })
-    })
+    }.bind(this))
+
     return nextId
   }
 
@@ -119,11 +121,15 @@ class App extends React.Component {
   }
 
   saveSnippetToStorage(snippetID) {
-    chrome.storage.sync.set({
-      snippets: {
-        [snippetID]: this.state.snippets[snippetID]
-      }
-    })
+    chrome.storage.sync.get(null, function (storage) {
+      const previousSnippets = storage.snippets
+
+      previousSnippets[snippetID] = this.state.snippets[snippetID]
+
+      chrome.storage.sync.set({
+        snippets: previousSnippets
+      })
+    }.bind(this))
   }
 
   handleKeyPress(event) {
