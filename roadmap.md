@@ -14,11 +14,12 @@ The Minimum Viable Product for *Snippets*
 ## Features
 
 - [ ] User Interface
-  - [ ] Create snippets
+  - [x] Create snippets
   - [x] Select snippet to edit
   - [x] Rename snippets
-- [ ] Data
-  - [ ] Store snippets in Chrome Sync storage
+  - [ ] Delete snippets
+- [x] Data
+  - [x] Store snippets in Chrome Sync storage
 
 ## Mockup
 
