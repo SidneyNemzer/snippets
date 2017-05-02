@@ -133,10 +133,7 @@ class App extends React.Component {
   }
 
   handleKeyPress(event) {
-    logger.info("Got div's keypress")
-    logger.info('key: ' + event.key)
     if (event.key === 's' && event.ctrlKey) {
-      logger.info('saving snippet!')
       this.saveSnippetToStorage(this.state.selectedSnippet)
     }
   }
