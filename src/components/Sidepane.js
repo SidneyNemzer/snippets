@@ -2,6 +2,7 @@ import React from 'react'
 
 import CreateSnippetButton from './CreateSnippetButton'
 import SnippetList from './SnippetList'
+import DeleteSnippetButton from './DeleteSnippetButton'
 
 class Sidepane extends React.Component {
   render() {
@@ -14,6 +15,7 @@ class Sidepane extends React.Component {
           selectSnippet={this.props.selectSnippet}
           updateSnippetName={this.props.updateSnippetName}
         />
+        <DeleteSnippetButton deleteSnippet={() => this.props.deleteSnippet(this.props.selectedSnippet)} />
       </div>
     )
   }
