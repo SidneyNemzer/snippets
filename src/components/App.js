@@ -29,7 +29,7 @@ class App extends React.Component {
     this.resetSnippets = this.resetSnippets.bind(this)
     this.createSnippet = this.createSnippet.bind(this)
     this.getNextId = this.getNextId.bind(this)
-    // this.deleteSnippet = this.deleteSnippet.bind(this)
+    this.deleteSnippet = this.deleteSnippet.bind(this)
 
     function onDataLoadFail(error) {
       logger.error('Failed to load snippets from sync storage')
@@ -145,9 +145,22 @@ class App extends React.Component {
     })
   }
 
-  // deleteSnippet() {
-  //
-  // }
+  deleteSnippet(snippetID) {
+    chrome.storage.sync.get(null, function (storage) {
+      const previousSnippets = storage.snippets
+
+      delete previousSnippets[snippetID]
+
+      const snippets = this.state.snippets
+      delete snippets[snippetID]
+
+      this.resetSnippets(snippets)
+
+      chrome.storage.sync.set({
+        snippets: previousSnippets
+      })
+    }.bind(this))
+  }
 
   render() {
     return (
@@ -161,6 +174,7 @@ class App extends React.Component {
           selectSnippet={this.selectSnippet}
           updateSnippetName={this.updateSnippetName}
           createSnippet={this.createSnippet}
+          deleteSnippet={this.deleteSnippet}
         />
         <AceEditor
           mode="javascript"
