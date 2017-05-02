@@ -51,3 +51,19 @@ button.create {
 button.create:hover {
   background-color: #A3B5FF;
 }
+
+button.delete {
+  background-color: #fc4c4c;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px auto 0;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  display: block;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+button.delete:hover {
+  background-color: #ff7c7c;
+}
