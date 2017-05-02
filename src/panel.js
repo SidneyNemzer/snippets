@@ -6,6 +6,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App'
 
+// TODO This function probably can be removed
 function evalInWindow(string) {
   chrome.devtools.inspectedWindow.eval(string)
 }
