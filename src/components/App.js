@@ -189,7 +189,7 @@ class App extends React.Component {
               ? this.state.snippets[this.state.selectedSnippet].content
               : 'Please select or create a snippet!'
           }
-          readOnly={!this.state.selectedSnippet}
+          readOnly={typeof this.state.selectedSnippet != 'string'}
           onChange={this.handleEditorChange}
         />
       </div>
