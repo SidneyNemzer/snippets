@@ -182,7 +182,7 @@ class App extends React.Component {
           mode="javascript"
           name="editor"
           height="100vh"
-          width="90%"
+          width="85%"
           theme="github"
           value={
             this.state.selectedSnippet
