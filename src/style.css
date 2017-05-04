@@ -11,7 +11,8 @@ body {
 }
 
 .sidepane {
-  width: 15%;
+  width: 10%;
+  min-width: 160px;
   height: 100vh;
   background-color: #f3f3f3;
   display: flex;
