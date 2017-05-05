@@ -42,6 +42,10 @@ body {
   background-color: #ffffff;
 }
 
+input {
+  width: 100%;
+}
+
 button.create {
   background-color: #4c6ffc;
   color: white;
