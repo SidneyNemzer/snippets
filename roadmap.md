@@ -37,6 +37,7 @@ The Minimum Viable Product for *Snippets*
 
 * Allow to snippets to be reordered
 * Allow sidebar to be hidden
+* Allow autocompletion to be turned on or off
 * Use better linting
 * Allow selection of editor theme
   * Theme interface components too?
