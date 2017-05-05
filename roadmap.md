@@ -40,3 +40,4 @@ The Minimum Viable Product for *Snippets*
 * Use better linting
 * Allow selection of editor theme
   * Theme interface components too?
+* Allow a snippet to be sent to a Github Gist and/or Pastebin?
