@@ -51,9 +51,6 @@ class App extends React.Component {
           return
         }
 
-        logger.info('Loaded Chrome storage:')
-        logger.info(storage)
-
         this.resetSnippets(storage.snippets)
         this.setState({
           nextId: storage.nextId
@@ -208,6 +205,8 @@ class App extends React.Component {
           }
           readOnly={typeof this.state.selectedSnippet != 'string'}
           onChange={this.handleEditorChange}
+          enableBasicAutocompletion={true}
+          enableLiveAutocompletion={true}
         />
       </div>
     )
