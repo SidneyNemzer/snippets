@@ -18,7 +18,8 @@ class App extends React.Component {
     this.state = {
       selectedSnippet: null,
       snippets: {},
-      nextId: 0
+      nextId: 0,
+      confirmingDelete: false
     }
 
     this.selectSnippet = this.selectSnippet.bind(this)
@@ -30,6 +31,7 @@ class App extends React.Component {
     this.createSnippet = this.createSnippet.bind(this)
     this.getNextId = this.getNextId.bind(this)
     this.deleteSnippet = this.deleteSnippet.bind(this)
+    this.handleDeleteSnippet = this.handleDeleteSnippet.bind(this)
 
     function onDataLoadFail(error) {
       logger.error('Failed to load snippets from sync storage')
@@ -97,7 +99,8 @@ class App extends React.Component {
 
   selectSnippet(snippetID) {
     this.setState({
-      selectedSnippet: snippetID
+      selectedSnippet: snippetID,
+      confirmingDelete: false
     })
   }
 
@@ -164,6 +167,19 @@ class App extends React.Component {
     }.bind(this))
   }
 
+  handleDeleteSnippet() {
+    if (this.state.confirmingDelete) {
+      this.deleteSnippet(this.state.selectedSnippet)
+      this.setState({
+        confirmingDelete: false
+      })
+    } else {
+      this.setState({
+        confirmingDelete: true
+      })
+    }
+  }
+
   render() {
     return (
       <div
@@ -176,7 +192,8 @@ class App extends React.Component {
           selectSnippet={this.selectSnippet}
           updateSnippetName={this.updateSnippetName}
           createSnippet={this.createSnippet}
-          deleteSnippet={this.deleteSnippet}
+          handleDeleteSnippet={this.handleDeleteSnippet}
+          confirmingDelete={this.state.confirmingDelete}
         />
         <AceEditor
           mode="javascript"
