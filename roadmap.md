@@ -18,7 +18,8 @@ The Minimum Viable Product for *Snippets*
   - [x] Rename snippets
   - [x] Delete snippets
   - [x] Allow snippet to be easily run in the console
-  - [ ] Use better linting
+  - [ ] Indicate when a snippet is unsaved
+  - [ ] Reset delete button if a different snippet is selected
 - [x] Data
   - [x] Store snippets in Chrome Sync storage
 
@@ -28,13 +29,14 @@ The Minimum Viable Product for *Snippets*
 
 # 0.2.0
 
-* Allow selection of editor theme
-  * Theme interface components too?
+* Add popup page (the page that appears when you click the extension badge in the top right)
+  * Allow snippets to be run, reordered, renamed, or opened from there
+  * Allow creation of key-bindings
 
 # Next few versions
 
 * Allow to snippets to be reordered
 * Allow sidebar to be hidden
-* Add popup page (the page that appears when you click the extension badge in the top right)
-  * Allow snippets to be run, reordered, renamed, or opened from there
-  * Allow creation of key-bindings
+* Use better linting
+* Allow selection of editor theme
+  * Theme interface components too?
