@@ -14,6 +14,7 @@ class Sidepane extends React.Component {
           selectedSnippet={this.props.selectedSnippet}
           selectSnippet={this.props.selectSnippet}
           updateSnippetName={this.props.updateSnippetName}
+          unsavedSnippets={this.props.unsavedSnippets}
         />
         <DeleteSnippetButton
           handleClick={this.props.handleDeleteSnippet}

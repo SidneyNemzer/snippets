@@ -87,13 +87,20 @@ class SnippetRow extends React.Component {
     }
 
     // If we need to display the name...
+
+    // Add an astrisk if it's unsaved
+    let name = ''
+    if (this.props.unsaved) {
+      name = '*'
+    }
+    name += this.props.name
     return (
       <div
         className={classes}
         onClick={!this.props.selected ? this.props.selectSelf : null}
         onDoubleClick={this.props.selected ? this.startRename : null}
       >
-        {this.props.name}
+        {name}
       </div>
     )
   }

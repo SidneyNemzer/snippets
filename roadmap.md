@@ -18,7 +18,7 @@ The Minimum Viable Product for *Snippets*
   - [x] Rename snippets
   - [x] Delete snippets
   - [x] Allow snippet to be easily run in the console
-  - [ ] Indicate when a snippet is unsaved
+  - [x] Indicate when a snippet is unsaved
   - [x] Reset delete button if a different snippet is selected
 - [x] Data
   - [x] Store snippets in Chrome Sync storage

@@ -19,7 +19,8 @@ class App extends React.Component {
       selectedSnippet: null,
       snippets: {},
       nextId: 0,
-      confirmingDelete: false
+      confirmingDelete: false,
+      unsavedSnippets: {}
     }
 
     this.selectSnippet = this.selectSnippet.bind(this)
@@ -129,6 +130,12 @@ class App extends React.Component {
       chrome.storage.sync.set({
         snippets: previousSnippets
       })
+
+      this.setState(function (previousState) {
+        delete previousState.unsavedSnippets[snippetID]
+
+        return previousState
+      })
     }.bind(this))
   }
 
@@ -143,6 +150,7 @@ class App extends React.Component {
   handleEditorChange(newValue) {
     this.setState(function (previousState) {
       previousState.snippets[this.state.selectedSnippet].content = newValue
+      previousState.unsavedSnippets[this.state.selectedSnippet] = true
       return previousState
     })
   }
@@ -191,6 +199,7 @@ class App extends React.Component {
           createSnippet={this.createSnippet}
           handleDeleteSnippet={this.handleDeleteSnippet}
           confirmingDelete={this.state.confirmingDelete}
+          unsavedSnippets={this.state.unsavedSnippets}
         />
         <AceEditor
           mode="javascript"
