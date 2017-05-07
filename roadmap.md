@@ -29,9 +29,13 @@ The Minimum Viable Product for *Snippets*
 
 # 0.2.0
 
-* Add popup page (the page that appears when you click the extension badge in the top right)
-  * Allow snippets to be run, reordered, renamed, or opened from there
-  * Allow creation of key-bindings
+* Add a popup page which allows...
+  * snippets to be viewed
+  * snippets to be run
+  * snippets to be renamed
+  * snippets to be opened
+  * creation of key-bindings to run a snippet
+* Fix autocompletion in the editor
 
 # Next few versions
 
