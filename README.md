@@ -22,3 +22,7 @@ A: Unfortunately, Chrome doesn't allow extensions to access the built-in snippet
 ### Q: What did you use to make this extension?
 
 A: The interface uses [React](https://facebook.github.io/react/). The code editor is [react-ace](https://github.com/securingsincity/react-ace)
+
+### Q: What font is the logo in?
+
+A: Freestyle Script. Maybe you don't find that too interesting, but I need this here so I don't forget it...
