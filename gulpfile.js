@@ -1,8 +1,7 @@
 const gulp = require('gulp')
 const clean = require('gulp-clean')
 const cleanhtml = require('gulp-cleanhtml')
-const minifycss = require('gulp-minify-css')
-const jshint = require('gulp-jshint')
+// const jshint = require('gulp-jshint')
 const uglify = require('gulp-uglify')
 const zip = require('gulp-zip')
 const webpackStream = require('webpack-stream')
@@ -62,34 +61,25 @@ gulp.task('scripts', /* ['jshint'],*/ function(cb) {
 
 // Minify styles
 gulp.task('styles', function() {
-// 	return gulp.src('src/styles/**/*.css')
-// 		.pipe(minifycss({root: 'src/styles', keepSpecialComments: 0}))
-// 		.pipe(gulp.dest('build/styles'));
-
-	// Copy the lone CSS file
-	// (This will change once more css is used)
-	// gulp.src('src/style.css')
-	// 	.pipe(gulp.dest('build'))
 	return gulp.src('src/styles/**')
 		.pipe(gulp.dest('build/styles'));
 });
 
-//build ditributable and sourcemaps after other tasks completed
+// Create the distributable zip file
 gulp.task('zip', ['html', 'scripts', 'styles', 'copy'], function() {
 	var manifest = require('./src/manifest'),
 		distFileName = manifest.name + ' v' + manifest.version + '.zip',
 		mapFileName = manifest.name + ' v' + manifest.version + '-maps.zip';
-	//collect all source maps
+	// Collect all source maps
 	gulp.src('build/scripts/**/*.map')
 		.pipe(zip(mapFileName))
 		.pipe(gulp.dest('dist'));
-	//build distributable extension
+	// Build distributable extension
 	return gulp.src(['build/**', '!build/scripts/**/*.map'])
 		.pipe(zip(distFileName))
 		.pipe(gulp.dest('dist'));
 });
 
-//run all tasks after build directory has been cleaned
 gulp.task('default', ['clean'], function() {
     gulp.start('zip');
 });
