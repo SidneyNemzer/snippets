@@ -1,9 +1,9 @@
 # Snippets
 
-Chrome extension that syncs snippets to browsers that you're logged into
+Chrome extension that allows you to create and edit Javascript code snippets, which are synced to all your computers
 
-> **Status: Pre-MVP**  
-> I'm still implementing MVP features. Check back in a week or two for a working version.
+> **Status: MVP**  
+> MVP features have been implemented. It will be available on the store in a day or two
 
 [View the MVP in the roadmap file](roadmap.md)
 
@@ -15,24 +15,10 @@ It will be available on the Chrome Web Store once it's done
 
 ## FAQ
 
-### Q: Why doesn't this use the snippets that are built-into chrome?
+### Q: Why doesn't this just sync the snippets that are built-into chrome?
 
-A: Chrome obviously doesn't sync those snippets itself. And unfortunately, Chrome doesn't allow extensions to access those snippets in any way. So I'm just re-implementing snippets myself.
+A: Unfortunately, Chrome doesn't allow extensions to access the built-in snippets. So I re-created a snippet editor.
 
-## Developing
+### Q: What did you use to make this extension?
 
-> Disclaimer: I'm not looking for contributions at the moment
-
-1. Clone the repo
-
-```bash
-git clone https://github.com/SidneyNemzer/snippets.git
-```
-
-2. Install modules with NPM
-
-```bash
-npm i
-```
-
-3. Done! Get Developing!
+A: The interface uses [React](https://facebook.github.io/react/). The code editor is [react-ace](https://github.com/securingsincity/react-ace)
