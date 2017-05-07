@@ -37,6 +37,8 @@ class App extends React.Component {
     function onDataLoadFail(error) {
       logger.error('Failed to load snippets from sync storage')
       logger.error(error)
+
+      // TODO Better error display
       this.resetSnippets({
         '0': {
           name: 'Error',
