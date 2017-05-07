@@ -11,6 +11,40 @@ import '../style.css'
 
 const logger = new Logger('App')
 
+const welcomeSnippet = `/***********************
+* Welcome to snippets! *
+***********************/
+
+console.log('Welcome to snippets!')
+
+/*
+CONTROLS
+
+  * Run a snippet in the page that you opened the devtools on
+    CTRL+ENTER / CMD+ENTER
+
+  * Toggle the console
+    ESC
+
+  * Save the selected snippet
+    CTRL+S
+    (Need to test how this works on a Mac)
+
+
+SYNC
+
+  Your snippets will be synced to any Chrome that you're logged into
+
+
+BUGS / ISSUES / SUGGESTIONS
+
+  Open an issue on this project's Github
+  https://github.com/SidneyNemzer/snippets/issues
+
+Happy coding!
+*/
+`
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -85,8 +119,8 @@ class App extends React.Component {
     if (Object.keys(newState.snippets).length === 0) {
       newState.snippets = {
         '0': {
-          name: 'New Snippet',
-          content: 'console.log(\'Welcome to Snippets!\')'
+          name: 'Welcome',
+          content: welcomeSnippet
         }
       }
     }
