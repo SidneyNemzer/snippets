@@ -1,6 +1,6 @@
 {
   "name": "snippets",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Create and edit Javascript code snippets, which are synced to all your computers",
   "scripts": {
     "build": "gulp",

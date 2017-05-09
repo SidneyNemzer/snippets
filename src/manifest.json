@@ -3,7 +3,7 @@
 
   "name": "Snippets",
   "description": "Create and edit Javascript code snippets, which are synced to all your computers",
-  "version": "0.1.0",
+  "version": "0.1.1",
 
   "devtools_page": "devtools.html",
 
