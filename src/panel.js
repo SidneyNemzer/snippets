@@ -41,7 +41,11 @@ function saveToStorage(key, value, mergeValue) {
 function loadFromStorage(key) {
   return new Promise(function (resolve, reject) {
     chrome.storage.sync.get(null, function (storage) {
-      resolve(storage[key])
+      if (key) {
+        resolve(storage[key])
+      } else {
+        resolve(storage)
+      }
     })
   })
 }
