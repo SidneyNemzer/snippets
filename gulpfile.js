@@ -38,7 +38,7 @@ gulp.task('html', function() {
 });
 
 // Lint Javascript files with JSHint
-// TODO Enable this (needs to work with React)
+// TODO Enable JSHint (needs to work with React)
 // gulp.task('jshint', function() {
 // 	return gulp.src('src/scripts/*.js')
 // 		.pipe(jshint())
@@ -54,7 +54,7 @@ gulp.task('todo', function() {
 // Build scripts into a single file with Webpack and UglifyJS
 gulp.task('scripts', ['todo'/*, 'jshint'*/], function(cb) {
 	// Pump is used to correctly dipslay errors
-	// TODO Add sourcemaps with gulp-sourcemaps
+	// TODO Get source maps working -- uglify might be destroying them
   pump([
     gulp.src('src/**/*.js'),
     webpackStream(require('./webpack.config.js'), webpack),
