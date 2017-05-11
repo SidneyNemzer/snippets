@@ -7,9 +7,7 @@ const zip = require('gulp-zip')
 const webpackStream = require('webpack-stream')
 const webpack = require('webpack')
 const pump = require('pump')
-
-// TODO Extract todos from files with gulp-todo
-// I know this isn't irony, but it's something like that
+const todo = require('gulp-todo')
 
 // Delete the files in the build directory
 gulp.task('clean', function() {
@@ -47,8 +45,14 @@ gulp.task('html', function() {
 // 		.pipe(jshint.reporter('default'));
 // });
 
+gulp.task('todo', function() {
+	gulp.src(['src/**/*.js', 'gulpfile.js', 'webpack.config.js'])
+		.pipe(todo())
+		.pipe(gulp.dest('.'))
+})
+
 // Build scripts into a single file with Webpack and UglifyJS
-gulp.task('scripts', /* ['jshint'],*/ function(cb) {
+gulp.task('scripts', ['todo'/*, 'jshint'*/], function(cb) {
 	// Pump is used to correctly dipslay errors
 	// TODO Add sourcemaps with gulp-sourcemaps
   pump([
