@@ -144,22 +144,15 @@ class App extends React.Component {
   }
 
   saveSnippetToStorage(snippetID) {
-    // TODO switch to new data managment functions
-    chrome.storage.sync.get(null, function (storage) {
-      const previousSnippets = storage.snippets
+    this.props.saveToStorage('snippets', {
+      [snippetID]: this.state.snippets[snippetID]
+    }, true)
 
-      previousSnippets[snippetID] = this.state.snippets[snippetID]
+    this.setState(function (previousState) {
+      delete previousState.unsavedSnippets[snippetID]
 
-      chrome.storage.sync.set({
-        snippets: previousSnippets
-      })
-
-      this.setState(function (previousState) {
-        delete previousState.unsavedSnippets[snippetID]
-
-        return previousState
-      })
-    }.bind(this))
+      return previousState
+    })
   }
 
   handleKeyPress(event) {
