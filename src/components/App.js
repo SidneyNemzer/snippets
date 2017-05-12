@@ -71,9 +71,13 @@ class App extends React.Component {
     this.props.loadFromStorage()
       .then(function (storage) {
         this.resetSnippets(storage.snippets ? storage.snippets : {})
-        this.setState({
-          nextId: storage.nextId
-        })
+
+        let nextId = storage.nextId
+        if (typeof nextId != 'number' || Number.isNaN(nextId)) {
+          nextId = 0
+        }
+
+        this.setState({nextId})
       }.bind(this))
   }
 
