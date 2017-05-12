@@ -18,6 +18,10 @@ A: Unfortunately, Chrome doesn't allow extensions to access the built-in snippet
 
 A: The interface uses [React](https://facebook.github.io/react/). The code editor is [react-ace](https://github.com/securingsincity/react-ace)
 
+### Q: Can you add *insert feature here*
+
+A: See [the roadmap](roadmap.md) for planned features. [Open an issue](https://github.com/SidneyNemzer/snippets/issues) if you'd like to suggest a feature.
+
 ### Q: What font is the logo in?
 
 A: Freestyle Script. Maybe you don't find that too interesting, but I need this here so I don't forget it...
