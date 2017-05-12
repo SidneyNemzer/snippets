@@ -20,12 +20,12 @@ function saveToStorage(key, value, mergeValue) {
       chrome.storage.sync.get(null, function (storage) {
         const previousValue = storage[key]
         const newValue = Object.assign({}, previousValue, value)
-        chrome.storage.sync.set(key, newValue, function() {
+        chrome.storage.sync.set({[key]: newValue}, function() {
           resolve()
         })
       })
     } else {
-      chrome.storage.sync.set(key, value, function() {
+      chrome.storage.sync.set({[key]: value}, function() {
         resolve()
       })
     }
