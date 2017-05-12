@@ -1,17 +1,12 @@
 # Snippets
 
-Chrome extension that allows you to create and edit Javascript code snippets, which are synced to all your computers
+Chrome extension that allows you to create and edit Javascript code snippets, which are synced to all your computers.
 
-> **Status: MVP**  
-> MVP features have been implemented, and the extension is [available on the store](https://chrome.google.com/webstore/detail/snippets/fakjeijchchmicjllnabpdkclfkpbiag)
-
-[For upcoming features, see the roadmap](roadmap.md)
+See [the changelog](CHANGELOG.md) for a version history and [the roadmap](roadmap.md) for upcoming features.
 
 ## Installing
 
-Install the extension from the Chrome Web Store
-
-https://chrome.google.com/webstore/detail/snippets/fakjeijchchmicjllnabpdkclfkpbiag
+Install the extension [from the Chrome Web Store](https://chrome.google.com/webstore/detail/snippets/fakjeijchchmicjllnabpdkclfkpbiag)
 
 ## FAQ
 
