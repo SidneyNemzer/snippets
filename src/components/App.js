@@ -165,7 +165,8 @@ class App extends React.Component {
   handleKeyPress(event) {
     if (event.key === 's' && event.ctrlKey) {
       this.saveSnippetToStorage(this.state.selectedSnippet)
-    } else if (event.key === 'Enter' && event.ctrlKey) { // TODO Support Mac!
+    // TODO Support Mac!
+    } else if (event.key === 'Enter' && event.ctrlKey) {
       chrome.devtools.inspectedWindow.eval(this.state.snippets[this.state.selectedSnippet].content)
     }
   }
