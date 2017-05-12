@@ -41,7 +41,7 @@ BUGS / ISSUES / SUGGESTIONS
   Open an issue on this project's Github
   https://github.com/SidneyNemzer/snippets/issues
 
-Happy coding!
+HAPPY CODING!
 */
 `
 
