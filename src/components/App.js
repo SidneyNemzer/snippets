@@ -130,6 +130,8 @@ class App extends React.Component {
         content: ''
       }
 
+      previousState.unsavedSnippets[id] = true
+
       return previousState
     })
   }
