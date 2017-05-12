@@ -1,7 +1,7 @@
 {
   "name": "snippets",
-  "version": "0.1.0",
-  "description": "Chrome extension that provides advanced snippet managment",
+  "version": "0.1.1",
+  "description": "Create and edit Javascript code snippets, which are synced to all your computers",
   "scripts": {
     "build": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,11 +22,9 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.0",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
     "gulp-cleanhtml": "^1.0.3",
     "gulp-jshint": "^2.0.4",
-    "gulp-strip-debug": "^1.1.0",
     "gulp-uglify": "^2.1.2",
     "gulp-zip": "^4.0.0",
     "jshint": "^2.9.4",
@@ -38,6 +36,7 @@
     "webpack-stream": "^3.2.0"
   },
   "dependencies": {
+    "gulp-todo": "^5.3.0",
     "logger": "git+https://github.com/SidneyNemzer/logger.git#0.1.0",
     "react": "^15.5.4",
     "react-ace": "^4.2.1",

@@ -7,9 +7,7 @@ const zip = require('gulp-zip')
 const webpackStream = require('webpack-stream')
 const webpack = require('webpack')
 const pump = require('pump')
-
-// TODO Extract todos from files with gulp-todo
-// I know this isn't irony, but it's something like that
+const todo = require('gulp-todo')
 
 // Delete the files in the build directory
 gulp.task('clean', function() {
@@ -40,17 +38,23 @@ gulp.task('html', function() {
 });
 
 // Lint Javascript files with JSHint
-// TODO Enable this (needs to work with React)
+// TODO Enable JSHint (needs to work with React)
 // gulp.task('jshint', function() {
 // 	return gulp.src('src/scripts/*.js')
 // 		.pipe(jshint())
 // 		.pipe(jshint.reporter('default'));
 // });
 
+gulp.task('todo', function() {
+	gulp.src(['src/**/*.js', 'gulpfile.js', 'webpack.config.js'])
+		.pipe(todo())
+		.pipe(gulp.dest('.'))
+})
+
 // Build scripts into a single file with Webpack and UglifyJS
-gulp.task('scripts', /* ['jshint'],*/ function(cb) {
+gulp.task('scripts', ['todo'/*, 'jshint'*/], function(cb) {
 	// Pump is used to correctly dipslay errors
-	// TODO Add sourcemaps with gulp-sourcemaps
+	// TODO Get source maps working -- uglify might be destroying them
   pump([
     gulp.src('src/**/*.js'),
     webpackStream(require('./webpack.config.js'), webpack),

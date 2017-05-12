@@ -41,7 +41,7 @@ BUGS / ISSUES / SUGGESTIONS
   Open an issue on this project's Github
   https://github.com/SidneyNemzer/snippets/issues
 
-Happy coding!
+HAPPY CODING!
 */
 `
 
@@ -68,39 +68,23 @@ class App extends React.Component {
     this.deleteSnippet = this.deleteSnippet.bind(this)
     this.handleDeleteSnippet = this.handleDeleteSnippet.bind(this)
 
-    function onDataLoadFail(error) {
-      logger.error('Failed to load snippets from sync storage')
-      logger.error(error)
+    this.props.loadFromStorage()
+      .then(function (storage) {
+        this.resetSnippets(storage.snippets ? storage.snippets : {})
 
-      // TODO Better error display
-      this.resetSnippets({
-        '0': {
-          name: 'Error',
-          content: "Uh oh! Couldn't load snippets from Chrome storage. \n" + error
-        }
-      })
-    }
-
-    try {
-      chrome.storage.sync.get(null, function (storage) {
-        if (chrome.runtime.lastError) {
-          onDataLoadFail(chrome.runtime.lastError)
-          return
+        let nextId = storage.nextId
+        if (typeof nextId != 'number' || Number.isNaN(nextId)) {
+          nextId = 0
         }
 
-        this.resetSnippets(storage.snippets)
-        this.setState({
-          nextId: storage.nextId
-        })
+        this.setState({nextId})
       }.bind(this))
-    } catch (error) {
-      onDataLoadFail(error)
-    }
   }
 
   getNextId() {
     const nextId = this.state.nextId
 
+    // TODO switch to new data managment functions
     chrome.storage.sync.set({
       nextId: nextId + 1
     }, function () {
@@ -146,6 +130,8 @@ class App extends React.Component {
         content: ''
       }
 
+      previousState.unsavedSnippets[id] = true
+
       return previousState
     })
   }
@@ -158,27 +144,22 @@ class App extends React.Component {
   }
 
   saveSnippetToStorage(snippetID) {
-    chrome.storage.sync.get(null, function (storage) {
-      const previousSnippets = storage.snippets
+    this.props.saveToStorage('snippets', {
+      [snippetID]: this.state.snippets[snippetID]
+    }, true)
 
-      previousSnippets[snippetID] = this.state.snippets[snippetID]
+    this.setState(function (previousState) {
+      delete previousState.unsavedSnippets[snippetID]
 
-      chrome.storage.sync.set({
-        snippets: previousSnippets
-      })
-
-      this.setState(function (previousState) {
-        delete previousState.unsavedSnippets[snippetID]
-
-        return previousState
-      })
-    }.bind(this))
+      return previousState
+    })
   }
 
   handleKeyPress(event) {
     if (event.key === 's' && event.ctrlKey) {
       this.saveSnippetToStorage(this.state.selectedSnippet)
-    } else if (event.key === 'Enter' && event.ctrlKey) { // TODO Support Mac!
+    // TODO Support Mac!
+    } else if (event.key === 'Enter' && event.ctrlKey) {
       chrome.devtools.inspectedWindow.eval(this.state.snippets[this.state.selectedSnippet].content)
     }
   }
@@ -192,6 +173,7 @@ class App extends React.Component {
   }
 
   deleteSnippet(snippetID) {
+    // TODO switch to new data managment functions
     chrome.storage.sync.get(null, function (storage) {
       const previousSnippets = storage.snippets
 
