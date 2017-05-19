@@ -4,6 +4,8 @@ import React from 'react'
 
 import Sidepane from './Sidepane'
 import AceEditor from 'react-ace'
+
+import 'brace/ext/language_tools'
 import 'brace/mode/javascript'
 import 'brace/theme/github'
 
