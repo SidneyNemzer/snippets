@@ -11,7 +11,8 @@ import '../style.css'
 
 const logger = new Logger('App')
 
-const welcomeSnippet = `/***********************
+const welcomeSnippet = `
+/***********************
 * Welcome to snippets! *
 ***********************/
 
@@ -22,13 +23,14 @@ CONTROLS
 
   * Run a snippet in the page that you opened the devtools on
     CTRL+ENTER / CMD+ENTER
+    (You must have the snippet focused)
 
-  * Toggle the console
+  * Toggle the devtools console
     ESC
 
   * Save the selected snippet
     CTRL+S
-    (Need to test how this works on a Mac)
+    (Mac also uses CTRL+S)
 
 
 SYNC
