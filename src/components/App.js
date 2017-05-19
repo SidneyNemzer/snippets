@@ -236,6 +236,7 @@ class App extends React.Component {
           }
           readOnly={typeof this.state.selectedSnippet != 'string'}
           onChange={this.handleEditorChange}
+          highlightActiveLine={false}
           enableBasicAutocompletion={true}
           enableLiveAutocompletion={true}
         />
