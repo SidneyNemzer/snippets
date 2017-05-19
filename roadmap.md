@@ -5,6 +5,12 @@
 
 # 0.2.0
 
+* Switch saving/loading logic to a background page
+* Add autosaving (see [#2](https://github.com/SidneyNemzer/snippets/issues/2))
+* Fix autocompletion (?)
+
+# 0.3.0
+
 * Add a popup page which allows you to...
   * view your snippets
   * run snippets in the context of the current page
@@ -17,7 +23,6 @@
 
 * Allow snippets to be reordered
   * (?) Add a "favorite" system, to sort snippets based on the current webpage
-* Add autosaving (see [#2](https://github.com/SidneyNemzer/snippets/issues/2))
 * Allow the sidebar to be hidden
 * Allow autocompletion to be turned on or off
 * Use better linting in the editor
