@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Snippets",
-  "description": "Create and edit Javascript code snippets, which are synced to all your computers",
+  "description": "Create and edit JavaScript code snippets, which are synced to all your computers",
   "version": "0.2.0",
 
   "devtools_page": "devtools.html",
