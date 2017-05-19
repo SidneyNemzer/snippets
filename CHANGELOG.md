@@ -1,3 +1,9 @@
+## 0.2.0
+
+### Misc
+
+* Fixed spelling mistake in extension's description
+
 ## 0.1.1
 
 ### Bug Fixes
