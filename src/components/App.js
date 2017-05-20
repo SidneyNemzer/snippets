@@ -73,7 +73,7 @@ class App extends React.Component {
     this.handleDeleteSnippet = this.handleDeleteSnippet.bind(this)
 
     this.props.loadFromStorage()
-      .then(function (storage) {
+      .then(storage => {
         this.resetSnippets(storage.snippets ? storage.snippets : {})
 
         let nextId = storage.nextId
@@ -82,7 +82,7 @@ class App extends React.Component {
         }
 
         this.setState({nextId})
-      }.bind(this))
+      })
   }
 
   getNextId() {
