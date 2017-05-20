@@ -4,6 +4,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App'
 
+window.onMessage = function onMessage(message) {
+  console.log('[Panel] Got message: ' + message)
+  postMessage(message + ' panel response')
+}
+
 /**
  * Save data to Chrome's Sync storage
  * @param  {string} key        A key, which is used to reference this data in the storage
