@@ -38,10 +38,16 @@ gulp.task('todo', function() {
 		.pipe(gulp.dest('.'))
 })
 
+gulp.task('scripts-build', ['todo'], function (cb) {
+	pump([
+		gulp.src('src/**/*.js'),
+		webpackStream(require('./webpack.config.js'), webpack),
+		gulp.dest('build')
+	], cb)
+})
+
 // Build scripts into a single file with Webpack and UglifyJS
-gulp.task('scripts', ['todo'], function(cb) {
-	// Pump is used to correctly dipslay errors
-	// TODO Get source maps working -- uglify might be destroying them
+gulp.task('scripts-build-minify', ['todo'], function (cb) {
   pump([
     gulp.src('src/**/*.js'),
     webpackStream(require('./webpack.config.js'), webpack),
@@ -57,7 +63,7 @@ gulp.task('styles', function() {
 });
 
 // Create the distributable zip file
-gulp.task('zip', ['html', 'scripts', 'styles', 'copy'], function() {
+gulp.task('zip', ['html', 'scripts-build-minify', 'styles', 'copy'], function() {
 	const manifest = require('./src/manifest')
 	const distFileName = manifest.name + ' v' + manifest.version + '.zip'
 	const mapFileName = manifest.name + ' v' + manifest.version + '-maps.zip'
@@ -71,6 +77,14 @@ gulp.task('zip', ['html', 'scripts', 'styles', 'copy'], function() {
 		.pipe(gulp.dest('dist'))
 });
 
-gulp.task('default', ['clean'], function() {
+gulp.task('build-dev', ['clean'], function () {
+	gulp.start('html')
+	gulp.start('scripts-build')
+	gulp.start('styles')
+	gulp.start('copy')
+})
+
+// TODO Configure sourcemaps for production
+gulp.task('build-prod', ['clean'], function() {
     gulp.start('zip')
 });

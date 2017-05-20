@@ -3,7 +3,8 @@
   "version": "0.2.0",
   "description": "Create and edit Javascript code snippets, which are synced to all your computers",
   "scripts": {
-    "build": "gulp",
+    "build-dev": "gulp build-dev",
+    "build-prod": "gulp build-prod",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
