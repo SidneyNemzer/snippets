@@ -11,7 +11,7 @@ chrome.runtime.onConnect.addListener(function (port) {
   port.onDisconnect.addListener(function () {
     let index = ports.indexOf(port)
     if (index !== -1) {
-      ports.splice(i, 1)
+      ports.splice(index, 1)
     }
   })
 
