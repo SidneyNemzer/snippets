@@ -1,5 +1,6 @@
 const path = require('path')
 
+process.noDeprecation = true
 
 function relativePath(subURL) {
   return path.resolve(__dirname, subURL)
