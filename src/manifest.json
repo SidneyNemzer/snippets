@@ -5,6 +5,11 @@
   "description": "Create and edit JavaScript code snippets, which are synced to all your computers",
   "version": "0.2.0",
 
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
   "devtools_page": "devtools.html",
 
   "permissions": [

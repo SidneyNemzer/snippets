@@ -20,6 +20,8 @@ gulp.task('copy', function() {
 		.pipe(gulp.dest('build/icons'))
 	gulp.src('src/devtools.js')
 		.pipe(gulp.dest('build'))
+	gulp.src('src/background.js')
+		.pipe(gulp.dest('build'))
 	return gulp.src('src/manifest.json')
 		.pipe(gulp.dest('build'))
 });
