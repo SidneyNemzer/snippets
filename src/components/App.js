@@ -88,14 +88,12 @@ class App extends React.Component {
   getNextId() {
     const nextId = this.state.nextId
 
-    // TODO switch to new data managment functions
-    chrome.storage.sync.set({
-      nextId: nextId + 1
-    }, function () {
-      this.setState({
-        nextId: nextId + 1
+    this.props.saveToStorage('nextId', nextId + 1)
+      .then(() => {
+        this.setState({
+          nextId: nextId + 1
+        })
       })
-    }.bind(this))
 
     return nextId
   }
@@ -177,21 +175,17 @@ class App extends React.Component {
   }
 
   deleteSnippet(snippetID) {
-    // TODO switch to new data managment functions
-    chrome.storage.sync.get(null, function (storage) {
-      const previousSnippets = storage.snippets
+    this.props.loadFromStorage('snippets')
+      .then(storeSnippets => {
+        delete storeSnippets[snippetID]
 
-      delete previousSnippets[snippetID]
+        const previousSnippets = this.state.snippets
+        delete previousSnippets[snippetID]
 
-      const snippets = this.state.snippets
-      delete snippets[snippetID]
+        this.resetSnippets(previousSnippets)
 
-      this.resetSnippets(snippets)
-
-      chrome.storage.sync.set({
-        snippets: previousSnippets
+        this.props.saveToStorage('snippets', storeSnippets)
       })
-    }.bind(this))
   }
 
   handleDeleteSnippet() {
