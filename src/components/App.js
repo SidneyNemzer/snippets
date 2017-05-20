@@ -24,7 +24,7 @@ console.log('Welcome to snippets!')
 CONTROLS
 
   * Run a snippet in the page that you opened the devtools on
-    CTRL+ENTER / CMD+ENTER
+    CTRL+ENTER
     (You must have the snippet focused)
 
   * Toggle the devtools console
