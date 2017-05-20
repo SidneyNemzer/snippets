@@ -18,7 +18,6 @@ gulp.task('clean', function() {
 gulp.task('copy', function() {
 	gulp.src('src/icons/**')
 		.pipe(gulp.dest('build/icons'))
-	// Copy the devtools.js file, because it doesn't get processed by webpack
 	gulp.src('src/devtools.js')
 		.pipe(gulp.dest('build'))
 	return gulp.src('src/manifest.json')
@@ -33,7 +32,7 @@ gulp.task('html', function() {
 });
 
 gulp.task('todo', function() {
-	gulp.src(['src/**/*.js', 'gulpfile.js', 'webpack.config.js'])
+	return gulp.src(['src/**/*.js', 'gulpfile.js', 'webpack.config.js'])
 		.pipe(todo())
 		.pipe(gulp.dest('.'))
 })
