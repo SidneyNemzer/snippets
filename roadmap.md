@@ -1,8 +1,3 @@
-# Table of Contents
-
-1. [0.2.0](#020)
-2. [Next few versions](#next-few-versions)
-
 # 0.2.0
 
 * Switch saving/loading logic to a background page
