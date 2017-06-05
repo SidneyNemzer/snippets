@@ -7,7 +7,8 @@
 
 * Switch saving/loading logic to a background page
 * Add autosaving (see [#2](https://github.com/SidneyNemzer/snippets/issues/2))
-* Fix autocompletion (?)
+* Fix autocompletion
+* Better error handling when running snippets
 
 # 0.3.0
 
@@ -17,7 +18,6 @@
   * rename snippets
   * (?) open snippets in the editor
   * (?) add a key-binding to run a snippet
-* Fix autocompletion in the editor
 
 # Next few versions
 
