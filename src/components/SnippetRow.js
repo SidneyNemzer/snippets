@@ -1,12 +1,8 @@
-import Logger from 'logger'
-
 import React from 'react'
 
 class SnippetRow extends React.Component {
   constructor(props) {
     super(props)
-
-    this.logger = new Logger('SnippetRow')
 
     this.state = {
       isRenaming: false,

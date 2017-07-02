@@ -1,5 +1,3 @@
-import Logger from 'logger'
-
 import React from 'react'
 
 import Sidepane from './Sidepane'
@@ -10,8 +8,6 @@ import 'brace/mode/javascript'
 import 'brace/theme/github'
 
 import '../style.css'
-
-const logger = new Logger('App')
 
 const welcomeSnippet = `
 /***********************

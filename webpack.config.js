@@ -18,10 +18,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         include: [
-          relativePath('src'),
-          // TODO Update this once there's a compiled version on Github
-          // Currently, it must be compiled to ES5 by Webpack
-          /logger/
+          relativePath('src')
         ],
         use: {
           loader: 'babel-loader',
