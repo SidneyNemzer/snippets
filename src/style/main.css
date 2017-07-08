@@ -77,3 +77,31 @@ button.delete {
 button.delete:hover {
   background-color: #ff7c7c;
 }
+
+
+.error {
+  margin: 50px auto;
+  max-width: 600px;
+  font-family: sans-serif;
+  font-size: 1.5em;
+}
+.error h1,
+.error p,
+.error pre,
+.error a {
+  text-align: center;
+}
+.error pre {
+  width: 100%;
+  color: red;
+}
+.error h1,
+.error p {
+  margin: 10px 0 0;
+}
+
+.error .action,
+.error a {
+  font-size: 0.7em;
+  display: block;
+}
