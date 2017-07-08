@@ -1,7 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TodoWebpackPlugin = require('todo-webpack-plugin')
-const pages = require('./src/build')
+const pages = require('./src/build-dev')
 
 // Prevents deprecation warnings
 process.noDeprecation = true
@@ -18,13 +18,11 @@ const config = {
     rules: [
       {
         test: /\.jsx?$/,
-        include: [
-          './src'
-        ],
+        exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['es2015', 'react']
+            presets: ['env', 'react']
           }
         }
       },
@@ -60,14 +58,18 @@ const generateConfig = (baseConfig, pagesToAdd) => {
     filename: '[name].js'
   }
 
-  baseConfig.plugins = baseConfig.plugins.concat(pagesToAdd.map(page => (
-    new HtmlWebpackPlugin({
-      title: page.options.title,
-      filename: page.output.html,
-      template: 'src/' + page.input.template,
-      chunks: [page.output.bundle]
-    })
-  )))
+  baseConfig.plugins = baseConfig.plugins.concat(pagesToAdd.map(page => {
+    if (page.input.template) {
+      return new HtmlWebpackPlugin({
+        title: page.options ? page.options.title : '',
+        filename: page.output.html,
+        template: 'src/' + page.input.template,
+        chunks: [page.output.bundle]
+      })
+    } else {
+      return undefined
+    }
+  }).filter(item => item !== undefined))
 
   return baseConfig
 }
