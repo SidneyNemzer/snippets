@@ -11,7 +11,7 @@ const config = {
   output: {},
 
   plugins: [
-    new TodoWebpackPlugin()
+    //new TodoWebpackPlugin()
   ],
 
   module: {
