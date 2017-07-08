@@ -1,7 +1,7 @@
 chrome.devtools.panels.create(
   'Snippets',
   '', // We don't provide an image
-  'panel.html',
+  '../html/panel.html',
 
   // Enable messaging between panel and background script
   // This logic passes messages between the two

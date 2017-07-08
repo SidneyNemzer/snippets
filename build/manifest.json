@@ -7,10 +7,10 @@
 
   "background": {
     "scripts": [
-      "background.js"
+      "js/background.js"
     ]
   },
-  "devtools_page": "devtools.html",
+  "devtools_page": "html/devtools.html",
 
   "permissions": [
     "storage"

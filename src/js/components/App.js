@@ -7,7 +7,7 @@ import 'brace/ext/language_tools'
 import 'brace/mode/javascript'
 import 'brace/theme/github'
 
-import '../style.css'
+import '../../style/main.css'
 
 const welcomeSnippet = `
 /***********************
