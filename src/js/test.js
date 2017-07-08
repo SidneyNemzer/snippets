@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App'
+import ErrorPage from './components/ErrorPage'
 
 window.postMessage = function postMessage(message) {
   console.log('[Noop] Posting messge:', message)
@@ -29,11 +30,15 @@ try {
     document.getElementById('root')
   )
 } catch (error) {
-  // TODO Better error display
-  const rootElement = document.getElementById('root')
-  rootElement.innerHTML = '<h1>Critical Error!</h1>' +
-                          '<p>Sorry, an error occurred :(</p>' +
-                          '<p>' + error + '</p>'
-  console.error('Snippets: critical error!')
+  ReactDOM.render(
+    <ErrorPage
+      title="Error"
+      message="Something's not working :("
+      error={error.toString()}
+      action="If this happens again, report it here:"
+      link="https://github.com/SidneyNemzer/snippets/issues"
+    />,
+    document.getElementById('root')
+  )
   console.error(error)
 }
