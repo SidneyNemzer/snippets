@@ -24,6 +24,7 @@
     "css-loader": "^0.28.0",
     "html-webpack-plugin": "^2.29.0",
     "style-loader": "^0.16.1",
+    "todo-webpack-plugin": "^1.8.0",
     "webpack": "^3.0.0",
     "webpack-dev-server": "^2.5.1"
   },

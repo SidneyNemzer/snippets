@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const TodoWebpackPlugin = require('todo-webpack-plugin')
 const pages = require('./src/build')
 
 // Prevents deprecation warnings
@@ -9,7 +10,9 @@ const config = {
   entry: {},
   output: {},
 
-  plugins: [],
+  plugins: [
+    new TodoWebpackPlugin()
+  ],
 
   module: {
     rules: [
@@ -57,14 +60,14 @@ const generateConfig = (baseConfig, pagesToAdd) => {
     filename: '[name].js'
   }
 
-  baseConfig.plugins = pagesToAdd.map(page => (
+  baseConfig.plugins = baseConfig.plugins.concat(pagesToAdd.map(page => (
     new HtmlWebpackPlugin({
       title: page.options.title,
       filename: page.output.html,
       template: 'src/' + page.input.template,
       chunks: [page.output.bundle]
     })
-  ))
+  )))
 
   return baseConfig
 }
