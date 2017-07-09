@@ -229,6 +229,7 @@ class App extends React.Component {
           highlightActiveLine={false}
           enableBasicAutocompletion={true}
           enableLiveAutocompletion={true}
+          editorProps={{$blockScrolling: true}}
         />
       </div>
     )
