@@ -15,9 +15,9 @@ function saveToStorage(key, value, mergeValue) {
 function loadFromStorage(key) {
   console.log('[Noop] loadFromStorage, key:', key)
   if (key) {
-    Promise.resolve(undefined)
+    return Promise.resolve(undefined)
   } else {
-    Promise.resolve({})
+    return Promise.resolve({})
   }
 }
 
