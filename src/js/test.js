@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import App from './components/App'
 import ErrorPage from './components/ErrorPage'
 
-window.postMessage = function postMessage(message) {
+window.extensionPostMessage = function extensionPostMessage(message) {
   console.log('[Noop] Posting messge:', message)
 }
 
