@@ -36,6 +36,8 @@ const config = {
     ]
   },
 
+  devtool: 'eval-source-map',
+
   devServer: {
     contentBase: './build',
     inline: true,
