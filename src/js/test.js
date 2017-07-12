@@ -1,7 +1,4 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from './components/App'
-import ErrorPage from './components/ErrorPage'
+import createEditor from './editor'
 
 window.extensionPostMessage = function extensionPostMessage(message) {
   console.log('[Noop] Posting messge:', message)
@@ -21,24 +18,4 @@ function loadFromStorage(key) {
   }
 }
 
-try {
-  ReactDOM.render(
-    <App
-      saveToStorage={saveToStorage}
-      loadFromStorage={loadFromStorage}
-    />,
-    document.getElementById('root')
-  )
-} catch (error) {
-  ReactDOM.render(
-    <ErrorPage
-      title="Error"
-      message="Something's not working :("
-      error={error.toString()}
-      action="If this happens again, report it here:"
-      link="https://github.com/SidneyNemzer/snippets/issues"
-    />,
-    document.getElementById('root')
-  )
-  console.error(error)
-}
+createEditor(saveToStorage, loadFromStorage)
