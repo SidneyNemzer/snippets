@@ -1,4 +1,12 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import {
+  createSnippet,
+  renameSnippet,
+  updateSnippet,
+  deleteSnippet
+} from '../actions/snippets.js'
 
 import Sidepane from './Sidepane'
 import AceEditor from 'react-ace'
@@ -9,81 +17,31 @@ import 'brace/theme/github'
 
 import '../../../style/main.css'
 
-const welcomeSnippet = `
-/***********************
-* Welcome to snippets! *
-***********************/
-
-console.log('Welcome to snippets!')
-
-/*
-CONTROLS
-
-  * Run a snippet in the page that you opened the devtools on
-    CTRL+ENTER
-    (You must have the snippet focused)
-
-  * Toggle the devtools console
-    ESC
-
-  * Save the selected snippet
-    CTRL+S
-    (Mac also uses CTRL+S)
-
-
-SYNC
-
-  Your snippets will be synced to any Chrome that you're logged into
-
-
-BUGS / ISSUES / SUGGESTIONS
-
-  Open an issue on this project's Github
-  https://github.com/SidneyNemzer/snippets/issues
-
-HAPPY CODING!
-*/
-`
-
 class App extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      selectedSnippet: 0,
-      snippets: props.snippetStore.getSnippets(),
-      nextId: 0,
+      selectedSnippet: Object.keys(props.snippets)[0] || null,
       confirmingDelete: false
     }
 
     this.selectSnippet = this.selectSnippet.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
-    this.updateSnippetName = this.updateSnippetName.bind(this)
     this.handleEditorChange = this.handleEditorChange.bind(this)
     this.checkSelectedSnippet = this.checkSelectedSnippet.bind(this)
-    this.createSnippet = this.createSnippet.bind(this)
-    this.getNextId = this.getNextId.bind(this)
     this.deleteSnippet = this.deleteSnippet.bind(this)
     this.handleDeleteSnippet = this.handleDeleteSnippet.bind(this)
-
-    props.snippetStore.subscribe(() => {
-      this.setState({
-        snippets: props.snippetStore.getSnippets()
-      })
-    })
-  }
-
-  getNextId() {
-    return this.props.getNextId()
   }
 
   checkSelectedSnippet() {
-    const { snippets, selectedSnippet } = this.state
+    const { selectedSnippet } = this.state
+    const { snippets } = this.props
 
-    if (selectedSnippet === 0 || !snippets[selectedSnippet]) {
+    if (selectedSnippet === null || !snippets[selectedSnippet]) {
       this.setState({
         selectedSnippet: Object.keys(snippets)[0]
-      })
+      }, () => console.log('checked selected'))
     }
   }
 
@@ -94,28 +52,25 @@ class App extends React.Component {
     })
   }
 
-  createSnippet() {
-    const id = this.getNextId()
-    this.props.snippetStore.newSnippet(id)
-  }
-
-  updateSnippetName(snippetID, newName) {
-    this.props.snippetStore.updateSnippet(snippetID, newName)
-  }
-
   handleKeyPress(event) {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+      const { selectedSnippet } = this.state
+      const { snippets } = this.props
       // TODO Better error handling
-      chrome.devtools.inspectedWindow.eval(this.state.snippets[this.state.selectedSnippet].content)
+      chrome.devtools.inspectedWindow.eval(snippets[selectedSnippet].body)
     }
   }
 
   handleEditorChange(newValue) {
-    this.props.snippetStore.updateSnippet(this.state.selectedSnippet, null, newValue)
+    this.props.updateSnippet(
+      this.state.selectedSnippet,
+      newValue
+    )
   }
 
   deleteSnippet(snippetID) {
-    this.props.snippetStore.deleteSnippet(snippetID)
+    this.props.deleteSnippet(snippetID)
+    console.log('deleted')
     this.checkSelectedSnippet()
   }
 
@@ -133,9 +88,10 @@ class App extends React.Component {
   }
 
   renderEditor() {
-    const { selectedSnippet, snippets } = this.state
+    const { selectedSnippet } = this.state
+    const { snippets } = this.props
 
-    if (selectedSnippet !== 0) {
+    if (selectedSnippet !== null) {
       return (
         <AceEditor
           mode="javascript"
@@ -143,12 +99,12 @@ class App extends React.Component {
           height="100vh"
           width="90%"
           theme="github"
-          value={snippets[selectedSnippet].content}
+          value={snippets[selectedSnippet].body}
           onChange={this.handleEditorChange}
           highlightActiveLine={false}
           enableBasicAutocompletion={true}
           enableLiveAutocompletion={true}
-          editorProps={{$blockScrolling: true}}
+          editorProps={{$blockScrolling: Infinity}}
         />
       )
     } else {
@@ -167,11 +123,11 @@ class App extends React.Component {
         onKeyDown={this.handleKeyPress}
       >
         <Sidepane
-          snippets={this.state.snippets}
+          snippets={this.props.snippets}
           selectedSnippet={this.state.selectedSnippet}
           selectSnippet={this.selectSnippet}
-          updateSnippetName={this.updateSnippetName}
-          createSnippet={this.createSnippet}
+          renameSnippet={this.props.renameSnippet}
+          createSnippet={this.props.createSnippet}
           handleDeleteSnippet={this.handleDeleteSnippet}
           confirmingDelete={this.state.confirmingDelete}
         />
@@ -181,4 +137,16 @@ class App extends React.Component {
   }
 }
 
-export default App
+const mapStateToProps = (state, props) => ({
+  snippets: state.snippets
+})
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({
+    createSnippet,
+    renameSnippet,
+    updateSnippet,
+    deleteSnippet
+  }, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
