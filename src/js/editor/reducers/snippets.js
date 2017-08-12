@@ -6,7 +6,51 @@ import {
   SAVED_SNIPPET
 } from '../actions/snippets.js'
 
-const snippets = (state = {}, action) => {
+const welcomeSnippet = `
+/***********************
+* Welcome to snippets! *
+***********************/
+
+console.log('Welcome to snippets!')
+
+/*
+CONTROLS
+
+  * Run a snippet in the page that you opened the devtools on
+    CTRL+ENTER
+    (You must have the snippet focused)
+
+  * Toggle the devtools console
+    ESC
+
+  * Save the selected snippet
+    CTRL+S
+    (Mac also uses CTRL+S)
+
+
+SYNC
+
+  Your snippets will be synced to any Chrome that you're logged into
+
+
+BUGS / ISSUES / SUGGESTIONS
+
+  Open an issue on this project's Github
+  https://github.com/SidneyNemzer/snippets/issues
+
+HAPPY CODING!
+*/
+`
+
+const defaultState = {
+  a: {
+    name: 'Welcome!',
+    body: welcomeSnippet,
+    saved: true
+  }
+}
+
+const snippets = (state = defaultState, action) => {
   switch (action.type) {
     case CREATE_SNIPPET:
       const toReturn = Object.assign({},
