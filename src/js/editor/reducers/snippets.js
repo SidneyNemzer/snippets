@@ -2,7 +2,8 @@ import {
   CREATE_SNIPPET,
   RENAME_SNIPPET,
   UPDATE_SNIPPET,
-  DELETE_SNIPPET
+  DELETE_SNIPPET,
+  SAVED_SNIPPET
 } from '../actions/snippets.js'
 
 const snippets = (state = {}, action) => {
@@ -13,7 +14,8 @@ const snippets = (state = {}, action) => {
         {
           [action.id]: {
             name: action.name,
-            body: ''
+            body: '',
+            saved: false
           }
         }
       )
@@ -24,7 +26,8 @@ const snippets = (state = {}, action) => {
         {
           [action.id]: {
             name: action.newName,
-            body: state[action.id].body
+            body: state[action.id].body,
+            saved: false
           }
         }
       )
@@ -34,7 +37,8 @@ const snippets = (state = {}, action) => {
         {
           [action.id]: {
             name: state[action.id].name,
-            body: action.newBody
+            body: action.newBody,
+            saved: false
           }
         }
       )
@@ -42,6 +46,17 @@ const snippets = (state = {}, action) => {
       const newState = Object.assign({}, state)
       delete newState[action.id]
       return newState
+    case SAVED_SNIPPET:
+      return Object.assign({},
+        state,
+        {
+          [action.id]: {
+            name: state[action.id].name,
+            body: state[action.id].body,
+            saved: true
+          }
+        }
+      )
     default:
       if (!action.type.includes('@@redux'))
         console.warn('Unknown action type:', action.type)
