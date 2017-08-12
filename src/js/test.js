@@ -1,21 +1,4 @@
-import { createStore } from 'redux'
 import createEditor from './editor'
-import snippetStore from './editor/reducers'
-
-function debounce(func, wait, immediate) {
-	var timeout;
-	return function() {
-		var context = this, args = arguments;
-		var later = function() {
-			timeout = null;
-			if (!immediate) func.apply(context, args);
-		};
-		var callNow = immediate && !timeout;
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-		if (callNow) func.apply(context, args);
-	};
-};
 
 window.extensionPostMessage = function extensionPostMessage(message) {
   console.log('[Noop] Posting messge:', message)
@@ -35,6 +18,4 @@ function loadFromStorage(key) {
   }
 }
 
-const store = createStore(snippetStore)
-
-createEditor(store)
+createEditor(loadFromStorage, saveToStorage)
