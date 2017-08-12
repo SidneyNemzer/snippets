@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import App from './components/App'
 import ErrorPage from './components/ErrorPage'
-import snippetStore from './reducers'
+import rootReducer from './reducers'
 import { savedSnippet } from './actions/snippets'
 
 function debounce(func, wait, immediate) {
@@ -61,7 +61,7 @@ export default (loadFromStorage, saveToStorage) => {
 		//timer(1000)
 	])
 	  .then(() => {
-	    const store = createStore(snippetStore)
+	    const store = createStore(rootReducer)
 
 	    store.subscribe(debounce(() => saveStore(store), 1000))
 
