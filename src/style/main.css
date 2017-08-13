@@ -1,13 +1,27 @@
 body {
+  font-family: Roboto;
   margin: 0;
 }
 
-.app {
+.home {
   display: flex;
 }
 
+.home header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.editor-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .ace_editor {
-  font-size: 1.2em;
+  font-size: 1.1em;
+  flex-grow: 1;
 }
 
 .sidepane {

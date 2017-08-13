@@ -14,7 +14,6 @@ class SnippetList extends React.Component {
               key={snippetID}
               selectSelf={() => this.props.selectSnippet(snippetID)}
               updateName={newName => this.props.renameSnippet(snippetID, newName)}
-              unsaved={!this.props.snippets[snippetID].saved}
             />
           )
         })
