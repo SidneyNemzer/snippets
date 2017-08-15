@@ -68,7 +68,9 @@ export default (loadFromStorage, saveToStorage) => {
 			try {
 		    ReactDOM.render(
 					<Provider store={store}>
-		      	<App/>
+	      		<App
+							runInInspectedWindow={eval}
+						/>
 					</Provider>,
 		      document.getElementById('root')
 		    )

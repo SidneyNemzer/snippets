@@ -29,6 +29,7 @@ class Main extends React.Component {
     this.checkSelectedSnippet = this.checkSelectedSnippet.bind(this)
     this.deleteSnippet = this.deleteSnippet.bind(this)
     this.handleDeleteSnippet = this.handleDeleteSnippet.bind(this)
+    this.runSnippet = this.runSnippet.bind(this)
   }
 
   checkSelectedSnippet() {
@@ -49,12 +50,23 @@ class Main extends React.Component {
     })
   }
 
+  runSnippet(snippetBody) {
+    const code = `
+      try {
+        ${snippetBody}
+      } catch (e) {
+        console.error(e)
+      }
+    `
+
+    this.props.runInInspectedWindow(code)
+  }
+
   handleKeyPress(event) {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
       const { selectedSnippet } = this.state
       const { snippets } = this.props
-      // TODO Better error handling
-      chrome.devtools.inspectedWindow.eval(snippets[selectedSnippet].body)
+      this.runSnippet(snippets[selectedSnippet].body)
     }
   }
 
@@ -126,6 +138,7 @@ class Main extends React.Component {
           createSnippet={this.props.createSnippet}
           handleDeleteSnippet={this.handleDeleteSnippet}
           confirmingDelete={this.state.confirmingDelete}
+          runSnippet={this.runSnippet}
         />
         <div className="editor-container">
           <Header

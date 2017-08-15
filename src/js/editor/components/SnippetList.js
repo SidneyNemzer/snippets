@@ -16,6 +16,7 @@ class SnippetList extends React.Component {
               selected={selected}
               name={this.props.snippets[snippetID].name}
               deleteSnippet={() => this.props.deleteSnippet(snippetID)}
+              runSnippet={() => this.props.runSnippet(this.props.snippets[snippetID].body)}
             />
           )
         })
