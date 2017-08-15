@@ -2,7 +2,6 @@ import React from 'react'
 
 import CreateSnippetButton from './CreateSnippetButton'
 import SnippetList from './SnippetList'
-import DeleteSnippetButton from './DeleteSnippetButton'
 
 class Sidepane extends React.Component {
   render() {
@@ -14,10 +13,7 @@ class Sidepane extends React.Component {
           selectedSnippet={this.props.selectedSnippet}
           selectSnippet={this.props.selectSnippet}
           renameSnippet={this.props.renameSnippet}
-        />
-        <DeleteSnippetButton
-          handleClick={this.props.handleDeleteSnippet}
-          isConfirming={this.props.confirmingDelete}
+          deleteSnippet={this.props.deleteSnippet}
         />
       </div>
     )
