@@ -1,19 +1,21 @@
 import React from 'react'
 
-import SnippetRow from './SnippetRow'
+import List from 'material-ui/List'
+import SnippetSelector from './SnippetSelector'
 
 class SnippetList extends React.Component {
   renderRows() {
     return (
       Object.keys(this.props.snippets)
         .map(snippetID => {
+          const selected = this.props.selectedSnippet === snippetID
           return (
-            <SnippetRow
-              selected={this.props.selectedSnippet === snippetID}
-              name={this.props.snippets[snippetID].name}
+            <SnippetSelector
               key={snippetID}
-              selectSelf={() => this.props.selectSnippet(snippetID)}
-              updateName={newName => this.props.renameSnippet(snippetID, newName)}
+              selectSnippet={() => this.props.selectSnippet(snippetID)}
+              selected={selected}
+              name={this.props.snippets[snippetID].name}
+              deleteSnippet={() => this.props.deleteSnippet(snippetID)}
             />
           )
         })
@@ -22,9 +24,9 @@ class SnippetList extends React.Component {
 
   render() {
     return (
-      <div className="snippet-list">
+      <List>
         {this.renderRows()}
-      </div>
+      </List>
     )
   }
 }
