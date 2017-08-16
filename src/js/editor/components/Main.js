@@ -26,27 +26,40 @@ class Main extends React.Component {
     this.selectSnippet = this.selectSnippet.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.handleEditorChange = this.handleEditorChange.bind(this)
-    this.checkSelectedSnippet = this.checkSelectedSnippet.bind(this)
+    this.selectPreviousSnippet = this.selectPreviousSnippet.bind(this)
     this.deleteSnippet = this.deleteSnippet.bind(this)
     this.handleDeleteSnippet = this.handleDeleteSnippet.bind(this)
     this.runSnippet = this.runSnippet.bind(this)
   }
 
-  checkSelectedSnippet() {
+  selectPreviousSnippet() {
     const { selectedSnippet } = this.state
     const { snippets } = this.props
 
-    if (selectedSnippet === null || !snippets[selectedSnippet]) {
-      this.setState({
-        selectedSnippet: Object.keys(snippets)[0]
-      }, () => console.log('checked selected'))
+    if (Object.keys(snippets).length < 2) {
+      return this.selectSnippet(null)
+    }
+
+    if (selectedSnippet === null) {
+      return this.selectSnippet(Object.keys(snippets)[0])
+    }
+
+    const selectedIndex = Object.keys(snippets).findIndex(snippetId => {
+      return snippetId === selectedSnippet
+    })
+
+    if (selectedIndex > 0) {
+      return this.selectSnippet(Object.keys(snippets)[selectedIndex - 1])
+    } else {
+      return this.selectSnippet(Object.keys(snippets)[1])
     }
   }
 
   selectSnippet(snippetID) {
-    this.setState({
-      selectedSnippet: snippetID,
-      confirmingDelete: false
+    return new Promise(resolve => {
+      this.setState({
+        selectedSnippet: snippetID
+      }, resolve)
     })
   }
 
@@ -78,22 +91,13 @@ class Main extends React.Component {
   }
 
   deleteSnippet(snippetID) {
-    this.props.deleteSnippet(snippetID)
-    console.log('deleted')
-    this.checkSelectedSnippet()
+    this.selectPreviousSnippet()
+      .then(() => this.props.deleteSnippet(snippetID))
   }
 
   handleDeleteSnippet() {
-    if (this.state.confirmingDelete) {
-      this.deleteSnippet(this.state.selectedSnippet)
-      this.setState({
-        confirmingDelete: false
-      })
-    } else {
-      this.setState({
-        confirmingDelete: true
-      })
-    }
+    // TODO redundant
+    this.deleteSnippet(this.state.selectedSnippet)
   }
 
   renderEditor() {
@@ -136,7 +140,7 @@ class Main extends React.Component {
           selectSnippet={this.selectSnippet}
           renameSnippet={this.props.renameSnippet}
           createSnippet={this.props.createSnippet}
-          handleDeleteSnippet={this.handleDeleteSnippet}
+          deleteSnippet={this.handleDeleteSnippet}
           confirmingDelete={this.state.confirmingDelete}
           runSnippet={this.runSnippet}
         />
