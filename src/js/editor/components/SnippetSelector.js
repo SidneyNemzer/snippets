@@ -36,7 +36,8 @@ class SnippetSelector extends React.Component {
     this.setState({
       isRenaming: true,
       startingRename: true,
-      currentInput: this.props.name
+      currentInput: this.props.name,
+      menuOpen: false
     })
   }
 
@@ -112,6 +113,7 @@ class SnippetSelector extends React.Component {
 
     const { selected, name } = this.props
 
+    // TODO maybe disable ListItem.button and Menu icon when renaming
     return (
       <ListItem
         button={true}
@@ -134,8 +136,18 @@ class SnippetSelector extends React.Component {
             open={this.state.menuOpen}
             onRequestClose={this.handleMenuClose}
           >
-            <MenuItem><Edit /> Rename</MenuItem>
-            <MenuItem><PlayArrow /> Run</MenuItem>
+            <MenuItem
+              onClick={this.startRename}
+            >
+              <Edit />
+              Rename
+            </MenuItem>
+            <MenuItem
+              onClick={this.props.runSnippet}
+            >
+              <PlayArrow />
+              Run
+            </MenuItem>
             <MenuItem><Check /> Sandbox</MenuItem>
             <MenuItem
               onClick={this.props.deleteSnippet}
