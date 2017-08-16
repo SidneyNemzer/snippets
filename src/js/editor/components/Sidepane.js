@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Button from 'material-ui/Button'
+import SettingsIcon from 'material-ui-icons/Settings'
 import CreateSnippetButton from './CreateSnippetButton'
 import SnippetList from './SnippetList'
 
@@ -16,6 +18,7 @@ class Sidepane extends React.Component {
           deleteSnippet={this.props.deleteSnippet}
           runSnippet={this.props.runSnippet}
         />
+        <Button><SettingsIcon /></Button>
       </div>
     )
   }
