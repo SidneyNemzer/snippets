@@ -91,13 +91,17 @@ class Main extends React.Component {
   }
 
   deleteSnippet(snippetID) {
-    this.selectPreviousSnippet()
-      .then(() => this.props.deleteSnippet(snippetID))
+    if (snippetID === this.state.selectedSnippet) {
+      this.selectPreviousSnippet()
+        .then(() => this.props.deleteSnippet(snippetID))
+    } else {
+      this.props.deleteSnippet(snippetID)
+    }
   }
 
-  handleDeleteSnippet() {
+  handleDeleteSnippet(id) {
     // TODO redundant
-    this.deleteSnippet(this.state.selectedSnippet)
+    this.deleteSnippet(id)
   }
 
   renderEditor() {
