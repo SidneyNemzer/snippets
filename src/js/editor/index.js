@@ -51,6 +51,7 @@ export default (loadFromStorage, saveToStorage) => {
 	  }
 	}
 
+	// TODO loading screen
 	// ReactDOM.render(
 	// 	<div>Loading...</div>,
 	// 	document.getElementById('root')
