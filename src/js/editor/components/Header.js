@@ -1,8 +1,10 @@
 import React from 'react'
 
+import MenuIcon from 'material-ui-icons/Menu'
+
 const Header = (props) => (
   <header>
-    <i className="material-icons">menu</i>
+    <MenuIcon />
     <span>
       {props.message}
     </span>
