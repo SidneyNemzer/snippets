@@ -13,7 +13,7 @@ import PlayArrow from 'material-ui-icons/PlayArrow'
 import Check from 'material-ui-icons/Check'
 import Delete from 'material-ui-icons/Delete'
 
-class SnippetRow extends React.Component {
+class SnippetSelector extends React.Component {
   constructor(props) {
     super(props)
 
@@ -150,4 +150,4 @@ class SnippetRow extends React.Component {
   }
 }
 
-export default SnippetRow
+export default SnippetSelector
