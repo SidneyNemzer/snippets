@@ -49,9 +49,12 @@ class SnippetSelector extends React.Component {
   }
 
   handleBlur() {
-    this.props.updateName(this.state.currentInput)
+    const { currentInput } = this.state
     this.setState({
       isRenaming: false
+    }, () => {
+      console.log('updating name to', currentInput)
+      this.props.updateName(currentInput)
     })
   }
 
@@ -76,42 +79,41 @@ class SnippetSelector extends React.Component {
   }
 
   componentDidUpdate() {
-    // If we just added the <input>...
     if (this.state.isRenaming && this.state.startingRename) {
-      // Select and focus it
-      this.nameInput.select()
-      this.nameInput.focus()
+      // Without the delay, the input instantly loses focus...
+      // not sure why
+      setTimeout(() => {
+        this.nameInput.select()
+        this.nameInput.focus()
+      }, 350) // With any lower delay, 'nameInput' is undefined
+    }
+  }
+
+  renderName() {
+    const { isRenaming } = this.state
+    const { name } = this.props
+
+    if (isRenaming) {
+      return (
+        <input
+          ref={input => this.nameInput = input}
+          value={this.state.currentInput}
+          onChange={this.handleChange}
+          onBlur={this.handleBlur}
+          onKeyPress={this.handleKeyPress}
+        />
+      )
+    } else {
+      return (
+        <ListItemText
+          primary={name}
+        />
+      )
     }
   }
 
   render() {
-    // Figure out what classes the container div needs
-    let classes = 'snippet-row'
-    if (this.props.selected) {
-      classes += ' selected'
-    }
-
-    // If we need to display the <input>
-    // to change the name...
-    if (this.state.isRenaming) {
-      return (
-        <div
-          className={classes}
-          onClick={!this.props.selected ? this.props.selectSelf : null}
-          onDoubleClick={this.props.selected ? this.startRename : null}
-        >
-          <input
-            ref={input => this.nameInput = input}
-            value={this.state.currentInput}
-            onChange={this.handleChange}
-            onBlur={this.handleBlur}
-            onKeyPress={this.handleKeyPress}
-          />
-        </div>
-      )
-    }
-
-    const { selected, name } = this.props
+    const { selected } = this.props
 
     // TODO maybe disable ListItem.button and Menu icon when renaming
     return (
@@ -120,9 +122,7 @@ class SnippetSelector extends React.Component {
         onClick={selected ? () => {} : () => this.props.selectSnippet()}
         className={selected ? 'selected' : ''}
       >
-        <ListItemText
-          primary={name}
-        />
+        {this.renderName()}
         <ListItemSecondaryAction>
           <IconButton
             className="menu-icon"
