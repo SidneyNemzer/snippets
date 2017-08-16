@@ -148,7 +148,6 @@ class SnippetSelector extends React.Component {
               <PlayArrow />
               Run
             </MenuItem>
-            <MenuItem><Check /> Sandbox</MenuItem>
             <MenuItem
               onClick={this.props.deleteSnippet}
             >
