@@ -12,7 +12,7 @@ import Sidepane from './Sidepane'
 import Header from './Header'
 import Editor from './Editor'
 
-import '../../../style/main.css'
+//import '../../../style/main.css'
 
 class Main extends React.Component {
   constructor(props) {
