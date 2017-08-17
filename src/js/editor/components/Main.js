@@ -147,6 +147,7 @@ class Main extends React.Component {
           deleteSnippet={this.handleDeleteSnippet}
           confirmingDelete={this.state.confirmingDelete}
           runSnippet={this.runSnippet}
+          handleOpenSettings={this.props.handleOpenSettings}
         />
         <div className="editor-container">
           <Header

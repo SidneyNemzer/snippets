@@ -18,7 +18,11 @@ class Sidepane extends React.Component {
           deleteSnippet={this.props.deleteSnippet}
           runSnippet={this.props.runSnippet}
         />
-        <Button><SettingsIcon /></Button>
+        <Button
+          onClick={this.props.handleOpenSettings}
+        >
+          <SettingsIcon />
+        </Button>
       </div>
     )
   }
