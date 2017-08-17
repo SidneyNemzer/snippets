@@ -132,3 +132,19 @@ button.delete:hover {
   font-size: 0.7em;
   display: block;
 }
+
+
+.view-transition-enter {
+  opacity: 0.01;
+}
+.view-transition-enter.view-transition-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-out;
+}
+.view-transition-leave {
+  opacity: 1;
+}
+.view-transition-leave..view-transition-leave-active {
+  opacity: 0.01;
+  transition: opacity 500ms ease-out;
+}
