@@ -45,8 +45,7 @@ HAPPY CODING!
 const defaultState = {
   a: {
     name: 'Welcome!',
-    body: welcomeSnippet,
-    saved: true
+    body: welcomeSnippet
   }
 }
 
@@ -58,8 +57,7 @@ const snippets = (state = defaultState, action) => {
         {
           [action.id]: {
             name: action.name,
-            body: '',
-            saved: false
+            body: ''
           }
         }
       )
@@ -70,8 +68,7 @@ const snippets = (state = defaultState, action) => {
         {
           [action.id]: {
             name: action.newName,
-            body: state[action.id].body,
-            saved: false
+            body: state[action.id].body
           }
         }
       )
@@ -81,8 +78,7 @@ const snippets = (state = defaultState, action) => {
         {
           [action.id]: {
             name: state[action.id].name,
-            body: action.newBody,
-            saved: false
+            body: action.newBody
           }
         }
       )
@@ -90,20 +86,7 @@ const snippets = (state = defaultState, action) => {
       const newState = Object.assign({}, state)
       delete newState[action.id]
       return newState
-    case SAVED_SNIPPET:
-      return Object.assign({},
-        state,
-        {
-          [action.id]: {
-            name: state[action.id].name,
-            body: state[action.id].body,
-            saved: true
-          }
-        }
-      )
     default:
-      if (!action.type.includes('@@redux'))
-        console.warn('Unknown action type:', action.type)
       return state
   }
 }

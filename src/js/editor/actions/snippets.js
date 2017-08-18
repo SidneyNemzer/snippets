@@ -2,7 +2,6 @@ export const CREATE_SNIPPET = 'CREATE_SNIPPET'
 export const RENAME_SNIPPET = 'RENAME_SNIPPET'
 export const UPDATE_SNIPPET = 'UPDATE_SNIPPET'
 export const DELETE_SNIPPET = 'DELETE_SNIPPET'
-export const SAVED_SNIPPET = 'SAVED_SNIPPET'
 
 // Generate a unique ID using the crypto API
 // Source: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
@@ -32,10 +31,5 @@ export const updateSnippet = (id, newBody) => ({
 
 export const deleteSnippet = id => ({
   type: DELETE_SNIPPET,
-  id
-})
-
-export const savedSnippet = id => ({
-  type: SAVED_SNIPPET,
   id
 })

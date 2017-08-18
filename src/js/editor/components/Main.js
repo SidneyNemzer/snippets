@@ -128,10 +128,9 @@ class Main extends React.Component {
 
   render() {
     const saveMessage =
-      !!Object.values(this.props.snippets)
-        .find(snippet => !snippet.saved)
-        ? 'Saving...'
-        : 'Saved'
+      this.props.saved
+        ? 'Saved'
+        : 'Saving...'
 
     return (
       <div
@@ -161,7 +160,8 @@ class Main extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  snippets: state.snippets
+  snippets: state.snippets,
+  saved: state.saved
 })
 
 const mapDispatchToProps = (dispatch) =>

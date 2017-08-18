@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import App from './components/App'
 import ErrorPage from './components/ErrorPage'
 import rootReducer from './reducers'
-import { savedSnippet } from './actions/snippets'
+import { saved } from './actions'
 
 function debounce(func, wait, immediate) {
 	var timeout;
@@ -28,25 +28,13 @@ const timer = (miliseconds) =>
 		setTimeout(resolve, miliseconds)
 	})
 
-	const hasUnsavedSnippets = (snippets) => {
-	  return !!Object
-	    .values(snippets)
-	    .find(snippet =>
-	      !snippet.saved
-	    )
-	}
-
 export default (loadFromStorage, saveToStorage) => {
 	const saveStore = (store) => {
 	  const state = store.getState()
-	  if (hasUnsavedSnippets(state.snippets)) {
+	  if (!state.saved) {
 	    saveToStorage('snippets', state.snippets, true)
 	      .then(() => {
-	        Object
-	          .keys(state.snippets)
-	          .forEach(id => {
-	            store.dispatch(savedSnippet(id))
-	          })
+					store.dispatch(saved())
 	      })
 	  }
 	}
