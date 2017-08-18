@@ -7,60 +7,55 @@ import Settings from './Settings'
 import 'typeface-roboto'
 import '../../../style/main.css'
 
-const views = {
-  MAIN: 'MAIN',
-  SETTINGS: 'SETTINGS'
-}
-
 class App extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      view: views.MAIN
+      showSettings: false
     }
 
     this.handleOpenSettings = this.handleOpenSettings.bind(this)
+    this.handleCloseSettings = this.handleCloseSettings.bind(this)
   }
 
   handleOpenSettings() {
     this.setState({
-      view: views.SETTINGS
+      showSettings: true
     })
   }
 
-  renderCurrentView() {
-    switch (this.state.view) {
-      case views.MAIN:
-        return (
-          <Main
-            {...this.props}
-            key={views.MAIN}
-            handleOpenSettings={this.handleOpenSettings}
-          />
-        )
+  handleCloseSettings() {
+    this.setState({
+      showSettings: false
+    })
+  }
 
-      case views.SETTINGS:
-        return (
-          <Settings
-            key={views.SETTINGS}
-          />
-        )
-
-      default:
-        throw new Error('Unknown view')
-    }
+  renderSettings() {
+    if (this.state.showSettings)
+      return (
+        <Settings
+          key="settings"
+          handleCloseSettings={this.handleCloseSettings}
+        />
+      )
   }
 
   render() {
     return (
-      <CSSTransitionGroup
-        transitionName="view-transition"
-        transitionEnterTimeout={500}
-        transitionLeaveTimeout={500}
-      >
-        {this.renderCurrentView()}
-      </CSSTransitionGroup>
+      <div>
+        <CSSTransitionGroup
+          transitionName="view-transition"
+          transitionEnterTimeout={400}
+          transitionLeaveTimeout={400}
+        >
+          {this.renderSettings()}
+        </CSSTransitionGroup>
+        <Main
+          {...this.props}
+          handleOpenSettings={this.handleOpenSettings}
+        />
+      </div>
     )
   }
 }

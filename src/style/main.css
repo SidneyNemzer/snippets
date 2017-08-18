@@ -134,17 +134,28 @@ button.delete:hover {
 }
 
 
+.settings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  z-index: 5;
+}
+
+
 .view-transition-enter {
   opacity: 0.01;
 }
 .view-transition-enter.view-transition-enter-active {
   opacity: 1;
-  transition: opacity 500ms ease-out;
+  transition: opacity 400ms ease-out;
 }
 .view-transition-leave {
   opacity: 1;
 }
-.view-transition-leave..view-transition-leave-active {
+.view-transition-leave.view-transition-leave-active {
   opacity: 0.01;
-  transition: opacity 500ms ease-out;
+  transition: opacity 400ms ease-out;
 }
