@@ -121,6 +121,7 @@ button.delete:hover {
 .error pre {
   width: 100%;
   color: red;
+  white-space: pre-wrap;
 }
 .error h1,
 .error p {
