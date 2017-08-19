@@ -6,6 +6,7 @@ import Settings from './Settings'
 
 import 'typeface-roboto'
 import '../../../style/main.css'
+import '../../../style/settings.css'
 
 class App extends React.Component {
   constructor(props) {
