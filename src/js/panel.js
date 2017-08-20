@@ -23,15 +23,29 @@ function saveToStorage(key, value, mergeValue) {
     if (mergeValue) {
       // We'll need to retrieve the previous value first
       chrome.storage.sync.get(null, function (storage) {
-        const previousValue = storage[key]
+        const previousValue =
+          key === undefined
+            ? storage
+            : storage[key]
+        // Merge the old and new values
         const newValue = Object.assign({}, previousValue, value)
-        chrome.storage.sync.set({[key]: newValue}, function() {
-          resolve()
+        chrome.storage.sync.set(
+          key === undefined
+            ? newValue
+            : {[key]: newValue},
+          function() {
+            resolve()
         })
       })
     } else {
-      chrome.storage.sync.set({[key]: value}, function() {
-        resolve()
+      const newVal =
+        key === undefined
+          ? value
+          : {[key]: value}
+      chrome.storage.sync.set(
+        newVal,
+        function() {
+          resolve()
       })
     }
   })
@@ -46,7 +60,7 @@ function saveToStorage(key, value, mergeValue) {
 function loadFromStorage(key) {
   return new Promise(function (resolve, reject) {
     chrome.storage.sync.get(null, function (storage) {
-      if (key) {
+      if (key !== undefined) {
         resolve(storage[key])
       } else {
         resolve(storage)
