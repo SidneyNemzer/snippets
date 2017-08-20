@@ -32,7 +32,9 @@ export default (loadFromStorage, saveToStorage) => {
 	const saveStore = (store) => {
 	  const state = store.getState()
 	  if (!state.saved) {
-	    saveToStorage('snippets', state.snippets, true)
+			const copyState = Object.assign({}, state)
+			delete copyState.saved
+	    saveToStorage(undefined, copyState, true)
 	      .then(() => {
 					store.dispatch(saved())
 	      })
