@@ -126,9 +126,6 @@ class Settings extends React.Component {
             <h1 className="title">
               Snippets Settings
             </h1>
-            <span>
-              {this.props.saved ? 'Saved' : 'Saving...'}
-            </span>
           </Toolbar>
         </AppBar>
         <main>

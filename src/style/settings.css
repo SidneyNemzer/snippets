@@ -15,7 +15,11 @@
 
 .settings header > div {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+}
+.settings header button {
+  position: absolute;
+  left: 20px;
 }
 .settings header button span svg {
   color: white;
