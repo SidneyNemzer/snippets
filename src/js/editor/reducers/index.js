@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { SAVED } from '../actions'
 import snippets from './snippets'
+import settings from './settings'
 
 const saved = (state = true, action) => {
   switch (action.type) {
@@ -12,6 +13,7 @@ const saved = (state = true, action) => {
 }
 
 const rootReducer = combineReducers({
+  settings,
   snippets,
   saved
 })
