@@ -109,10 +109,8 @@ class Main extends React.Component {
     if (selectedSnippet !== null) {
       return (
         <Editor
-          theme="github"
           value={snippets[selectedSnippet].body}
           onChange={this.handleEditorChange}
-          autoCompletion={true}
         />
       )
     } else {
