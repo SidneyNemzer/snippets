@@ -5,7 +5,7 @@ module.exports = [
       entryScript: 'js/background.js'
     },
     output: {
-      bundle: 'js/backgound'
+      bundle: 'js/background'
     }
   },
 
