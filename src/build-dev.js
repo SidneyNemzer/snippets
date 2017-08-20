@@ -22,17 +22,16 @@ module.exports = [
   },
 
   // Panel
-  // Disabled because it's erroring
-  // {
-  //   input: {
-  //     template: 'html/root.ejs',
-  //     entryScript: 'js/panel.js'
-  //   },
-  //   output: {
-  //     html: 'html/panel.html',
-  //     bundle: 'js/panel'
-  //   }
-  // },
+  {
+    input: {
+      template: 'html/root.ejs',
+      entryScript: 'js/panel.js'
+    },
+    output: {
+      html: 'html/panel.html',
+      bundle: 'js/panel'
+    }
+  },
 
   // Test page
   {
