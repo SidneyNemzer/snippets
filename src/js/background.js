@@ -1,27 +1,100 @@
-let ports = []
+import { createStore } from 'redux'
+import { wrapStore } from 'react-chrome-redux'
+import { saved } from './editor/actions'
+import rootReducer from './editor/reducers'
 
-chrome.runtime.onConnect.addListener(function (port) {
-  // We're only interested in connections from a devtools panel
-  if (port.name !== 'devtools') {
-    return
-  }
-  ports.push(port)
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments
+		var later = function() {
+			timeout = null
+			if (!immediate) func.apply(context, args)
+		};
+		var callNow = immediate && !timeout
+		clearTimeout(timeout)
+		timeout = setTimeout(later, wait)
+		if (callNow)
+      func.apply(context, args)
+	}
+}
 
-  // Remove ports when they're closed (that means the devtools window closed)
-  port.onDisconnect.addListener(function () {
-    let index = ports.indexOf(port)
-    if (index !== -1) {
-      ports.splice(index, 1)
+/**
+ * Save data to Chrome's Sync storage
+ * @param  {string} key        A key, which is used to reference this data in the storage
+ * @param  {*} value           A value to store
+ * @param  {boolean} mergeValue If `value` is an object, setting this to true will keep keys
+ *                              from the original value that are unchaned in the new value
+ * @return {Promise}            The promise is resolved when the operation has completed
+ * @resolves {undefined}        No value is passed
+ */
+function saveToStorage(key, value, mergeValue) {
+  return new Promise(function (resolve, reject) {
+    if (mergeValue) {
+      // We'll need to retrieve the previous value first
+      chrome.storage.sync.get(null, function (storage) {
+        const previousValue =
+          key === undefined
+            ? storage
+            : storage[key]
+        // Merge the old and new values
+        const newValue = Object.assign({}, previousValue, value)
+        chrome.storage.sync.set(
+          key === undefined
+            ? newValue
+            : {[key]: newValue},
+          function() {
+            resolve()
+        })
+      })
+    } else {
+      const newVal =
+        key === undefined
+          ? value
+          : {[key]: value}
+      chrome.storage.sync.set(
+        newVal,
+        function() {
+          resolve()
+      })
     }
   })
+}
 
-  port.onMessage.addListener(function (message) {
-    console.log('[Background] Got message from devtools: ' + message)
-  })
-})
-
-function messageAll(message) {
-  ports.forEach(port => {
-    port.postMessage(message)
+/**
+ * Retrieves data from Chrome's sync storage
+ * @param   {string}  key   The key to retrieve
+ * @returns {Promise}       Resolves when the data has been retrieved
+ * @resolves {*}            The value of the key. It may be any value allowed in Chrome storage.
+ */
+function loadFromStorage(key) {
+  return new Promise(function (resolve, reject) {
+    chrome.storage.sync.get(null, function (storage) {
+      if (key !== undefined) {
+        resolve(storage[key])
+      } else {
+        resolve(storage)
+      }
+    })
   })
 }
+
+const saveStore = (store) => {
+  const state = store.getState()
+  if (!state.saved) {
+    const copyState = Object.assign({}, state)
+    delete copyState.saved
+    saveToStorage(undefined, copyState, true)
+      .then(() => {
+        store.dispatch(saved())
+      })
+  }
+}
+
+loadFromStorage()
+  .then(result => {
+    const store = createStore(rootReducer, result[0])
+    wrapStore(store, {portName: 'SNIPPETS'})
+
+    store.subscribe(debounce(() => saveStore(store), 1500))
+  })
