@@ -1,13 +1,4 @@
-// React is not explicitly used in this file,
-// but JSX compiles to React.createElement calls
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from './components/App'
-
-window.onMessage = function onMessage(message) {
-  console.log('[Panel] Got message: ' + message)
-  postMessage(message + ' panel response')
-}
+import createEditor from './editor'
 
 /**
  * Save data to Chrome's Sync storage
@@ -69,20 +60,4 @@ function loadFromStorage(key) {
   })
 }
 
-try {
-  ReactDOM.render(
-    <App
-      saveToStorage={saveToStorage}
-      loadFromStorage={loadFromStorage}
-    />,
-    document.getElementById('root')
-  )
-} catch (error) {
-  // TODO Better error display
-  const rootElement = document.getElementById('root')
-  rootElement.innerHTML = '<h1>Critical Error!</h1>' +
-                          '<p>Sorry, an error occurred :(</p>' +
-                          '<p>' + error + '</p>'
-  console.error('Snippets: critical error!')
-  console.error(error)
-}
+createEditor(loadFromStorage, saveToStorage, chrome.devtools.inspectedWindow.eval)
