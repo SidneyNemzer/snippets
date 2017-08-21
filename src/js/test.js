@@ -18,4 +18,4 @@ function loadFromStorage(key) {
   }
 }
 
-createEditor(loadFromStorage, saveToStorage)
+createEditor(loadFromStorage, saveToStorage, eval)

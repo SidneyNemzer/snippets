@@ -28,7 +28,7 @@ const timer = (miliseconds) =>
 		setTimeout(resolve, miliseconds)
 	})
 
-export default (loadFromStorage, saveToStorage) => {
+export default (loadFromStorage, saveToStorage, runInInspectedWindow) => {
 	const saveStore = (store) => {
 	  const state = store.getState()
 	  if (!state.saved) {
@@ -60,7 +60,7 @@ export default (loadFromStorage, saveToStorage) => {
 		    ReactDOM.render(
 					<Provider store={store}>
 	      		<App
-							runInInspectedWindow={eval}
+							runInInspectedWindow={runInInspectedWindow}
 						/>
 					</Provider>,
 		      document.getElementById('root')
