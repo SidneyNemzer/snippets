@@ -48,11 +48,11 @@ export default (loadFromStorage, saveToStorage, runInInspectedWindow) => {
 	// )
 
 	Promise.all([
-		loadFromStorage('snippets'),
+		loadFromStorage(),
 		//timer(1000)
 	])
-	  .then(() => {
-	    const store = createStore(rootReducer)
+	  .then(result => {
+	    const store = createStore(rootReducer, result[0])
 
 	    store.subscribe(debounce(() => saveStore(store), 1000))
 
