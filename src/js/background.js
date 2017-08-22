@@ -93,7 +93,7 @@ const saveStore = (store) => {
 
 loadFromStorage()
   .then(result => {
-    const store = createStore(rootReducer, result[0])
+    const store = createStore(rootReducer, result)
     wrapStore(store, {portName: 'SNIPPETS'})
 
     store.subscribe(debounce(() => saveStore(store), 1500))
