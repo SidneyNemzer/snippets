@@ -23,6 +23,8 @@ import TextField from 'material-ui/TextField'
 import SettingsGroup from './SettingsGroup'
 import Switch from 'material-ui/Switch'
 
+import logo from '../../../../images/logo-transparent.png'
+
 const themes = {
   github: 'Github',
   tomorrow_night: 'Tomorrow Night'
@@ -129,6 +131,21 @@ class Settings extends React.Component {
           </Toolbar>
         </AppBar>
         <main>
+          <SettingsGroup
+            label="About"
+            className="about"
+          >
+            <img
+              className="logo"
+              src={logo}
+            />
+            <p className="version">
+              1.0.0
+            </p>
+            <p className="author">
+              By Sidney Nemzer
+            </p>
+          </SettingsGroup>
           <SettingsGroup
             label="Sync"
           >
