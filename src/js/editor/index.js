@@ -5,11 +5,12 @@ import { Store } from 'react-chrome-redux'
 import App from './components/App'
 import ErrorPage from './components/ErrorPage'
 
-
-export default (runInInspectedWindow) => {
-	const store = new Store({
+const chromeReduxStore = () =>
+	new Store({
 		portName: 'SNIPPETS'
 	})
+
+export default (runInInspectedWindow, store = chromeReduxStore()) => {
 	const unsubscribe = store.subscribe(() => {
 		unsubscribe()
 		console.log(store.getState())
