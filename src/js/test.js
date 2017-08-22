@@ -1,21 +1,39 @@
+/* This file starts the editor to allow for interface development
+   It simulates panel.js (start editor) and background.js (redux store)
+*/
+
+import { createStore } from 'redux'
+import rootReducer from './editor/reducers'
+import { saved } from './editor/actions'
 import createEditor from './editor'
 
-window.extensionPostMessage = function extensionPostMessage(message) {
-  console.log('[Noop] Posting messge:', message)
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments
+		var later = function() {
+			timeout = null
+			if (!immediate) func.apply(context, args)
+		};
+		var callNow = immediate && !timeout
+		clearTimeout(timeout)
+		timeout = setTimeout(later, wait)
+		if (callNow)
+      func.apply(context, args)
+	}
 }
 
-function saveToStorage(key, value, mergeValue) {
-  console.log('[Noop] saveToStorage:', {key, value, mergeValue})
-  return Promise.resolve()
-}
-
-function loadFromStorage(key) {
-  console.log('[Noop] loadFromStorage, key:', key)
-  if (key) {
-    return Promise.resolve(undefined)
-  } else {
-    return Promise.resolve({})
+const saveStore = (store) => {
+  const state = store.getState()
+  if (!state.saved) {
+    console.log('[Noop] save store:', state)
+    store.dispatch(saved())
   }
 }
 
-createEditor(loadFromStorage, saveToStorage, eval)
+const store = createStore(rootReducer)
+store.subscribe(debounce(() => saveStore(store), 1500))
+
+createEditor(eval, store)
+// Simulate react-chrome-redux store
+store.dispatch({ type: 'LOADED' })
