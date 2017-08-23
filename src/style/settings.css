@@ -5,7 +5,9 @@
   right: 0;
   bottom: 0;
   background: #eeeeee;
-  z-index: 5;
+  z-index: 7;
+  overflow: auto;
+  padding-bottom: 20px;
 }
 
 .settings .title {
