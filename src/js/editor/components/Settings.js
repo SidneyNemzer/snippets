@@ -146,7 +146,7 @@ class Settings extends React.Component {
               By Sidney Nemzer
             </p>
             <a
-              href="https://google.com"
+              href="https://github.com/SidneyNemzer/snippets"
               target="_blank"
             >
               <Button className="repo">
