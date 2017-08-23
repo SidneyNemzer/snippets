@@ -23,9 +23,10 @@ CONTROLS
   * Toggle the devtools console
     ESC
 
-  * Save the selected snippet
-    CTRL+S
-    (Mac also uses CTRL+S)
+
+EVERYTHING IS AUTOSAVED
+
+  Once you stop typing, your work will be automatically saved
 
 
 SYNC
@@ -37,6 +38,7 @@ BUGS / ISSUES / SUGGESTIONS
 
   Open an issue on this project's Github
   https://github.com/SidneyNemzer/snippets/issues
+
 
 HAPPY CODING!
 */
