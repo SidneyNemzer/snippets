@@ -10,8 +10,10 @@ body {
 
 .home header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 0 10px;
+  background: #f3f3f3;
+}
 }
 
 .editor-container {
