@@ -12,6 +12,8 @@ import Sidepane from './Sidepane'
 import Header from './Header'
 import Editor from './Editor'
 
+import logo from '../../../../images/logo-transparent.png'
+
 class Main extends React.Component {
   constructor(props) {
     super(props)
@@ -116,7 +118,8 @@ class Main extends React.Component {
     } else {
       return (
         <div className="none-selected">
-          Nothing is selected
+          <img src={logo} />
+          <p>Nothing Selected</p>
         </div>
       )
     }

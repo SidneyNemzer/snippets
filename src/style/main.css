@@ -14,6 +14,17 @@ body {
   padding: 0 10px;
   background: #f3f3f3;
 }
+
+.none-selected {
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.none-selected img {
+  height: 100px;
 }
 
 .editor-container {
