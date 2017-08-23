@@ -145,6 +145,14 @@ class Settings extends React.Component {
             <p className="author">
               By Sidney Nemzer
             </p>
+            <a
+              href="https://google.com"
+              target="_blank"
+            >
+              <Button className="repo">
+                Github Repo
+              </Button>
+            </a>
           </SettingsGroup>
           <SettingsGroup
             label="Sync"

@@ -48,6 +48,12 @@
 .settings .about .author {
   margin: 10px 0 0;
 }
+.settings .about a {
+  text-decoration: none;
+}
+.settings .repo {
+  margin-top: 20px;
+}
 
 .settings .sync-description {
   color: gray;
