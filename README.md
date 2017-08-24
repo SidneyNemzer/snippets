@@ -1,6 +1,6 @@
-# Snippets
+![Snippets](images/marquee.png)
 
-Chrome extension that allows you to create and edit Javascript code snippets, which are synced to all your computers.
+A Chrome extension that allows you to create and edit JavaScript code snippets, which are synced to all your computers.
 
 See [the changelog](CHANGELOG.md) for a version history and [the roadmap](roadmap.md) for upcoming features.
 
@@ -10,13 +10,13 @@ Install the extension [from the Chrome Web Store](https://chrome.google.com/webs
 
 ## FAQ
 
-### Q: Why doesn't this just sync the snippets that are built-into chrome?
+### Q: Why doesn't this just sync the snippets that are built-into Chrome?
 
-A: Unfortunately, Chrome doesn't allow extensions to access the built-in snippets. So I re-created a snippet editor.
+A: Unfortunately, Chrome doesn't allow extensions to access the built-in snippets. So I created my own snippet editor!
 
 ### Q: What did you use to make this extension?
 
-A: The interface uses [React](https://facebook.github.io/react/). The code editor is [react-ace](https://github.com/securingsincity/react-ace)
+A: The interface uses [React](https://facebook.github.io/react/) and [Material UI](http://www.material-ui.com/#/). The code editor is [react-ace](https://github.com/securingsincity/react-ace). [Redux](http://redux.js.org/) and [react-chrome-redux](https://github.com/tshaddix/react-chrome-redux) are used to sync all panels.
 
 ### Q: Can you add *insert feature here*
 
@@ -24,4 +24,4 @@ A: See [the roadmap](roadmap.md) for planned features. [Open an issue](https://g
 
 ### Q: What font is the logo in?
 
-A: Freestyle Script. Maybe you don't find that too interesting, but I need this here so I don't forget it...
+A: Freestyle Script. Maybe you don't find that too interesting, but I'll forget it if I don't write it somewhere...
