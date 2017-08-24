@@ -39,8 +39,8 @@ body {
 }
 
 .sidepane {
-  width: 10%;
-  min-width: 160px;
+  width: 12%;
+  min-width: 200px;
   height: 100vh;
   background-color: #f3f3f3;
   display: flex;
