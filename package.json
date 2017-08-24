@@ -1,6 +1,6 @@
 {
   "name": "snippets",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Create and edit JavaScript code snippets, which are synced to all your computers",
   "scripts": {
     "build": "webpack",
