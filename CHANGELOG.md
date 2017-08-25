@@ -1,3 +1,9 @@
+## 1.0.1
+
+### Bug Fixes
+
+* Fix loading of old snippet data
+
 ## 1.0.0
 
 ### Features
@@ -18,6 +24,7 @@
 ### Misc
 
 * Update the "Welcome!" snippet
+* Default to indents to 2 spaces instead of 4
 
 ## 0.1.1
 
