@@ -21,3 +21,4 @@
 * (?) More editor themes
 * (?) Allow a snippet to be sent to a Github Gist and/or Pastebin?
 * (?) Allow snippets to be downloaded
+* Support other browsers (using the WebExtensions API)
