@@ -10,6 +10,10 @@ Install the extension [from the Chrome Web Store](https://chrome.google.com/webs
 
 ## FAQ
 
+### Q: How do I use this extension?
+
+A: After installing the extension, open the Chrome Devtools on any webpage. This extension adds a new tab called "Snippets", where you can view, edit, and run your JavaScript code snippets.
+
 ### Q: Why doesn't this just sync the snippets that are built-into Chrome?
 
 A: Unfortunately, Chrome doesn't allow extensions to access the built-in snippets. So I created my own snippet editor!
