@@ -93,6 +93,7 @@ class SnippetSelector extends React.Component {
     const { name } = this.props
 
     if (isRenaming) {
+      // TODO use material ui input
       return (
         <input
           ref={input => this.nameInput = input}
