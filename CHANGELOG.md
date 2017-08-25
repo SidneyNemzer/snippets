@@ -1,14 +1,23 @@
-## 0.2.0
+## 1.0.0
+
+### Features
+
+* Add configurable settings
+* Add autocompletion
+* Add autosave (everything is autosaved!)
+* Update interface
+* Errors are displayed in nicer page
+  * Removed all errors
 
 ### Bug Fixes
 
-* Fix autocompletion (yep, it actually works now)
+* Fixed spelling mistake in extension's description
+* Disable line highlighting
+* Errors in snippets are displayed in the console instead of being hidden
 
 ### Misc
 
-* Fixed spelling mistake in extension's description
-* Disable line highlighting
-* Minor edits to the "Welcome!" snippet
+* Update the "Welcome!" snippet
 
 ## 0.1.1
 
