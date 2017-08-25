@@ -34,6 +34,24 @@ const saveStore = (store) => {
 const store = createStore(rootReducer)
 store.subscribe(debounce(() => saveStore(store), 1500))
 
-createEditor(eval, store)
+const fakeStore = {
+	dispatch: (...args) => {
+		setTimeout(() => {
+			store.dispatch(...args)
+		}, 2)
+	}
+}
+
+createEditor(eval, new Proxy(
+	store,
+	{
+		get: (target, key) => {
+			if (key === 'dispatch') {
+				return fakeStore.dispatch
+			} else {
+				return target[key]
+			}
+		}
+}))
 // Simulate react-chrome-redux store
 store.dispatch({ type: 'LOADED' })
