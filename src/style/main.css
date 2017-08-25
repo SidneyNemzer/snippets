@@ -1,0 +1,165 @@
+body {
+  font-family: Roboto;
+  font-size: 16px;
+  margin: 0;
+}
+
+.home {
+  display: flex;
+}
+
+.home header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 10px;
+  background: #f3f3f3;
+}
+
+.none-selected {
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.none-selected img {
+  height: 100px;
+}
+
+.editor-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.ace_editor {
+  font-size: 1.1em;
+  flex-grow: 1;
+}
+
+.sidepane {
+  width: 12%;
+  min-width: 200px;
+  height: 100vh;
+  background-color: #f3f3f3;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidepane .selected {
+  background: lightgray;
+  cursor: default;
+}
+.sidepane .menu-icon {
+  visibility: hidden;
+  transition: visibility 150ms cubic-bezier(0.4, 0.0, 0.2, 1) 0ms;
+}
+.sidepane ul > div:hover div .menu-icon,
+.sidepane li.selected + div .menu-icon {
+  visibility: visible;
+}
+
+.snippet-list {
+  margin-top: 10px;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.snippet-row {
+  background-color: transparent;
+  padding: 10px;
+  font-size: 1.2em;
+  margin-left: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.snippet-row.selected {
+  background-color: #d8d8d8;
+  cursor: default;
+  border-radius: 0 0 2px 2px;
+}
+.snippet-row:not(.selected):hover {
+  background-color: #ffffff;
+}
+
+input {
+  width: 100%;
+}
+
+button.create {
+  background-color: #4c6ffc;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px auto 0;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  display: block;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+button.create:hover {
+  background-color: #A3B5FF;
+}
+
+button.delete {
+  background-color: #fc4c4c;
+  color: white;
+  padding: 5px 15px;
+  margin: 10px auto;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  display: block;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+button.delete:hover {
+  background-color: #ff7c7c;
+}
+
+
+.error {
+  margin: 50px auto;
+  max-width: 600px;
+  font-family: sans-serif;
+  font-size: 1.5em;
+}
+.error h1,
+.error p,
+.error pre,
+.error a {
+  text-align: center;
+}
+.error pre {
+  width: 100%;
+  color: red;
+  white-space: pre-wrap;
+}
+.error h1,
+.error p {
+  margin: 10px 0 0;
+}
+
+.error .action,
+.error a {
+  font-size: 0.7em;
+  display: block;
+}
+
+
+.view-transition-enter {
+  opacity: 0.01;
+}
+.view-transition-enter.view-transition-enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-out;
+}
+.view-transition-leave {
+  opacity: 1;
+}
+.view-transition-leave.view-transition-leave-active {
+  opacity: 0.01;
+  transition: opacity 400ms ease-out;
+}

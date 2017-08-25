@@ -1,0 +1,74 @@
+.settings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #eeeeee;
+  z-index: 7;
+  overflow: auto;
+  padding-bottom: 20px;
+}
+
+.settings .title {
+  font-size: 1.5em;
+  font-weight: normal;
+}
+
+.settings header > div {
+  display: flex;
+  justify-content: center;
+}
+.settings header button {
+  position: absolute;
+  left: 20px;
+}
+.settings header button span svg {
+  color: white;
+}
+
+.settings main {
+  max-width: 800px;
+  margin: auto;
+}
+
+.settings .settings-group > h2 {
+  color: gray;
+}
+
+.settings .about > div {
+  text-align: center;
+  padding: 20px;
+}
+.settings .logo {
+  height: 150px;
+}
+.settings .about .version {
+  margin: 10px 0 0;
+  color: gray;
+}
+.settings .about .author {
+  margin: 10px 0 0;
+}
+.settings .about a {
+  text-decoration: none;
+}
+.settings .repo {
+  margin-top: 20px;
+}
+
+.settings .sync-description {
+  color: gray;
+  font-style: italic;
+  padding: 20px;
+  text-align: center;
+}
+
+.settings .tab-size-input {
+  width: 50px;
+  margin-right: 20px;
+}
+
+.settings .tab-size-input input {
+  text-align: center;
+}

@@ -1,8 +1,9 @@
 import React from 'react'
 
+import Button from 'material-ui/Button'
+import SettingsIcon from 'material-ui-icons/Settings'
 import CreateSnippetButton from './CreateSnippetButton'
 import SnippetList from './SnippetList'
-import DeleteSnippetButton from './DeleteSnippetButton'
 
 class Sidepane extends React.Component {
   render() {
@@ -13,13 +14,15 @@ class Sidepane extends React.Component {
           snippets={this.props.snippets}
           selectedSnippet={this.props.selectedSnippet}
           selectSnippet={this.props.selectSnippet}
-          updateSnippetName={this.props.updateSnippetName}
-          unsavedSnippets={this.props.unsavedSnippets}
+          renameSnippet={this.props.renameSnippet}
+          deleteSnippet={this.props.deleteSnippet}
+          runSnippet={this.props.runSnippet}
         />
-        <DeleteSnippetButton
-          handleClick={this.props.handleDeleteSnippet}
-          isConfirming={this.props.confirmingDelete}
-        />
+        <Button
+          onClick={this.props.handleOpenSettings}
+        >
+          <SettingsIcon />
+        </Button>
       </div>
     )
   }

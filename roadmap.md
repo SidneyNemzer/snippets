@@ -1,28 +1,23 @@
-# 0.2.0
+# Next version
 
-* Switch saving/loading logic to a background page
-* Add autosaving (see [#2](https://github.com/SidneyNemzer/snippets/issues/2))
-* Fix autocompletion
-* Better error handling when running snippets
+* Overhaul linting
+  * Allow linting to be disabled
+  * Better defaults (seems to have an ES5 preset currently)
 
-# 0.3.0
+# Soon
 
-* Add a popup page which allows you to...
+* Allow snippets to be run automatically when a URL is visited
+* Add a popup page which allows you to:
   * view your snippets
-  * run snippets in the context of the current page
+  * run snippets in the current page
   * rename snippets
-  * (?) open snippets in the editor
-  * (?) add a key-binding to run a snippet
+  * open snippets in the editor
 
-# Next few versions
+# Later
 
 * Allow snippets to be reordered
   * (?) Add a "favorite" system, to sort snippets based on the current webpage
-* Allow the sidebar to be hidden
-* Allow autocompletion to be turned on or off
-* Use better linting in the editor
-* Allow selection of editor theme
-  * (?) Theme interface elements too
+* Allow the sidebar to be hidden for more editing space
+* (?) More editor themes
 * (?) Allow a snippet to be sent to a Github Gist and/or Pastebin?
-
-(?) = If I have time, and if it's possible
+* (?) Allow snippets to be downloaded

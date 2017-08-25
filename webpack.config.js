@@ -1,31 +1,28 @@
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const TodoWebpackPlugin = require('todo-webpack-plugin')
+const pages = require('./src/build-dev')
 
+// Prevents deprecation warnings
+process.noDeprecation = true
 
-function relativePath(subURL) {
-  return path.resolve(__dirname, subURL)
-}
+const config = {
+  entry: {},
+  output: {},
 
-module.exports = {
-  entry: relativePath('src/panel.js'),
-  output: {
-    path: relativePath('build'),
-    filename: 'panel.min.js'
-  },
-  devtool: 'inline-source-map',
+  plugins: [
+    //new TodoWebpackPlugin()
+  ],
+
   module: {
     rules: [
       {
         test: /\.jsx?$/,
-        include: [
-          relativePath('src'),
-          // TODO Update this once there's a compiled version on Github
-          // Currently, it must be compiled to ES5 by Webpack
-          /logger/
-        ],
+        exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['es2015', 'react']
+            presets: ['env', 'react']
           }
         }
       },
@@ -33,14 +30,54 @@ module.exports = {
         test: /\.css/,
         use: [
           'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1
-            }
-          }
+          'css-loader'
         ]
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url-loader?limit=100000'
       }
     ]
+  },
+
+  //devtool: 'eval-source-map',
+
+  devServer: {
+    contentBase: './build',
+    inline: true,
+    stats: {
+      colors: true
+    }
   }
 }
+
+const generateConfig = (baseConfig, pagesToAdd) => {
+  baseConfig.entry = pagesToAdd.reduce(
+    (accumulator, page) => (Object.assign(accumulator, {
+      [page.output.bundle]: './src/' + page.input.entryScript
+    })),
+    {}
+  )
+
+  baseConfig.output = {
+    path: path.resolve('./build/'),
+    filename: '[name].js'
+  }
+
+  baseConfig.plugins = baseConfig.plugins.concat(pagesToAdd.map(page => {
+    if (page.input.template) {
+      return new HtmlWebpackPlugin({
+        title: page.options ? page.options.title : '',
+        filename: page.output.html,
+        template: 'src/' + page.input.template,
+        chunks: [page.output.bundle]
+      })
+    } else {
+      return undefined
+    }
+  }).filter(item => item !== undefined))
+
+  return baseConfig
+}
+
+module.exports = generateConfig(config, pages)

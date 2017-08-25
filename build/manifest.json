@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "Snippets",
+  "description": "Create and edit JavaScript code snippets, which are synced to all your computers",
+  "version": "1.0.1",
+
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ]
+  },
+  "devtools_page": "html/devtools.html",
+
+  "permissions": [
+    "storage"
+  ],
+
+  "icons": {
+    "16": "icons/icon_16.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  }
+}
