@@ -53,7 +53,6 @@ class SnippetSelector extends React.Component {
     this.setState({
       isRenaming: false
     }, () => {
-      console.log('updating name to', currentInput)
       this.props.updateName(currentInput)
     })
   }

@@ -13,7 +13,6 @@ const chromeReduxStore = () =>
 export default (runInInspectedWindow, store = chromeReduxStore()) => {
 	const unsubscribe = store.subscribe(() => {
 		unsubscribe()
-		console.log(store.getState())
 		try {
 		  ReactDOM.render(
 				<Provider store={store}>
