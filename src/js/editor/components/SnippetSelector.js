@@ -128,7 +128,13 @@ class SnippetSelector extends React.Component {
             className="menu-icon"
           >
             <MoreVert
-              onClick={this.handleMenuOpen}
+              onClick={event => {
+                if (!selected) {
+                  this.props.selectSnippet()
+                }
+              
+                this.handleMenuOpen(event)
+              }}
             />
           </IconButton>
           <Menu
