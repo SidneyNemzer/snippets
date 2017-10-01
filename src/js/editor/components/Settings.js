@@ -40,6 +40,8 @@ const menus = {
   TAB_CHAR: 'TAB_CHAR'
 }
 
+const VERSION = SNIPPETS_VERSION
+
 class Settings extends React.Component {
   constructor(props) {
     super(props)
@@ -140,7 +142,7 @@ class Settings extends React.Component {
               src={logo}
             />
             <p className="version">
-              1.0.0
+              {VERSION}
             </p>
             <p className="author">
               By Sidney Nemzer

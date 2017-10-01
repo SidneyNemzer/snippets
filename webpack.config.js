@@ -22,6 +22,9 @@ const config = {
   output: {},
 
   plugins: [
+    new webpack.DefinePlugin({
+      SNIPPETS_VERSION: JSON.stringify(package.version)
+    })
   ],
 
   module: {
