@@ -64,12 +64,11 @@ class Main extends React.Component {
 
   runSnippet(snippetBody) {
     const code = `
-      try {
-        ${snippetBody}
-      } catch (e) {
-        console.error(e)
-      }
-    `
+try {
+  ${snippetBody}
+} catch (e) {
+  console.error(e)
+}`
 
     this.props.runInInspectedWindow(code)
   }

@@ -12,8 +12,6 @@ manifest.name = package.name
 manifest.description = package.description
 manifest.version = package.version
 
-// Prevents deprecation warnings
-process.noDeprecation = true
 fs.writeFileSync(
   path.resolve('./build/manifest.json'),
   JSON.stringify(manifest)
@@ -24,7 +22,6 @@ const config = {
   output: {},
 
   plugins: [
-    //new TodoWebpackPlugin()
   ],
 
   module: {
