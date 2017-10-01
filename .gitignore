@@ -3,3 +3,4 @@ dist
 npm-debug.log
 build/html
 build/js
+build/manifest.json

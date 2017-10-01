@@ -1,5 +1,5 @@
 {
-  "name": "snippets",
+  "name": "Snippets",
   "version": "1.0.1",
   "description": "Create and edit JavaScript code snippets, which are synced to all your computers",
   "scripts": {

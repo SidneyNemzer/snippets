@@ -1,10 +1,23 @@
+const fs = require('fs')
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TodoWebpackPlugin = require('todo-webpack-plugin')
+
 const pages = require('./src/build-dev')
+const manifest = require('./src/manifest.json')
+const package = require('./package.json')
+
+manifest.name = package.name
+manifest.description = package.description
+manifest.version = package.version
 
 // Prevents deprecation warnings
 process.noDeprecation = true
+fs.writeFileSync(
+  path.resolve('./build/manifest.json'),
+  JSON.stringify(manifest)
+)
 
 const config = {
   entry: {},
