@@ -11,6 +11,7 @@ const chromeReduxStore = () =>
 	})
 
 export default (runInInspectedWindow, store = chromeReduxStore()) => {
+	// Ignore the first event; the store will be empty
 	const unsubscribe = store.subscribe(() => {
 		unsubscribe()
 		try {
