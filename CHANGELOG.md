@@ -4,6 +4,10 @@
 
 * Prevent old snippet data from overriding new data
 
+### Misc
+
+* Slightly reduce font size
+
 ## 1.0.1
 
 ### Bug Fixes
