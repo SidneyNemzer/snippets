@@ -7,6 +7,7 @@
 ### Misc
 
 * Slightly reduce font size
+* Code cleanup
 
 ## 1.0.1
 

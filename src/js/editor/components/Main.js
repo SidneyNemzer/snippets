@@ -28,7 +28,6 @@ class Main extends React.Component {
     this.handleEditorChange = this.handleEditorChange.bind(this)
     this.selectPreviousSnippet = this.selectPreviousSnippet.bind(this)
     this.deleteSnippet = this.deleteSnippet.bind(this)
-    this.handleDeleteSnippet = this.handleDeleteSnippet.bind(this)
     this.runSnippet = this.runSnippet.bind(this)
   }
 
@@ -99,11 +98,6 @@ class Main extends React.Component {
     }
   }
 
-  handleDeleteSnippet(id) {
-    // TODO redundant
-    this.deleteSnippet(id)
-  }
-
   renderEditor() {
     const { selectedSnippet } = this.state
     const { snippets } = this.props
@@ -142,7 +136,7 @@ class Main extends React.Component {
           selectSnippet={this.selectSnippet}
           renameSnippet={this.props.renameSnippet}
           createSnippet={this.props.createSnippet}
-          deleteSnippet={this.handleDeleteSnippet}
+          deleteSnippet={this.deleteSnippet}
           confirmingDelete={this.state.confirmingDelete}
           runSnippet={this.runSnippet}
           handleOpenSettings={this.props.handleOpenSettings}
