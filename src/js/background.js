@@ -93,14 +93,14 @@ const saveStore = (store) => {
 
 loadFromStorage()
   .then(result => {
-		try {
-			const { snippets } = result
-			Object.keys(snippets).forEach(id => {
-				if (snippets[id].content) {
-					result.snippets[id].body = snippets[id].content
+		if (result.snippets) {
+			Object.entries(result.snippets).forEach(([id, value]) => {
+				const { content, body } = value
+				if (content && typeof body === undefined) {
+					result.snippets[id].body = content
 				}
 			})
-		} catch (e) {}
+		}
     const store = createStore(rootReducer, result)
     wrapStore(store, {portName: 'SNIPPETS'})
 

@@ -1,3 +1,9 @@
+## ?
+
+### Bug Fixes
+
+* Prevent old snippet data from overriding new data
+
 ## 1.0.1
 
 ### Bug Fixes
