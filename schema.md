@@ -18,7 +18,8 @@ This file documents how Snippets stores data
     tabSize: 2, // Int
     autoComplete: true, // Boolean
     softTabs: true, // Boolean
-    theme: 'github' // 'github' or 'tomorrow_night'
+    theme: 'github', // 'github' or 'tomorrow_night'
+    lineWrap: false // Boolean
   }
 }
 ```

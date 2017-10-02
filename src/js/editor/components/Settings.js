@@ -7,7 +7,8 @@ import {
   tabSize,
   autoComplete,
   softTabs,
-  theme
+  theme,
+  lineWrap
 } from '../actions/settings.js'
 
 import AppBar from 'material-ui/AppBar'
@@ -209,6 +210,16 @@ class Settings extends React.Component {
                   />
                 </ListItemSecondaryAction>
               </ListItem>
+              <Divider />
+              <ListItem>
+                <ListItemText primary="Line Wrap" />
+                <ListItemSecondaryAction>
+                  <Switch
+                    checked={this.props.settings.lineWrap}
+                    onChange={() => this.props.lineWrap(!this.props.settings.lineWrap)}
+                  />
+                </ListItemSecondaryAction>
+              </ListItem>
             </List>
             {this.renderMenu()}
           </SettingsGroup>
@@ -228,7 +239,8 @@ const mapDispatchToProps = (dispatch) =>
     tabSize,
     autoComplete,
     softTabs,
-    theme
+    theme,
+    lineWrap
   }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings)

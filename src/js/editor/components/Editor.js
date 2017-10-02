@@ -31,6 +31,7 @@ const Editor = (props) => {
       enableBasicAutocompletion={props.settings.autoComplete}
       enableLiveAutocompletion={props.settings.autoComplete}
       tabSize={props.settings.tabSize}
+      wrapEnabled={props.settings.lineWrap}
       editorProps={{
         $blockScrolling: Infinity,
         useSoftTabs: props.settings.softTabs

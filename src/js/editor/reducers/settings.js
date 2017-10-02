@@ -2,14 +2,16 @@ import {
   TAB_SIZE,
   AUTO_COMPLETE,
   SOFT_TABS,
-  THEME
+  THEME,
+  LINE_WRAP
 } from '../actions/settings'
 
 const defaultState = {
   tabSize: 2,
   autoComplete: true,
   softTabs: true,
-  theme: 'github'
+  theme: 'github',
+  lineWrap: false
 }
 
 const settings = (state = defaultState, action) => {
@@ -40,6 +42,13 @@ const settings = (state = defaultState, action) => {
         state,
         {
           theme: action.theme
+        }
+      )
+    case LINE_WRAP:
+      return Object.assign({},
+        state,
+        {
+          lineWrap: action.lineWrap
         }
       )
     default:

@@ -2,6 +2,7 @@ export const TAB_SIZE = 'TAB_SIZE'
 export const AUTO_COMPLETE = 'AUTO_COMPLETE'
 export const SOFT_TABS = 'SOFT_TABS'
 export const THEME = 'THEME'
+export const LINE_WRAP = 'LINE_WRAP'
 
 export const tabSize = size => ({
   type: TAB_SIZE,
@@ -21,4 +22,9 @@ export const softTabs = useSoftTabs => ({
 export const theme = theme => ({
   type: THEME,
   theme
+})
+
+export const lineWrap = lineWrap => ({
+  type: LINE_WRAP,
+  lineWrap
 })
