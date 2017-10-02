@@ -1,5 +1,9 @@
 ## ?
 
+### Features
+
+* Add an option to enable line wrapping
+
 ### Bug Fixes
 
 * Prevent old snippet data from overriding new data
