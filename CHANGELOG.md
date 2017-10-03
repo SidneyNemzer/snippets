@@ -1,3 +1,9 @@
+## 1.1.1
+
+### Bug Fixes
+
+* Fixed issue with loading legacy snippet data
+
 ## 1.1.0
 
 ### Features
