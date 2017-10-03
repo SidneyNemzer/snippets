@@ -19,7 +19,8 @@ This file documents how Snippets stores data
     autoComplete: true, // Boolean
     softTabs: true, // Boolean
     theme: 'github', // 'github' or 'tomorrow_night'
-    lineWrap: false // Boolean
+    lineWrap: false, // Boolean
+    linter: true, // Boolean
   }
 }
 ```

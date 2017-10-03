@@ -3,6 +3,7 @@
 ### Features
 
 * Add an option to enable line wrapping
+* Add an option to disable the linter
 
 ### Bug Fixes
 

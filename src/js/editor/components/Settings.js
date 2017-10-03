@@ -8,7 +8,8 @@ import {
   autoComplete,
   softTabs,
   theme,
-  lineWrap
+  lineWrap,
+  linter
 } from '../actions/settings.js'
 
 import AppBar from 'material-ui/AppBar'
@@ -220,6 +221,16 @@ class Settings extends React.Component {
                   />
                 </ListItemSecondaryAction>
               </ListItem>
+              <Divider />
+              <ListItem>
+                <ListItemText primary="Linter" />
+                <ListItemSecondaryAction>
+                  <Switch
+                    checked={this.props.settings.linter}
+                    onChange={() => this.props.linter(!this.props.settings.linter)}
+                  />
+                </ListItemSecondaryAction>
+              </ListItem>
             </List>
             {this.renderMenu()}
           </SettingsGroup>
@@ -240,7 +251,8 @@ const mapDispatchToProps = (dispatch) =>
     autoComplete,
     softTabs,
     theme,
-    lineWrap
+    lineWrap,
+    linter
   }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings)

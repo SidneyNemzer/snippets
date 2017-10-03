@@ -3,6 +3,7 @@ export const AUTO_COMPLETE = 'AUTO_COMPLETE'
 export const SOFT_TABS = 'SOFT_TABS'
 export const THEME = 'THEME'
 export const LINE_WRAP = 'LINE_WRAP'
+export const LINTER = 'LINTER'
 
 export const tabSize = size => ({
   type: TAB_SIZE,
@@ -27,4 +28,9 @@ export const theme = theme => ({
 export const lineWrap = lineWrap => ({
   type: LINE_WRAP,
   lineWrap
+})
+
+export const linter = linter => ({
+  type: LINTER,
+  linter
 })

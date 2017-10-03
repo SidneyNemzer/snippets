@@ -3,7 +3,8 @@ import {
   AUTO_COMPLETE,
   SOFT_TABS,
   THEME,
-  LINE_WRAP
+  LINE_WRAP,
+  LINTER
 } from '../actions/settings'
 
 const defaultState = {
@@ -11,7 +12,8 @@ const defaultState = {
   autoComplete: true,
   softTabs: true,
   theme: 'github',
-  lineWrap: false
+  lineWrap: false,
+  linter: true
 }
 
 const settings = (state = defaultState, action) => {
@@ -49,6 +51,13 @@ const settings = (state = defaultState, action) => {
         state,
         {
           lineWrap: action.lineWrap
+        }
+      )
+    case LINTER:
+      return Object.assign({},
+        state,
+        {
+          linter: action.linter
         }
       )
     default:

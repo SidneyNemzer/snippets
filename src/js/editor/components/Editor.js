@@ -36,6 +36,9 @@ const Editor = (props) => {
         $blockScrolling: Infinity,
         useSoftTabs: props.settings.softTabs
       }}
+      setOptions={{
+        useWorker: props.settings.linter
+      }}
     />
   )
 }
