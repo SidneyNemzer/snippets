@@ -119,7 +119,10 @@ button.delete:hover {
   background-color: #ff7c7c;
 }
 
-
+.save-error {
+  color: red;
+  text-decoration: none;
+}
 .error {
   margin: 50px auto;
   max-width: 600px;

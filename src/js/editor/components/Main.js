@@ -118,12 +118,22 @@ try {
     }
   }
 
-  render() {
-    const saveMessage =
-      this.props.saved
-        ? 'Saved'
-        : 'Saving...'
+  renderSaveMessage() {
+    const { saved } = this.props
+    if (saved === true) {
+      return <span>Saved</span>
+    } else if (saved === false) {
+      return <span>Saving...</span>
+    } else if (typeof saved === 'object') {
+      if (saved.moreInfo) {
+        return <a className="save-error" target="_blank" href={saved.moreInfo}>{saved.reason}</a>
+      } else {
+        return <span className="save-error">{saved.reason}</span>
+      }
+    }
+  }
 
+  render() {
     return (
       <div
         className="home"
@@ -141,9 +151,9 @@ try {
           handleOpenSettings={this.props.handleOpenSettings}
         />
         <div className="editor-container">
-          <Header
-            message={saveMessage}
-          />
+          <Header>
+            {this.renderSaveMessage()}
+          </Header>
           {this.renderEditor()}
         </div>
       </div>

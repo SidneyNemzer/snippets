@@ -1,6 +1,6 @@
 import { createStore } from 'redux'
 import { wrapStore } from 'react-chrome-redux'
-import { saved } from './editor/actions'
+import { saved, saveFailed } from './editor/actions'
 import rootReducer from './editor/reducers'
 
 function debounce(func, wait, immediate) {
@@ -44,7 +44,11 @@ function saveToStorage(key, value, mergeValue) {
             ? newValue
             : {[key]: newValue},
           function() {
-            resolve()
+						if (chrome.runtime.lastError) {
+							reject(chrome.runtime.lastError)
+						} else {
+	            resolve()
+						}
         })
       })
     } else {
@@ -55,7 +59,11 @@ function saveToStorage(key, value, mergeValue) {
       chrome.storage.sync.set(
         newVal,
         function() {
-          resolve()
+					if (chrome.runtime.lastError) {
+						reject(chrome.runtime.lastError)
+					} else {
+						resolve()
+					}
       })
     }
   })
@@ -88,6 +96,13 @@ const saveStore = (store) => {
       .then(() => {
         store.dispatch(saved())
       })
+			.catch(error => {
+				console.error('Error while saving:', error)
+				if (error.message === 'QUOTA_BYTES_PER_ITEM quota exceeded')
+					store.dispatch(saveFailed('Storage limit exceeded! Click for more info', 'https://github.com/SidneyNemzer/snippets#warning'))
+				else
+					store.dispatch(saveFailed('An unknown error occurred while saving: ' + error.message))
+			})
   }
 }
 

@@ -4,9 +4,7 @@ import MenuIcon from 'material-ui-icons/Menu'
 
 const Header = (props) => (
   <header>
-    <span>
-      {props.message}
-    </span>
+    {props.children}
   </header>
 )
 

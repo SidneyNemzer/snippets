@@ -1,3 +1,9 @@
+## 1.1.2
+
+### Features
+
+* Display a warning when the storage limit is exceeded
+
 ## 1.1.1
 
 ### Bug Fixes
