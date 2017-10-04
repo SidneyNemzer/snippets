@@ -4,7 +4,7 @@ Currently, you can only store up to about 8000 bytes across all your snippets, d
 
 **If you exceed this amount, the new data will be lost!**
 
-I'm going to deploy an update soon that displays a warning when this happens. In the next few days, I'll be able to switch to a different storage method with a much higher limit. See issue [#5](https://github.com/SidneyNemzer/snippets/issues/5)
+You'll see a warning if this happens. For now, you can avoid the issue by deleting a snippets you aren't using. In the next few days, I'll be able to switch to a different storage method with a much higher limit. See issue [#5](https://github.com/SidneyNemzer/snippets/issues/5)
 
 ![Snippets](images/logo-transparent.png)
 
