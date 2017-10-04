@@ -1,4 +1,12 @@
-![Snippets](images/marquee.png)
+# WARNING
+
+Currently, you can only store up to about 8000 bytes accross all your snippets, due to the way Chrome's Sync storage works.
+
+**If you exceed this amount, the new data will be lost!**
+
+I'm going to deploy an update soon that displays a warning when this happens. In the next few days, I'll be able to switch to a different storage method with a much higher limit. See issue [#5](https://github.com/SidneyNemzer/snippets/issues/5)
+
+![Snippets](images/logo-transparent.png)
 
 A Chrome extension that allows you to create and edit JavaScript code snippets, which are synced to all your computers.
 
