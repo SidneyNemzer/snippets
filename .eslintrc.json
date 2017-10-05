@@ -1,0 +1,15 @@
+{
+  "extends": "standard",
+  "plugins": [
+    "standard",
+    "promise"
+  ],
+  "rules": {
+    "space-in-parens": "off",
+    "space-before-function-paren": ["error", {
+      "anonymous": "always",
+      "named": "never",
+      "asyncArrow": "always"
+    }]
+  }
+}
