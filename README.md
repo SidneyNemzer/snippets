@@ -8,32 +8,13 @@ You'll see a warning if this happens. For now, you can avoid the issue by deleti
 
 ![Snippets](images/logo-transparent.png)
 
-A Chrome extension that allows you to create and edit JavaScript code snippets, which are synced to all your computers.
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/fakjeijchchmicjllnabpdkclfkpbiag.svg)][chrome-web-store]
 
-See [the changelog](CHANGELOG.md) for a version history and [the roadmap](roadmap.md) for upcoming features.
+A Chrome extension that allows you to create and edit JavaScript code snippets, which are synced to all your computers. After installing the extension, use the editor by **opening the devtools** and selecting the **snippets tab**.
 
-## Installing
+* [**INSTALL**][chrome-web-store] - On the Chrome Web Store
+* [**FAQ**][docs/faq.md] - Frequently asked questions
+* [**CHANGELOG**][changelog.md] - A history of changes
+* [**ROADMAP**][roadmap.md] - Planned features
 
-Install the extension [from the Chrome Web Store](https://chrome.google.com/webstore/detail/snippets/fakjeijchchmicjllnabpdkclfkpbiag)
-
-## FAQ
-
-### Q: How do I use this extension?
-
-A: After installing the extension, open the Chrome Devtools on any webpage. This extension adds a new tab called "Snippets", where you can view, edit, and run your JavaScript code snippets.
-
-### Q: Why doesn't this just sync the snippets that are built-into Chrome?
-
-A: Unfortunately, Chrome doesn't allow extensions to access the built-in snippets. So I created my own snippet editor!
-
-### Q: What did you use to make this extension?
-
-A: The interface uses [React](https://facebook.github.io/react/) and [Material UI](http://www.material-ui.com/#/). The code editor is [react-ace](https://github.com/securingsincity/react-ace). [Redux](http://redux.js.org/) and [react-chrome-redux](https://github.com/tshaddix/react-chrome-redux) are used to sync all panels.
-
-### Q: Can you add *insert feature here*
-
-A: See [the roadmap](roadmap.md) for planned features. [Open an issue](https://github.com/SidneyNemzer/snippets/issues) if you'd like to suggest a feature.
-
-### Q: What font is the logo in?
-
-A: Freestyle Script. Maybe you don't find that too interesting, but I'll forget it if I don't write it somewhere...
+[chrome-web-store]: https://chrome.google.com/webstore/detail/snippets/fakjeijchchmicjllnabpdkclfkpbiag
