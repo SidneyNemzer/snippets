@@ -14,7 +14,7 @@ A Chrome extension that allows you to create and edit JavaScript code snippets, 
 
 * [**INSTALL**][chrome-web-store] - On the Chrome Web Store
 * [**FAQ**](docs/faq.md) - Frequently asked questions
-* [**CHANGELOG**](changelog.md) - A history of changes
+* [**CHANGELOG**](CHANGELOG.md) - A history of changes
 * [**ROADMAP**](roadmap.md) - Planned features
 
 [chrome-web-store]: https://chrome.google.com/webstore/detail/snippets/fakjeijchchmicjllnabpdkclfkpbiag
