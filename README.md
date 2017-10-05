@@ -13,8 +13,8 @@ You'll see a warning if this happens. For now, you can avoid the issue by deleti
 A Chrome extension that allows you to create and edit JavaScript code snippets, which are synced to all your computers. After installing the extension, use the editor by **opening the devtools** and selecting the **snippets tab**.
 
 * [**INSTALL**][chrome-web-store] - On the Chrome Web Store
-* [**FAQ**][docs/faq.md] - Frequently asked questions
-* [**CHANGELOG**][changelog.md] - A history of changes
-* [**ROADMAP**][roadmap.md] - Planned features
+* [**FAQ**](docs/faq.md) - Frequently asked questions
+* [**CHANGELOG**](changelog.md) - A history of changes
+* [**ROADMAP**](roadmap.md) - Planned features
 
 [chrome-web-store]: https://chrome.google.com/webstore/detail/snippets/fakjeijchchmicjllnabpdkclfkpbiag
