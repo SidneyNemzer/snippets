@@ -1,9 +1,10 @@
 # Next version
 
-* Allow the sidebar to be hidden/resized
+* New storage method for snippets
 
 # Soon
 
+* Allow the sidebar to be hidden/resized
 * Better linter defaults (seems to have an ES5 preset currently)
 * Allow snippets to be run automatically when a URL is visited
 * Add a popup page which allows you to:
