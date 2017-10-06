@@ -42,6 +42,8 @@ const menus = {
   TAB_CHAR: 'TAB_CHAR'
 }
 
+// This variable is injected by webpack
+/* eslint-disable no-undef */
 const VERSION = SNIPPETS_VERSION
 
 class Settings extends React.Component {
@@ -68,10 +70,10 @@ class Settings extends React.Component {
     switch (this.state.menu) {
       case menus.THEME:
         this.props.theme(newValue)
-        break;
+        break
       case menus.TAB_CHAR:
         this.props.softTabs(newValue)
-        break;
+        break
       default:
         throw new Error('Unknown menu')
     }
@@ -90,7 +92,7 @@ class Settings extends React.Component {
             onClick={event => this.handleMenuItemClick(event, option)}
           >
             {themes[option]}
-          </MenuItem>,
+          </MenuItem>
         )
       case menus.TAB_CHAR:
         return Object.keys(tabTypes).map((tabType, index) =>
@@ -100,7 +102,7 @@ class Settings extends React.Component {
             onClick={event => this.handleMenuItemClick(event, tabType)}
           >
             {tabTypes[tabType]}
-          </MenuItem>,
+          </MenuItem>
         )
       default:
     }
@@ -163,7 +165,7 @@ class Settings extends React.Component {
           >
             <p className="sync-description">
               Your snippets are being synced to your Google account
-              (if you're signed into Chrome)
+              (if you&apos;re signed into Chrome)
             </p>
           </SettingsGroup>
           <SettingsGroup
