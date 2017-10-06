@@ -1,3 +1,4 @@
+/* global chrome */
 import { createStore } from 'redux'
 import { wrapStore } from 'react-chrome-redux'
 import { saved, saveFailed } from './editor/actions'
@@ -43,13 +44,13 @@ function saveToStorage(key, value, mergeValue) {
           key === undefined
             ? newValue
             : {[key]: newValue},
-          function() {
-						if (chrome.runtime.lastError) {
-							reject(chrome.runtime.lastError)
-						} else {
-	            resolve()
-						}
-        })
+          function () {
+            if (chrome.runtime.lastError) {
+              reject(chrome.runtime.lastError)
+            } else {
+              resolve()
+            }
+          })
       })
     } else {
       const newVal =
@@ -58,13 +59,13 @@ function saveToStorage(key, value, mergeValue) {
           : {[key]: value}
       chrome.storage.sync.set(
         newVal,
-        function() {
-					if (chrome.runtime.lastError) {
-						reject(chrome.runtime.lastError)
-					} else {
-						resolve()
-					}
-      })
+        function () {
+          if (chrome.runtime.lastError) {
+            reject(chrome.runtime.lastError)
+          } else {
+            resolve()
+          }
+        })
     }
   })
 }
@@ -96,28 +97,32 @@ const saveStore = (store) => {
       .then(() => {
         store.dispatch(saved())
       })
-			.catch(error => {
-				console.error('Error while saving:', error)
-				if (error.message === 'QUOTA_BYTES_PER_ITEM quota exceeded')
-					store.dispatch(saveFailed('Storage limit exceeded! Click for more info', 'https://github.com/SidneyNemzer/snippets#warning'))
-				else
-					store.dispatch(saveFailed('An unknown error occurred while saving: ' + error.message))
-			})
+      .catch(error => {
+        console.error('Error while saving:', error)
+        if (error.message === 'QUOTA_BYTES_PER_ITEM quota exceeded') {
+          store.dispatch(saveFailed(
+            'Storage limit exceeded! Click for more info',
+            'https://github.com/SidneyNemzer/snippets#warning')
+          )
+        } else {
+          store.dispatch(saveFailed('An unknown error occurred while saving: ' + error.message))
+        }
+      })
   }
 }
 
 loadFromStorage()
   .then(result => {
-		console.log('loaded data:', result)
-		if (result.snippets) {
-			Object.entries(result.snippets).forEach(([id, value]) => {
-				const { content, body } = value
-				if (content && typeof body === 'undefined') {
-					result.snippets[id].body = content
-				}
-			})
-		}
-		console.log('proccessed data:', result)
+    console.log('loaded data:', result)
+    if (result.snippets) {
+      Object.entries(result.snippets).forEach(([id, value]) => {
+        const { content, body } = value
+        if (content && typeof body === 'undefined') {
+          result.snippets[id].body = content
+        }
+      })
+    }
+    console.log('proccessed data:', result)
     const store = createStore(rootReducer, result)
     wrapStore(store, {portName: 'SNIPPETS'})
 
