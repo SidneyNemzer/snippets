@@ -63,7 +63,7 @@ const saveStore = (store) => {
             'https://github.com/SidneyNemzer/snippets#warning')
           )
         } else {
-          store.dispatch(saveFailed('An unknown error occurred while saving: ' + error.message))
+          store.dispatch(saveFailed('Error while saving: ' + error.message))
         }
       })
   }
