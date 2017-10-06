@@ -1,8 +1,12 @@
 {
-  "extends": "standard",
+  "extends": [
+    "standard",
+    "plugin:react/recommended"
+  ],
   "plugins": [
     "standard",
-    "promise"
+    "promise",
+    "react"
   ],
   "rules": {
     "space-in-parens": "off",
@@ -10,6 +14,7 @@
       "anonymous": "always",
       "named": "never",
       "asyncArrow": "always"
-    }]
+    }],
+    "react/prop-types": "off"
   }
 }
