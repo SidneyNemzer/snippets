@@ -73,23 +73,12 @@ function saveToStorage(key, value, mergeValue) {
   })
 }
 
-/**
- * Retrieves data from Chrome's sync storage
- * @param   {string}  key   The key to retrieve
- * @returns {Promise}       Resolves when the data has been retrieved
- * @resolves {*}            The value of the key. It may be any value allowed in Chrome storage.
- */
-function loadFromStorage(key) {
-  return new Promise(function (resolve, reject) {
-    chrome.storage.sync.get(null, function (storage) {
-      if (key !== undefined) {
-        resolve(storage[key])
-      } else {
-        resolve(storage)
-      }
+const getStorage = () =>
+  new Promise(resolve => {
+    chrome.storage.sync.get(null, storage => {
+      resolve(storage)
     })
   })
-}
 
 const saveStore = (store) => {
   const state = store.getState()
@@ -114,7 +103,7 @@ const saveStore = (store) => {
   }
 }
 
-loadFromStorage()
+getStorage()
   .then(result => {
     console.log('loaded data:', result)
     if (result.snippets) {
