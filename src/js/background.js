@@ -23,56 +23,6 @@ const debounce = (func, wait, immediate) => {
   }
 }
 
-/**
- * Save data to Chrome's Sync storage
- * @param  {string} key        A key, which is used to reference this data in the storage
- * @param  {*} value           A value to store
- * @param  {boolean} mergeValue If `value` is an object, setting this to true will keep keys
- *                              from the original value that are unchaned in the new value
- * @return {Promise}            The promise is resolved when the operation has completed
- * @resolves {undefined}        No value is passed
- */
-function saveToStorage(key, value, mergeValue) {
-  return new Promise(function (resolve, reject) {
-    if (mergeValue) {
-      // We'll need to retrieve the previous value first
-      chrome.storage.sync.get(null, function (storage) {
-        const previousValue =
-          key === undefined
-            ? storage
-            : storage[key]
-        // Merge the old and new values
-        const newValue = Object.assign({}, previousValue, value)
-        chrome.storage.sync.set(
-          key === undefined
-            ? newValue
-            : {[key]: newValue},
-          function () {
-            if (chrome.runtime.lastError) {
-              reject(chrome.runtime.lastError)
-            } else {
-              resolve()
-            }
-          })
-      })
-    } else {
-      const newVal =
-        key === undefined
-          ? value
-          : {[key]: value}
-      chrome.storage.sync.set(
-        newVal,
-        function () {
-          if (chrome.runtime.lastError) {
-            reject(chrome.runtime.lastError)
-          } else {
-            resolve()
-          }
-        })
-    }
-  })
-}
-
 const getStorage = () =>
   new Promise(resolve => {
     chrome.storage.sync.get(null, storage => {
@@ -80,12 +30,28 @@ const getStorage = () =>
     })
   })
 
+const saveStorageMerge = (newStorage) =>
+  // Retrieve the previous value so we can merge with the new value
+  getStorage()
+    .then(oldStorage =>
+      new Promise((resolve, reject) => {
+        const mergedValue = Object.assign({}, oldStorage, newStorage)
+        chrome.storage.sync.set(mergedValue, () => {
+          if (chrome.runtime.lastError) {
+            reject(chrome.runtime.lastError)
+          } else {
+            resolve()
+          }
+        })
+      })
+    )
+
 const saveStore = (store) => {
   const state = store.getState()
   if (!state.saved) {
     const copyState = Object.assign({}, state)
     delete copyState.saved
-    saveToStorage(undefined, copyState, true)
+    saveStorageMerge(copyState)
       .then(() => {
         store.dispatch(saved())
       })
