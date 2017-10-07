@@ -154,6 +154,7 @@ class Settings extends React.Component {
             <a
               href="https://github.com/SidneyNemzer/snippets"
               target="_blank"
+              rel='noopener noreferrer'
             >
               <Button className="repo">
                 Github Repo
