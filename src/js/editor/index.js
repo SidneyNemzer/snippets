@@ -14,6 +14,8 @@ export default (runInInspectedWindow, store = chromeReduxStore()) => {
   // Ignore the first event; the store will be empty
   const unsubscribe = store.subscribe(() => {
     unsubscribe()
+    const root = document.createElement('div')
+    document.appendChild(root)
     try {
       ReactDOM.render(
         <Provider store={store}>
@@ -21,7 +23,7 @@ export default (runInInspectedWindow, store = chromeReduxStore()) => {
             runInInspectedWindow={runInInspectedWindow}
           />
         </Provider>,
-        document.getElementById('root')
+        root
       )
     } catch (error) {
       ReactDOM.render(
@@ -32,7 +34,7 @@ export default (runInInspectedWindow, store = chromeReduxStore()) => {
           action="If this happens again, report it here:"
           link="https://github.com/SidneyNemzer/snippets/issues"
         />,
-        document.getElementById('root')
+        root
       )
       console.error(error)
     }
