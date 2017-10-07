@@ -15,6 +15,7 @@
       "named": "never",
       "asyncArrow": "always"
     }],
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "spaced-comment": "off"
   }
 }
