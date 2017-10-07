@@ -33,13 +33,12 @@ class App extends React.Component {
   }
 
   renderSettings() {
-    if (this.state.showSettings)
-      return (
-        <Settings
-          key="settings"
-          handleCloseSettings={this.handleCloseSettings}
-        />
-      )
+    return this.state.showSettings && (
+      <Settings
+        key="settings"
+        handleCloseSettings={this.handleCloseSettings}
+      />
+    )
   }
 
   render() {

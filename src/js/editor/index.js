@@ -6,35 +6,35 @@ import App from './components/App'
 import ErrorPage from './components/ErrorPage'
 
 const chromeReduxStore = () =>
-	new Store({
-		portName: 'SNIPPETS'
-	})
+  new Store({
+    portName: 'SNIPPETS'
+  })
 
 export default (runInInspectedWindow, store = chromeReduxStore()) => {
-	// Ignore the first event; the store will be empty
-	const unsubscribe = store.subscribe(() => {
-		unsubscribe()
-		try {
-		  ReactDOM.render(
-				<Provider store={store}>
-		  		<App
-						runInInspectedWindow={runInInspectedWindow}
-					/>
-				</Provider>,
-		    document.getElementById('root')
-		  )
-		} catch (error) {
-		  ReactDOM.render(
-		    <ErrorPage
-		      title="Error"
-		      message="Something's not working :("
-		      error={error.toString()}
-		      action="If this happens again, report it here:"
-		      link="https://github.com/SidneyNemzer/snippets/issues"
-		    />,
-		    document.getElementById('root')
-		  )
-		  console.error(error)
-		}
-	})
+  // Ignore the first event; the store will be empty
+  const unsubscribe = store.subscribe(() => {
+    unsubscribe()
+    try {
+      ReactDOM.render(
+        <Provider store={store}>
+          <App
+            runInInspectedWindow={runInInspectedWindow}
+          />
+        </Provider>,
+        document.getElementById('root')
+      )
+    } catch (error) {
+      ReactDOM.render(
+        <ErrorPage
+          title="Error"
+          message="Something's not working :("
+          error={error.toString()}
+          action="If this happens again, report it here:"
+          link="https://github.com/SidneyNemzer/snippets/issues"
+        />,
+        document.getElementById('root')
+      )
+      console.error(error)
+    }
+  })
 }

@@ -46,5 +46,5 @@ module.exports = [
       html: 'html/test.html',
       bundle: 'js/test'
     }
-  },
+  }
 ]

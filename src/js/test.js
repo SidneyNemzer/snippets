@@ -42,6 +42,7 @@ const fakeStore = {
 	}
 }
 
+/* eslint-disable no-eval */
 createEditor(eval, new Proxy(
 	store,
 	{

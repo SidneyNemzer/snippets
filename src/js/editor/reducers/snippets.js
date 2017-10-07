@@ -2,8 +2,7 @@ import {
   CREATE_SNIPPET,
   RENAME_SNIPPET,
   UPDATE_SNIPPET,
-  DELETE_SNIPPET,
-  SAVED_SNIPPET
+  DELETE_SNIPPET
 } from '../actions/snippets.js'
 
 const welcomeSnippet = `
