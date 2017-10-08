@@ -11,7 +11,7 @@ const SnippetList = props => (
           <SnippetSelector
             key={snippetId}
             selectSnippet={() => props.selectSnippet(snippetId)}
-            selected={props.selectSnippet === snippetId}
+            selected={props.selectedSnippet === snippetId}
             updateName={newName => props.renameSnippet(snippetId, newName)}
             name={snippet.name}
             deleteSnippet={() => props.deleteSnippet(snippetId)}
