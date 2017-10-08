@@ -15,7 +15,7 @@ export default (runInInspectedWindow, store = chromeReduxStore()) => {
   const unsubscribe = store.subscribe(() => {
     unsubscribe()
     const root = document.createElement('div')
-    document.appendChild(root)
+    document.body.appendChild(root)
     try {
       ReactDOM.render(
         <Provider store={store}>
