@@ -8,9 +8,17 @@
   https://github.com/facebookincubator/create-react-app
 */
 const path = require('path')
+const fse = require('fs-extra')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+const { name, description, version } = require('./package.json')
+const manifest = Object.assign(
+  require('./src/manifest'),
+  {name, description, version}
+)
+fse.outputFileSync('./build/manifest.json', JSON.stringify(manifest))
 
 module.exports = {
   devServer: {
@@ -21,12 +29,12 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
-  entry: [
-    './src/js/background.js',
-    './src/js/devtools.js',
-    './src/js/panel.js',
-    './src/js/test.js'
-  ],
+  entry: {
+    background: './src/js/background.js',
+    devtools: './src/js/devtools.js',
+    panel: './src/js/panel.js',
+    test: './src/js/test.js'
+  },
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
     path: path.resolve('./build'),
@@ -36,11 +44,9 @@ module.exports = {
     // a real file. It's just the virtual path that is served by
     // WebpackDevServer in development. This is the JS bundle containing code
     // from all our entry points, and the Webpack runtime.
-    filename: 'js/bundle.js',
+    filename: 'js/[name].js',
     // There are also additional JS chunk files if you use code splitting.
     chunkFilename: 'js/[name].chunk.js',
-    // This is the URL that app is served from. We use "/" in development.
-    publicPath: '/',
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
@@ -82,7 +88,7 @@ module.exports = {
             loader: require.resolve('url-loader'),
             options: {
               limit: 10000,
-              name: 'media/[name].[hash:8].[ext]'
+              name: 'media/[name].[ext]'
             }
           },
           // Process JS with Babel.
@@ -119,10 +125,10 @@ module.exports = {
             // it's runtime that would otherwise processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.js$/, /\.html$/, /\.json$/],
+            exclude: [/\.js$/, /\.html$/, /\.json$/, /\.ejs$/],
             loader: require.resolve('file-loader'),
             options: {
-              name: 'media/[name].[hash:8].[ext]'
+              name: 'media/[name].[ext]'
             }
           }
         ]
@@ -132,22 +138,31 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      SNIPPETS_VERSION: JSON.stringify(version)
+    }),
     // Copy static files into the build folder
     new CopyWebpackPlugin([{
-      from: 'static', to: 'build'
+      from: 'static', to: './'
     }]),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
-      chunks: ['src/js/background']
+      chunks: ['devtools'],
+      filename: 'devtools.html',
+      title: 'Devtools'
     }),
     new HtmlWebpackPlugin({
       inject: true,
-      chunks: ['src/js/devtools']
+      chunks: ['panel'],
+      filename: 'panel.html',
+      title: 'Panel'
     }),
     new HtmlWebpackPlugin({
       inject: true,
-      chuncks: ['src/js/test']
+      chunks: ['test'],
+      filename: 'test.html',
+      title: 'Test'
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin()
