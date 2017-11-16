@@ -6,5 +6,5 @@ module.exports = () => {
     require('../src/manifest'),
     {name, description, version}
   )
-  fse.outputFileSync('../build/manifest.json', JSON.stringify(manifest))
+  fse.outputFileSync('build/manifest.json', JSON.stringify(manifest))
 }
