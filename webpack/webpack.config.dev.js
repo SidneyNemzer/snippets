@@ -8,17 +8,12 @@
   https://github.com/facebookincubator/create-react-app
 */
 const path = require('path')
-const fse = require('fs-extra')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const { version } = require('../package.json')
 
-const { name, description, version } = require('./package.json')
-const manifest = Object.assign(
-  require('./src/manifest'),
-  {name, description, version}
-)
-fse.outputFileSync('./build/manifest.json', JSON.stringify(manifest))
+require('./build-manifest.js')()
 
 module.exports = {
   devServer: {
