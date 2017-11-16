@@ -11,9 +11,9 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const OnBuildPlugin = require('on-build-webpack')
 const { version } = require('../package.json')
-
-require('./build-manifest.js')()
 
 module.exports = {
   devServer: {
@@ -133,6 +133,10 @@ module.exports = {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(
+      ['build/**/*.*'],
+      { root: path.resolve('.') }
+    ),
     new webpack.DefinePlugin({
       SNIPPETS_VERSION: JSON.stringify(version)
     }),
@@ -160,7 +164,10 @@ module.exports = {
       title: 'Test'
     }),
     // Add module names to factory functions so they appear in browser profiler.
-    new webpack.NamedModulesPlugin()
+    new webpack.NamedModulesPlugin(),
+    new OnBuildPlugin(() => {
+      require('./build-manifest.js')()
+    })
   ],
   // Turn off performance hints during development because we don't do any
   // splitting or minification in interest of speed.

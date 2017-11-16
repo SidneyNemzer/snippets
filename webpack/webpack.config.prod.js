@@ -12,9 +12,9 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const OnBuildPlugin = require('on-build-webpack')
 const { version } = require('../package.json')
-
-require('./build-manifest.js')()
 
 const htmlPluginMinifyOptions = {
   removeComments: true,
@@ -165,6 +165,10 @@ module.exports = {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(
+      ['build/**/*.*'],
+      { root: path.resolve('.') }
+    ),
     new webpack.DefinePlugin({
       SNIPPETS_VERSION: JSON.stringify(version)
     }),
@@ -207,6 +211,9 @@ module.exports = {
       filename: 'panel.html',
       minify: htmlPluginMinifyOptions,
       title: 'Panel'
+    }),
+    new OnBuildPlugin(() => {
+      require('./build-manifest.js')()
     })
   ]
 }
