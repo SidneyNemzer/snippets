@@ -1,10 +1,10 @@
 /* Webpack Development Config
 
   This configuration file is used by Webpack (and webpack-dev-server) during
-  development of your app. It is focused on build speed and ease of debugging
-  while production is focused on file size optimization
+  development. It's focused on build speed and ease of debugging while
+  production is focused on file size optimization
 
-  This file is mostly taken from the create-react-app project
+  This file is based on the create-react-app dev config
   https://github.com/facebookincubator/create-react-app
 */
 const path = require('path')
@@ -21,15 +21,16 @@ module.exports = {
     watchContentBase: true,
     publicPath: '/'
   },
+
   devtool: 'cheap-module-source-map',
-  // These are the "entry points" to our application.
-  // This means they will be the "root" imports that are included in JS bundle.
+
   entry: {
     background: './src/js/background.js',
     devtools: './src/js/devtools.js',
     panel: './src/js/panel.js',
     test: './src/js/test.js'
   },
+
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
     path: path.resolve('./build'),
@@ -46,17 +47,12 @@ module.exports = {
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
   },
-  resolve: {
-    // These are the reasonable defaults supported by the Node ecosystem.
-    // We also include JSX as a common component filename extension to support
-    // some tools, although we do not recommend using it, see:
-    // https://github.com/facebookincubator/create-react-app/issues/290
-    extensions: ['.js', '.json', '.jsx']
-  },
+
   module: {
     // This makes missing exports an error instead of a warning
     strictExportPresence: true,
     rules: [
+      // Run ESLint on JavaScript files
       {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
@@ -71,13 +67,12 @@ module.exports = {
         include: path.resolve('./src')
       },
       {
-        // "oneOf" will traverse all following loaders until one will
-        // match the requirements. When no loader matches it will fall
-        // back to the "file" loader at the end of the loader list.
+        // "oneOf" will traverse its loaders until one matchs the requirements.
+        // When no loader matches it will fall back to the "file" loader at the
+        // end of the loader list.
         oneOf: [
-          // "url" loader works like "file" loader except that it embeds assets
-          // smaller than specified limit in bytes as data URLs to avoid requests.
-          // A missing `test` is equivalent to a match.
+          // "url" loader works just like "file" loader but it also embeds
+          // assets smaller than specified size as data URLs to avoid requests.
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
             loader: require.resolve('url-loader'),
@@ -117,9 +112,9 @@ module.exports = {
           // that fall through the other loaders.
           {
             // Exclude `js` files to keep "css" loader working as it injects
-            // it's runtime that would otherwise processed through "file" loader.
-            // Also exclude `html` and `json` extensions so they get processed
-            // by webpacks internal loaders.
+            // its runtime that would otherwise processed through "file" loader.
+            // Also exclude a few other extensions so they get processed
+            // by Webpack's internal loaders.
             exclude: [/\.js$/, /\.html$/, /\.json$/, /\.ejs$/],
             loader: require.resolve('file-loader'),
             options: {
@@ -144,7 +139,7 @@ module.exports = {
     new CopyWebpackPlugin([{
       from: 'static', to: './'
     }]),
-    // Generates an `index.html` file with the <script> injected.
+    // Generate html files for the various pages
     new HtmlWebpackPlugin({
       inject: true,
       chunks: ['devtools'],
@@ -165,6 +160,7 @@ module.exports = {
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
+    // Build the manifest after Webpack is done
     new OnBuildPlugin(() => {
       require('./build-manifest.js')()
     })

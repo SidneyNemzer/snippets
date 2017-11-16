@@ -1,10 +1,9 @@
 /* Webpack Production Config
 
-  This configuration file is used by Webpack to create a production build of
-  your app. It is focused on file size optimization and speed when running the
-  bundle.
+  This configuration file is used by Webpack to create a production build. It's
+  focused on file size optimization and speed when running the bundle.
 
-  This file is mostly taken from the create-react-app project
+  This file is based on the create-react-app prod config
   https://github.com/facebookincubator/create-react-app
 */
 const path = require('path')
@@ -38,31 +37,22 @@ module.exports = {
     devtools: './src/js/devtools.js',
     panel: './src/js/panel.js'
   },
+
   output: {
-    // The build folder.
     path: path.resolve('./build'),
-    // Generated JS file names (with nested folders).
-    // There will be one main bundle, and one file per asynchronous chunk.
-    // Code splitting is not fully enabled in this config but webpack supports it
     filename: 'js/[name].js',
+    // Code splitting is not fully enabled in this config but webpack supports it
     chunkFilename: 'js/[name].chunk.js',
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
-      path
-        .relative('src', info.absoluteResourcePath)
-        .replace(/\\/g, '/')
+      path.relative('src', info.absoluteResourcePath).replace(/\\/g, '/')
   },
-  resolve: {
-    // These are the reasonable defaults supported by the Node ecosystem.
-    // We also include JSX as a common component filename extension to support
-    // some tools, although we do not recommend using it, see:
-    // https://github.com/facebookincubator/create-react-app/issues/290
-    extensions: ['.js', '.json', '.jsx']
-  },
+
   module: {
     // This makes missing exports an error instead of a warning
     strictExportPresence: true,
     rules: [
+      // Run ESLint on JavaScript files
       {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
@@ -77,9 +67,9 @@ module.exports = {
         include: path.resolve('./src')
       },
       {
-        // "oneOf" will traverse all following loaders until one will
-        // match the requirements. When no loader matches it will fall
-        // back to the "file" loader at the end of the loader list.
+        // "oneOf" will traverse its loaders until one matchs the requirements.
+        // When no loader matches it will fall back to the "file" loader at the
+        // end of the loader list.
         oneOf: [
           // "url" loader works just like "file" loader but it also embeds
           // assets smaller than specified size as data URLs to avoid requests.
@@ -104,17 +94,10 @@ module.exports = {
               presets: ['env', 'react']
             }
           },
-          // The notation here is somewhat confusing.
-          // "css" loader resolves paths in CSS and adds assets as dependencies.
-          // "style" loader normally turns CSS into JS modules injecting <style>,
-          // but unlike in development configuration, we do something different.
-          // `ExtractTextPlugin` first applies the "css" loader
-          // (second argument), then grabs the result CSS and puts it into a
-          // separate file in our build process. This way we actually ship
-          // a single CSS file in production instead of JS code injecting <style>
-          // tags. If you use code splitting, however, any async bundles will still
-          // use the "style" loader inside the async code so CSS from them won't be
-          // in the main CSS file.
+          // 'css-loader' resolves paths in CSS and adds assets as dependencies.
+          // `ExtractTextPlugin` grabs any CSS and into a separate file.
+          // When code splitting, async bundles will use the 'style-loader' and
+          // be injected as <style> tags by that bundle
           {
             test: /\.css$/,
             loader: ExtractTextPlugin.extract(
@@ -146,12 +129,12 @@ module.exports = {
           // This loader doesn't use a "test" so it will catch all modules
           // that fall through the other loaders.
           {
-            loader: require.resolve('file-loader'),
             // Exclude `js` files to keep "css" loader working as it injects
-            // it's runtime that would otherwise processed through "file" loader.
-            // Also exclude `html` and `json` extensions so they get processed
-            // by webpacks internal loaders.
+            // its runtime that would otherwise processed through "file" loader.
+            // Also exclude a few other extensions so they get processed
+            // by Webpack's internal loaders.
             exclude: [/\.js$/, /\.html$/, /\.json$/, /\.ejs$/],
+            loader: require.resolve('file-loader'),
             options: {
               name: 'media/[name].[ext]'
             }
@@ -191,11 +174,11 @@ module.exports = {
     new ExtractTextPlugin({
       filename: 'css/[name].css'
     }),
-    // Copy static files (like images) into the build folder
+    // Copy static files into the build folder
     new CopyWebpackPlugin([{
       from: 'static', to: './'
     }]),
-    // Generates an `index.html` file with the <script> injected.
+    // Generate html files for the various pages
     new HtmlWebpackPlugin({
       inject: true,
       chunks: ['devtools'],
@@ -210,6 +193,7 @@ module.exports = {
       minify: htmlPluginMinifyOptions,
       title: 'Panel'
     }),
+    // Build the manifest after Webpack is done
     new OnBuildPlugin(() => {
       require('./build-manifest.js')()
     })
