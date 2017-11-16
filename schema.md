@@ -21,6 +21,8 @@ This file documents how Snippets stores data
     theme: 'github', // 'github' or 'tomorrow_night'
     lineWrap: false, // Boolean
     linter: true, // Boolean
+    accessToken: 'abcd', // false or String
+    gistId: 'abcd', // false or String
   }
 }
 ```
