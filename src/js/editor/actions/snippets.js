@@ -1,4 +1,7 @@
 /* global crypto */
+
+import gApi from '../../GithubApi'
+
 export const CREATE_SNIPPET = 'CREATE_SNIPPET'
 export const RENAME_SNIPPET = 'RENAME_SNIPPET'
 export const UPDATE_SNIPPET = 'UPDATE_SNIPPET'
@@ -36,15 +39,35 @@ export const deleteSnippet = id => ({
   id
 })
 
-export const loadSnippets = () => dispatch => {
-  setTimeout(() => {
-    dispatch(loadedSnippets({
-      test: {
-        name: 'test',
-        body: 'test'
+export const loadSnippets = token => dispatch => {
+  // setTimeout(() => {
+  //   dispatch(loadedSnippets({
+  //     test: {
+  //       name: 'test',
+  //       body: 'test'
+  //     }
+  //   }))
+  // }, 3000)
+  gApi.gists.list(token)
+    .then(gists => {
+      if (gists.length > 0) {
+        return gApi.gists.get(token, gists[0].id)
+          .then(gist => {
+            dispatch(loadedSnippets(
+              Object.entries(gist.files)
+                .reduce((snippets, [ fileName, { truncated, content } ]) => {
+                  snippets[fileName] = {
+                    name: fileName,
+                    body: truncated ? '(Truncated)' : content
+                  }
+                  return snippets
+                }, {})
+            ))
+          })
+      } else {
+        throw new Error('You have no gists')
       }
-    }))
-  }, 3000)
+    })
 }
 
 export const loadedSnippets = snippets => ({
