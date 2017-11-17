@@ -7,13 +7,16 @@ This file documents how Snippets stores data
 ```javascript
 {
   saved: true, // Boolean
-  snippets: {
+
+  snippets: false // Not loaded or loading
+  snippets: {     // Loaded
     [id]: {
       name: "Snippet", // String
       body: "console.log('hi')" // String
     },
     // ...
   },
+
   settings: {
     tabSize: 2, // Int
     autoComplete: true, // Boolean
