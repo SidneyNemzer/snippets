@@ -2,9 +2,11 @@ import {
   CREATE_SNIPPET,
   RENAME_SNIPPET,
   UPDATE_SNIPPET,
-  DELETE_SNIPPET
+  DELETE_SNIPPET,
+  LOADED_SNIPPETS
 } from '../actions/snippets.js'
 
+/* eslint-disable no-unused-vars */
 const welcomeSnippet = `
 /***********************
 * Welcome to snippets! *
@@ -43,17 +45,12 @@ HAPPY CODING!
 */
 `
 
-const defaultState = {
-  a: {
-    name: 'Welcome!',
-    body: welcomeSnippet
-  }
-}
+const defaultState = false
 
 const snippets = (state = defaultState, action) => {
   switch (action.type) {
     case CREATE_SNIPPET:
-      const toReturn = Object.assign({},
+      return Object.assign({},
         state,
         {
           [action.id]: {
@@ -62,7 +59,6 @@ const snippets = (state = defaultState, action) => {
           }
         }
       )
-      return toReturn
     case RENAME_SNIPPET:
       return Object.assign({},
         state,
@@ -87,6 +83,9 @@ const snippets = (state = defaultState, action) => {
       const newState = Object.assign({}, state)
       delete newState[action.id]
       return newState
+    case LOADED_SNIPPETS:
+      console.log('Loaded snippets dispatched')
+      return action.snippets
     default:
       return state
   }

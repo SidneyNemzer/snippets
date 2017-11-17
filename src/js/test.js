@@ -1,10 +1,14 @@
+/* global localStorage */
+
 /* This file starts the editor to allow for interface development in a
    regular webpage. It simulates panel.js (start editor) and background.js
    (redux store)
 */
 
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import rootReducer from './editor/reducers'
+import { defaultState as defaultSettings } from './editor/reducers/settings'
 import { saved } from './editor/actions'
 import createEditor from './editor'
 
@@ -27,9 +31,23 @@ const debounce = (func, wait, immediate) => {
   }
 }
 
-const store = createStore(rootReducer)
+const lsAccessTokenKey = 'snippets:access-token'
+
+let accessToken = localStorage.getItem(lsAccessTokenKey) || false
+
+const store = createStore(rootReducer, {
+  settings: Object.assign(defaultSettings, {
+    accessToken
+  })
+}, applyMiddleware(thunk))
+
 store.subscribe(debounce(() => {
   const state = store.getState()
+  if (state.settings.accessToken !== accessToken) {
+    localStorage[lsAccessTokenKey] = state.settings.accessToken
+    accessToken = state.settings.accessToken
+    console.log('Updated access token in local storage')
+  }
   if (!state.saved) {
     console.log('[Noop] save store:', state)
     store.dispatch(saved())

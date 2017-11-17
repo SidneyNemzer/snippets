@@ -4,16 +4,19 @@ import {
   SOFT_TABS,
   THEME,
   LINE_WRAP,
-  LINTER
+  LINTER,
+  ACCESS_TOKEN
 } from '../actions/settings'
 
-const defaultState = {
+export const defaultState = {
   tabSize: 2,
   autoComplete: true,
   softTabs: true,
   theme: 'github',
   lineWrap: false,
-  linter: true
+  linter: true,
+  accessToken: false,
+  gistId: false
 }
 
 const settings = (state = defaultState, action) => {
@@ -58,6 +61,13 @@ const settings = (state = defaultState, action) => {
         state,
         {
           linter: action.linter
+        }
+      )
+    case ACCESS_TOKEN:
+      return Object.assign({},
+        state,
+        {
+          accessToken: action.accessToken
         }
       )
     default:

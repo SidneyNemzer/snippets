@@ -11,6 +11,7 @@ import {
 import Sidepane from './Sidepane'
 import Header from './Header'
 import Editor from './Editor'
+import Loading from './Loading'
 
 import logo from '../../../../images/logo-transparent.png'
 
@@ -134,6 +135,11 @@ try {
   }
 
   render() {
+    if (this.props.snippets === false) {
+      return (
+        <Loading />
+      )
+    }
     return (
       <div
         className="home"

@@ -4,6 +4,7 @@ export const SOFT_TABS = 'SOFT_TABS'
 export const THEME = 'THEME'
 export const LINE_WRAP = 'LINE_WRAP'
 export const LINTER = 'LINTER'
+export const ACCESS_TOKEN = 'ACCESS_TOKEN'
 
 export const tabSize = size => ({
   type: TAB_SIZE,
@@ -33,4 +34,9 @@ export const lineWrap = lineWrap => ({
 export const linter = linter => ({
   type: LINTER,
   linter
+})
+
+export const accessToken = accessToken => ({
+  type: ACCESS_TOKEN,
+  accessToken
 })

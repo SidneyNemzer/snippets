@@ -1,8 +1,14 @@
 import React from 'react'
 
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
+import { loadSnippets } from '../actions/snippets'
+
 import { CSSTransitionGroup } from 'react-transition-group'
 import Main from './Main'
 import Settings from './Settings'
+import Login from './Login'
 
 import 'typeface-roboto'
 import '../../../style/main.css'
@@ -18,6 +24,12 @@ class App extends React.Component {
 
     this.handleOpenSettings = this.handleOpenSettings.bind(this)
     this.handleCloseSettings = this.handleCloseSettings.bind(this)
+  }
+
+  componentDidMount() {
+    if (this.props.settings.accessToken) {
+      this.props.loadSnippets()
+    }
   }
 
   handleOpenSettings() {
@@ -42,6 +54,11 @@ class App extends React.Component {
   }
 
   render() {
+    if (!this.props.settings.accessToken) {
+      return (
+        <Login />
+      )
+    }
     return (
       <div>
         <CSSTransitionGroup
@@ -60,4 +77,13 @@ class App extends React.Component {
   }
 }
 
-export default App
+const mapStateToProps = (state, props) => ({
+  settings: state.settings
+})
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({
+    loadSnippets
+  }, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
