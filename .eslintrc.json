@@ -16,6 +16,7 @@
       "asyncArrow": "always"
     }],
     "react/prop-types": "off",
-    "spaced-comment": "off"
+    "spaced-comment": "off",
+    "prefer-promise-reject-errors": "off"
   }
 }
