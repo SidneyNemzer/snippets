@@ -7,11 +7,14 @@ import {
   updateSnippet,
   deleteSnippet
 } from '../actions/snippets.js'
+import { accessToken } from '../actions/settings'
+import * as RemoteData from '../RemoteData'
 
 import Sidepane from './Sidepane'
 import Header from './Header'
 import Editor from './Editor'
 import Loading from './Loading'
+import ErrorPage from './ErrorPage'
 
 import logo from '../../../../images/logo-transparent.png'
 
@@ -134,12 +137,7 @@ try {
     }
   }
 
-  render() {
-    if (this.props.snippets === false) {
-      return (
-        <Loading />
-      )
-    }
+  renderMain(snippets) {
     return (
       <div
         className="home"
@@ -165,6 +163,26 @@ try {
       </div>
     )
   }
+
+  render() {
+    return RemoteData.split({
+      loading: <Loading />,
+      success: this.renderMain.bind(this),
+      failure: error => (
+        error.code === 'auth/bad-credentials'
+          ? <ErrorPage
+            title="Failed to load snippets"
+            message="Github didn't accept the access token"
+            actionButton="Reset access token"
+            onActionButtonClick={() => this.props.accessToken(false)}
+          />
+          : <ErrorPage
+            title="Failed to load snippets"
+            message={error}
+          />
+      )
+    }, this.props.snippets)
+  }
 }
 
 const mapStateToProps = (state, props) => ({
@@ -177,7 +195,8 @@ const mapDispatchToProps = (dispatch) =>
     createSnippet,
     renameSnippet,
     updateSnippet,
-    deleteSnippet
+    deleteSnippet,
+    accessToken
   }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

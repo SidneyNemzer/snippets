@@ -5,6 +5,7 @@ import {
   DELETE_SNIPPET,
   LOADED_SNIPPETS
 } from '../actions/snippets.js'
+import * as RemoteData from '../RemoteData'
 
 /* eslint-disable no-unused-vars */
 const welcomeSnippet = `
@@ -45,7 +46,7 @@ HAPPY CODING!
 */
 `
 
-const defaultState = false
+const defaultState = RemoteData.loading()
 
 const snippets = (state = defaultState, action) => {
   switch (action.type) {
