@@ -27,8 +27,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.settings.accessToken) {
-      this.props.loadSnippets()
+    const { accessToken } = this.props.settings
+    if (accessToken) {
+      this.props.loadSnippets(accessToken)
     }
   }
 
