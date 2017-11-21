@@ -17,7 +17,7 @@ const { version } = require('../package.json')
 
 module.exports = {
   devServer: {
-    contentBase: './build',
+    contentBase: './static',
     watchContentBase: true,
     publicPath: '/'
   },
