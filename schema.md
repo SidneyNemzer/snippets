@@ -8,11 +8,11 @@ This file documents how Snippets stores data
 {
   saved: true, // Boolean
 
-  snippets: false // Not loaded or loading
-  snippets: {     // Loaded
-    [id]: {
-      name: "Snippet", // String
-      body: "console.log('hi')" // String
+  sncdippets: RemoteData
+    { // Loaded
+      [id]: {
+        name: "Snippet", // String
+        body: "console.log('hi')" // String
     },
     // ...
   },
