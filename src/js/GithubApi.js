@@ -5,9 +5,12 @@ const apiBase = (token, endpoint) =>
     .then(res => {
       if (res.status !== 200) {
         return res.json().then(data => {
-          const error = new Error()
-          error.message = data.message
-          throw error
+          return Promise.reject({
+            code: data.message === 'Bad credentials'
+              ? 'auth/bad-credentials'
+              : 'unknown',
+            message: data.message
+          })
         })
       }
       return res.json()
