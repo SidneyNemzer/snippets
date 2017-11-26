@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { accessToken } from '../actions/settings'
 import { loadSnippets } from '../actions/snippets'
 
+// TODO Move this to utility file
 const updater =
   (key, context) =>
     newValue =>

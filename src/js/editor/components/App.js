@@ -9,6 +9,7 @@ import { CSSTransitionGroup } from 'react-transition-group'
 import Main from './Main'
 import Settings from './Settings'
 import Login from './Login'
+import SelectGist from './SelectGist'
 
 import 'typeface-roboto'
 import '../../../style/main.css'
@@ -27,9 +28,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const { accessToken } = this.props.settings
-    if (accessToken) {
-      this.props.loadSnippets(accessToken)
+    const { accessToken, gistId } = this.props.settings
+    if (accessToken && gistId) {
+      this.props.loadSnippets(accessToken, gistId)
     }
   }
 
@@ -56,9 +57,9 @@ class App extends React.Component {
 
   render() {
     if (!this.props.settings.accessToken) {
-      return (
-        <Login />
-      )
+      return <Login />
+    } else if (!this.props.settings.gistId) {
+      return <SelectGist />
     }
     return (
       <div>

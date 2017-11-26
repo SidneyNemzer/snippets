@@ -28,3 +28,11 @@ export const split = (actions, remoteData) => {
       throw new Error('Unexpected remote data state')
   }
 }
+
+export const ifSuccess = (actions, remoteData) => {
+  split({
+    loading: actions.else,
+    success: actions.then,
+    failure: actions.else
+  }, remoteData)
+}

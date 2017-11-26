@@ -23,7 +23,7 @@ class Main extends React.Component {
     super(props)
 
     this.state = {
-      selectedSnippet: Object.keys(props.snippets)[0] || null,
+      selectedSnippet: null,
       confirmingDelete: false
     }
 
@@ -39,22 +39,32 @@ class Main extends React.Component {
     const { selectedSnippet } = this.state
     const { snippets } = this.props
 
-    if (Object.keys(snippets).length < 2) {
-      return this.selectSnippet(null)
-    }
+    RemoteData.ifSuccess({
+      then: snippets => {
+        if (Object.keys(snippets).length < 2) {
+          return this.selectSnippet(null)
+        }
 
-    if (selectedSnippet === null) {
-      return this.selectSnippet(Object.keys(snippets)[0])
-    }
+        if (selectedSnippet === null) {
+          return this.selectSnippet(Object.keys(snippets)[0])
+        }
 
-    const selectedIndex = Object.keys(snippets).findIndex(snippetId => {
-      return snippetId === selectedSnippet
-    })
+        const selectedIndex = Object.keys(snippets).findIndex(snippetId => {
+          return snippetId === selectedSnippet
+        })
 
-    if (selectedIndex > 0) {
-      return this.selectSnippet(Object.keys(snippets)[selectedIndex - 1])
-    } else {
-      return this.selectSnippet(Object.keys(snippets)[1])
+        if (selectedIndex > 0) {
+          return this.selectSnippet(Object.keys(snippets)[selectedIndex - 1])
+        } else {
+          return this.selectSnippet(Object.keys(snippets)[1])
+        }
+      }
+    }, snippets)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.snippets.state !== nextProps.snippets) {
+      this.selectPreviousSnippet()
     }
   }
 
@@ -101,9 +111,8 @@ try {
     }
   }
 
-  renderEditor() {
+  renderEditor(snippets) {
     const { selectedSnippet } = this.state
-    const { snippets } = this.props
 
     if (selectedSnippet !== null) {
       return (
@@ -144,7 +153,7 @@ try {
         onKeyDown={this.handleKeyPress}
       >
         <Sidepane
-          snippets={this.props.snippets}
+          snippets={snippets}
           selectedSnippet={this.state.selectedSnippet}
           selectSnippet={this.selectSnippet}
           renameSnippet={this.props.renameSnippet}
@@ -158,7 +167,7 @@ try {
           <Header>
             {this.renderSaveMessage()}
           </Header>
-          {this.renderEditor()}
+          {this.renderEditor(snippets)}
         </div>
       </div>
     )
@@ -169,7 +178,7 @@ try {
       loading: <Loading />,
       success: this.renderMain.bind(this),
       failure: error => (
-        error.code === 'auth/bad-credentials'
+        error.status === 'Unauthorized'
           ? <ErrorPage
             title="Failed to load snippets"
             message="Github didn't accept the access token"

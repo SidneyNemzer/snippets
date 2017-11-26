@@ -5,7 +5,8 @@ import {
   THEME,
   LINE_WRAP,
   LINTER,
-  ACCESS_TOKEN
+  ACCESS_TOKEN,
+  GIST_ID
 } from '../actions/settings'
 
 export const defaultState = {
@@ -68,6 +69,13 @@ const settings = (state = defaultState, action) => {
         state,
         {
           accessToken: action.accessToken
+        }
+      )
+    case GIST_ID:
+      return Object.assign({},
+        state,
+        {
+          gistId: action.gistId
         }
       )
     default:

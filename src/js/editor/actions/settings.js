@@ -5,6 +5,7 @@ export const THEME = 'THEME'
 export const LINE_WRAP = 'LINE_WRAP'
 export const LINTER = 'LINTER'
 export const ACCESS_TOKEN = 'ACCESS_TOKEN'
+export const GIST_ID = 'GIST_ID'
 
 export const tabSize = size => ({
   type: TAB_SIZE,
@@ -39,4 +40,9 @@ export const linter = linter => ({
 export const accessToken = accessToken => ({
   type: ACCESS_TOKEN,
   accessToken
+})
+
+export const gistId = gistId => ({
+  type: GIST_ID,
+  gistId
 })
