@@ -1,7 +1,13 @@
 /* global crypto */
 
-import gApi from '../../GithubApi'
+import GithubApi from 'github'
 import * as RemoteData from '../RemoteData'
+
+const github = new GithubApi({
+  headers: {
+    'user-agent': 'snippets'
+  }
+})
 
 export const CREATE_SNIPPET = 'CREATE_SNIPPET'
 export const RENAME_SNIPPET = 'RENAME_SNIPPET'
@@ -40,35 +46,23 @@ export const deleteSnippet = id => ({
   id
 })
 
-export const loadSnippets = token => dispatch => {
-  // setTimeout(() => {
-  //   dispatch(loadedSnippets({
-  //     test: {
-  //       name: 'test',
-  //       body: 'test'
-  //     }
-  //   }))
-  // }, 3000)
-  gApi.gists.list(token)
-    .then(gists => {
-      if (gists.length > 0) {
-        return gApi.gists.get(token, gists[0].id)
-          .then(gist => {
-            dispatch(loadedSnippets(RemoteData.success(
-              Object.entries(gist.files)
-                .reduce((snippets, [ fileName, { truncated, content } ]) => {
-                  snippets[fileName] = {
-                    name: fileName,
-                    body: truncated ? '(Truncated)' : content
-                  }
-                  return snippets
-                }, {})
-            )))
-          })
-          .catch(error => dispatch(loadedSnippets(RemoteData.failure(error))))
-      } else {
-        throw new Error('You have no gists')
-      }
+export const loadSnippets = (token, gistId) => dispatch => {
+  github.authenticate({
+    type: 'token',
+    token
+  })
+  github.gists.get({id: gistId})
+    .then(({data: gist}) => {
+      dispatch(loadedSnippets(RemoteData.success(
+        Object.entries(gist.files)
+          .reduce((snippets, [ fileName, { truncated, content } ]) => {
+            snippets[fileName] = {
+              name: fileName,
+              body: truncated ? '(Truncated)' : content
+            }
+            return snippets
+          }, {})
+      )))
     })
     .catch(error => dispatch(loadedSnippets(RemoteData.failure(error))))
 }
