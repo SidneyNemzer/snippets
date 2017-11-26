@@ -2,7 +2,13 @@ import React from 'react'
 import Button from 'material-ui/Button'
 
 const renderError = errorText => (
-  errorText !== undefined ? <pre>{errorText}</pre> : false
+  errorText !== undefined
+    ? typeof errorText === 'object'
+      ? typeof errorText.message === 'string'
+        ? <pre>{errorText.message}</pre>
+        : errorText.toString()
+      : <pre>{errorText}</pre>
+    : false
 )
 
 const renderAction = (action, actionButton, onClick) => (
@@ -17,14 +23,17 @@ const renderLink = link => (
   link !== undefined ? <a href={link}>{link}</a> : false
 )
 
-const ErrorPage = (props) => (
-  <div className="error">
-    <h1>{props.title}</h1>
-    <p>{props.message}</p>
-    {renderError(props.error)}
-    {renderAction(props.action, props.actionButton, props.onActionButtonClick)}
-    {renderLink(props.link)}
-  </div>
-)
+const ErrorPage = (props) => {
+  console.error(props.message)
+  return (
+    <div className="error">
+      <h1>{props.title}</h1>
+      <p>{props.message.toString()}</p>
+      {renderError(props.error)}
+      {renderAction(props.action, props.actionButton, props.onActionButtonClick)}
+      {renderLink(props.link)}
+    </div>
+  )
+}
 
 export default ErrorPage
