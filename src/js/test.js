@@ -11,6 +11,7 @@ import rootReducer from './editor/reducers'
 import { defaultState as defaultSettings } from './editor/reducers/settings'
 import { saved } from './editor/actions'
 import createEditor from './editor'
+import settingsMiddleware from './editor/middleware/settings'
 
 const debounce = (func, wait, immediate) => {
   let timeout = null
@@ -31,28 +32,34 @@ const debounce = (func, wait, immediate) => {
   }
 }
 
-const lsAccessTokenKey = 'snippets:access-token'
-
 let accessToken = localStorage.getItem(lsAccessTokenKey) || false
+
+const localStoragePrefix = 'snippets-settings:'
+
+const storage = {
+  set: (path, data) => {
+    localStorage[localStoragePrefix + path] = data
+  }
+}
 
 const store = createStore(rootReducer, {
   settings: Object.assign(defaultSettings, {
     accessToken
   })
-}, applyMiddleware(thunk))
+}, applyMiddleware(thunk, settingsMiddleware(storage)))
 
-store.subscribe(debounce(() => {
-  const state = store.getState()
-  if (state.settings.accessToken !== accessToken) {
-    localStorage[lsAccessTokenKey] = state.settings.accessToken
-    accessToken = state.settings.accessToken
-    console.log('Updated access token in local storage')
-  }
-  if (!state.saved) {
-    console.log('[Noop] save store:', state)
-    store.dispatch(saved())
-  }
-}, 1500))
+// store.subscribe(debounce(() => {
+//   const state = store.getState()
+//   if (state.settings.accessToken !== accessToken) {
+//     localStorage[lsAccessTokenKey] = state.settings.accessToken
+//     accessToken = state.settings.accessToken
+//     console.log('Updated access token in local storage')
+//   }
+//   if (!state.saved) {
+//     console.log('[Noop] save store:', state)
+//     store.dispatch(saved())
+//   }
+// }, 1500))
 
 const fakeStore = {
   dispatch: (...args) => {
