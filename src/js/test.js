@@ -8,31 +8,30 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from './editor/reducers'
+import { types } from './editor/actions/settings'
 import { defaultState as defaultSettings } from './editor/reducers/settings'
-import { saved } from './editor/actions'
+//import { saved } from './editor/actions'
 import createEditor from './editor'
 import settingsMiddleware from './editor/middleware/settings'
 
-const debounce = (func, wait, immediate) => {
-  let timeout = null
-  return function (...args) {
-    const context = this
-    const later = () => {
-      timeout = null
-      if (!immediate) {
-        func.apply(context, args)
-      }
-    }
-    const callNow = immediate && !timeout
-    clearTimeout(timeout)
-    timeout = setTimeout(later, wait)
-    if (callNow) {
-      func.apply(context, args)
-    }
-  }
-}
-
-let accessToken = localStorage.getItem(lsAccessTokenKey) || false
+// const debounce = (func, wait, immediate) => {
+//   let timeout = null
+//   return function (...args) {
+//     const context = this
+//     const later = () => {
+//       timeout = null
+//       if (!immediate) {
+//         func.apply(context, args)
+//       }
+//     }
+//     const callNow = immediate && !timeout
+//     clearTimeout(timeout)
+//     timeout = setTimeout(later, wait)
+//     if (callNow) {
+//       func.apply(context, args)
+//     }
+//   }
+// }
 
 const localStoragePrefix = 'snippets-settings:'
 
@@ -43,9 +42,10 @@ const storage = {
 }
 
 const store = createStore(rootReducer, {
-  settings: Object.assign(defaultSettings, {
-    accessToken
-  })
+  settings: Object.assign(
+    defaultSettings,
+    Object.keys(types).reduce(key => localStorage.getItem(key), {})
+  )
 }, applyMiddleware(thunk, settingsMiddleware(storage)))
 
 // store.subscribe(debounce(() => {
