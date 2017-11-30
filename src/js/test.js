@@ -43,7 +43,10 @@ const storage = {
 const store = createStore(rootReducer, {
   settings: Object.assign(
     defaultSettings,
-    Object.keys(types).reduce(key => localStorage.getItem(key), {})
+    Object.keys(types).reduce((accum, key) => {
+      accum[key] = localStorage.getItem(localStoragePrefix + key)
+      return accum
+    }, {})
   )
 }, applyMiddleware(thunk, settingsMiddleware(storage)))
 
