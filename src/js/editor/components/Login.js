@@ -3,7 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { accessToken } from '../actions/settings'
+import { actions as settingsActions } from '../actions/settings'
 import { loadSnippets } from '../actions/snippets'
 
 // TODO Move this to utility file
@@ -49,7 +49,7 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({
-    accessToken,
+    accessToken: settingsActions.accessToken,
     loadSnippets
   }, dispatch)
 

@@ -3,7 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { gistId } from '../actions/settings'
+import { actions as settingsActions } from '../actions/settings'
 import { loadSnippets } from '../actions/snippets'
 
 // TODO Move this to utility file
@@ -60,7 +60,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
-    gistId,
+    gistId: settingsActions.gistId,
     loadSnippets
   }, dispatch)
 

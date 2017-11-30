@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { SAVED, SAVE_FAILED } from '../actions'
 import snippets from './snippets'
-import settings from './settings'
+import { reducer as settings } from './settings'
 
 const saved = (state = true, action) => {
   switch (action.type) {

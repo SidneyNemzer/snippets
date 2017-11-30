@@ -1,7 +1,7 @@
 import { generateReducer } from '../generate-redux'
 import { types } from '../actions/settings'
 
-const defaultState = {
+export const defaultState = {
   [types.tabSize]: 2,
   [types.autoComplete]: true,
   [types.softTabs]: true,
@@ -12,7 +12,4 @@ const defaultState = {
   [types.gistId]: false
 }
 
-export default {
-  defaultState,
-  reducer: generateReducer(defaultState)
-}
+export const reducer = generateReducer(defaultState)

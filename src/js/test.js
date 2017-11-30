@@ -10,7 +10,6 @@ import thunk from 'redux-thunk'
 import rootReducer from './editor/reducers'
 import { types } from './editor/actions/settings'
 import { defaultState as defaultSettings } from './editor/reducers/settings'
-//import { saved } from './editor/actions'
 import createEditor from './editor'
 import settingsMiddleware from './editor/middleware/settings'
 

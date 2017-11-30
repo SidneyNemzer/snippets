@@ -1,6 +1,6 @@
 import { generateTypes, generateActions } from '../generate-redux'
 
-const types = {
+const typeNames = {
   tabSize: true,
   autoComplete: true,
   softTabs: true,
@@ -11,7 +11,5 @@ const types = {
   gistId: true
 }
 
-export default {
-  types: generateTypes(types),
-  actions: generateActions(types)
-}
+export const types = generateTypes(typeNames)
+export const actions = generateActions(typeNames)
