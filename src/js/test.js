@@ -12,6 +12,7 @@ import { types } from './editor/actions/settings'
 import { defaultState as defaultSettings } from './editor/reducers/settings'
 import createEditor from './editor'
 import settingsMiddleware from './editor/middleware/settings'
+import logger from 'redux-logger'
 
 // const debounce = (func, wait, immediate) => {
 //   let timeout = null
@@ -48,7 +49,7 @@ const store = createStore(rootReducer, {
       return accum
     }, {})
   )
-}, applyMiddleware(thunk, settingsMiddleware(storage)))
+}, applyMiddleware(thunk, settingsMiddleware(storage), logger))
 
 // store.subscribe(debounce(() => {
 //   const state = store.getState()
