@@ -37,7 +37,7 @@ const localStoragePrefix = 'snippets-settings:'
 
 const storage = {
   set: (path, data) => {
-    localStorage[localStoragePrefix + path] = data
+    localStorage[localStoragePrefix + path] = JSON.stringify(data)
   }
 }
 
@@ -45,7 +45,10 @@ const store = createStore(rootReducer, {
   settings: Object.assign(
     defaultSettings,
     Object.keys(types).reduce((accum, key) => {
-      accum[key] = localStorage.getItem(localStoragePrefix + key)
+      const storageValue = JSON.parse(localStorage.getItem(localStoragePrefix + key))
+      accum[key] = storageValue === null
+        ? defaultSettings[key]
+        : storageValue
       return accum
     }, {})
   )
