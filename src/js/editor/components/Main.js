@@ -174,23 +174,32 @@ try {
     )
   }
 
+  handleError(error) {
+    return error.status === 'Unauthorized'
+      ? <ErrorPage
+        title="Failed to load snippets"
+        message="Github didn't accept the access token"
+        actionButton="Reset access token"
+        onActionButtonClick={() => this.props.accessToken(false)}
+      />
+      : error.status === 'Not Found'
+        ? <ErrorPage
+          title="Failed to load snippets"
+          message="The gist ID '' doesn't seem to exist"
+          actionButton="Reset Gist ID"
+          onActionButtonClick={() => this.props.gistId(false)}
+        />
+        : <ErrorPage
+          title="Failed to load snippets"
+          message={error}
+        />
+  }
+
   render() {
     return RemoteData.split({
       loading: <Loading />,
       success: this.renderMain.bind(this),
-      failure: error => (
-        error.status === 'Unauthorized'
-          ? <ErrorPage
-            title="Failed to load snippets"
-            message="Github didn't accept the access token"
-            actionButton="Reset access token"
-            onActionButtonClick={() => this.props.accessToken(false)}
-          />
-          : <ErrorPage
-            title="Failed to load snippets"
-            message={error}
-          />
-      )
+      failure: this.handleError.bind(this)
     }, this.props.snippets)
   }
 }
