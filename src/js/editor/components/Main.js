@@ -58,7 +58,8 @@ class Main extends React.Component {
         } else {
           return this.selectSnippet(Object.keys(snippets)[1])
         }
-      }
+      },
+      else: () => {}
     }, snippets)
   }
 
