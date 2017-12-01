@@ -7,7 +7,7 @@ import {
   updateSnippet,
   deleteSnippet
 } from '../actions/snippets.js'
-import { accessToken } from '../actions/settings'
+import { actions as settingsActions } from '../actions/settings'
 import * as RemoteData from '../RemoteData'
 
 import Sidepane from './Sidepane'
@@ -215,7 +215,8 @@ const mapDispatchToProps = (dispatch) =>
     renameSnippet,
     updateSnippet,
     deleteSnippet,
-    accessToken
+    accessToken: settingsActions.accessToken,
+    gistId: settingsActions.gistId
   }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)
