@@ -85,7 +85,6 @@ const snippets = (state = defaultState, action) => {
       delete newState[action.id]
       return newState
     case LOADED_SNIPPETS:
-      console.log('Loaded snippets dispatched')
       return action.snippets
     default:
       return state
