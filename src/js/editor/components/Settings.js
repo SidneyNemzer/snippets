@@ -3,14 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import {
-  tabSize,
-  autoComplete,
-  softTabs,
-  theme,
-  lineWrap,
-  linter
-} from '../actions/settings.js'
+import { actions } from '../actions/settings.js'
 
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
@@ -249,13 +242,6 @@ const mapStateToProps = (state, props) => ({
 })
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({
-    tabSize,
-    autoComplete,
-    softTabs,
-    theme,
-    lineWrap,
-    linter
-  }, dispatch)
+  bindActionCreators(actions, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings)
