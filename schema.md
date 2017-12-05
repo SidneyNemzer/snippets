@@ -6,39 +6,47 @@ This file documents how Snippets stores data
 
 ```javascript
 {
-  saved: true, // Boolean
+  // Global errors 
+  // Just save errors for now
+  error: null, // String
 
-  snippets: RemoteData
-    { // Loaded
-      [id]: {
-        name: "Snippet", // String
-        body: "console.log('hi')" // String
-    },
-    // ...
-  },
+  snippets: {
+    loading: false, // Boolean
+    error: null, // String or null
+    data: {
+      [name]: {
+        deleted: false, // Boolean
+        renamed: 'new-name', // String or false
+        content: {
+          local: 'abcd', // String
+          remote: 'defg' // String
+      }
+    }
+  }
 
   settings: {
-    tabSize: 2, // Int
+    tabSize: 2,         // Int
     autoComplete: true, // Boolean
-    softTabs: true, // Boolean
-    theme: 'github', // 'github' or 'tomorrow_night'
-    lineWrap: false, // Boolean
-    linter: true, // Boolean
+    softTabs: true,     // Boolean
+    theme: 'github',    // 'github' or 'tomorrow_night'
+    lineWrap: false,    // Boolean
+    linter: true,       // Boolean
     accessToken: 'abcd', // false or String
-    gistId: 'abcd', // false or String
+    gistId: 'abcd',     // false or String
   }
 }
 ```
 
-## Chrome Sync Storage
+## Github Gist
 
 ```javascript
 {
-  snippets: {
-    // Same as Redux store.snippets
-  },
-  settings: {
-    // Same as Redux store.settings
+  public: false,
+  description: 'Snippets <link>'
+  files: {
+    [name]: {
+      content: 'content'
+    }
   }
 }
 ```
