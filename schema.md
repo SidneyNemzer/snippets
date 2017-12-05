@@ -8,7 +8,7 @@ This file documents how Snippets stores data
 {
   saved: true, // Boolean
 
-  sncdippets: RemoteData
+  snippets: RemoteData
     { // Loaded
       [id]: {
         name: "Snippet", // String
