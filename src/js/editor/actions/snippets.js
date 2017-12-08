@@ -1,7 +1,6 @@
 /* global crypto */
 
 import GithubApi from 'github'
-import * as RemoteData from '../RemoteData'
 
 const github = new GithubApi({
   headers: {
@@ -14,36 +13,27 @@ export const RENAME_SNIPPET = 'RENAME_SNIPPET'
 export const UPDATE_SNIPPET = 'UPDATE_SNIPPET'
 export const DELETE_SNIPPET = 'DELETE_SNIPPET'
 export const LOADED_SNIPPETS = 'LOADED_SNIPPETS'
+export const UPLOADED_SNIPPETS = 'UPLOADED_SNIPPETS'
 
-// Generate a unique ID using the crypto API
-// Source: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-function uuidv4() {
-  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-  )
-}
-
-export const createSnippet = name => ({
-  type: CREATE_SNIPPET,
-  id: uuidv4(),
-  name
+export const createSnippet = () => ({
+  type: CREATE_SNIPPET
 })
 
-export const renameSnippet = (id, newName) => ({
+export const renameSnippet = (oldName, newName) => ({
   type: RENAME_SNIPPET,
-  id,
+  oldName,
   newName
 })
 
-export const updateSnippet = (id, newBody) => ({
+export const updateSnippet = (name, newBody) => ({
   type: UPDATE_SNIPPET,
-  id,
+  name,
   newBody
 })
 
-export const deleteSnippet = id => ({
+export const deleteSnippet = name => ({
   type: DELETE_SNIPPET,
-  id
+  name
 })
 
 export const loadSnippets = (token, gistId) => dispatch => {
@@ -51,9 +41,9 @@ export const loadSnippets = (token, gistId) => dispatch => {
     type: 'token',
     token
   })
-  github.gists.get({id: gistId})
-    .then(({data: gist}) => {
-      dispatch(loadedSnippets(RemoteData.success(
+  github.gists.get({ id: gistId })
+    .then(({ data: gist }) => {
+      dispatch(loadedSnippets(
         Object.entries(gist.files)
           .reduce((snippets, [ fileName, { truncated, content } ]) => {
             snippets[fileName] = {
@@ -62,12 +52,13 @@ export const loadSnippets = (token, gistId) => dispatch => {
             }
             return snippets
           }, {})
-      )))
+      ))
     })
-    .catch(error => dispatch(loadedSnippets(RemoteData.failure(error))))
+    .catch(error => dispatch(loadedSnippets(error)))
 }
 
-export const loadedSnippets = snippets => ({
+export const loadedSnippets = (error, snippets = {}) => ({
   type: LOADED_SNIPPETS,
-  snippets
+  snippets,
+  error
 })
