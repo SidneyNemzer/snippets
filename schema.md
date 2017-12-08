@@ -6,7 +6,7 @@ This file documents how Snippets stores data
 
 ```javascript
 {
-  // Global errors 
+  // Global errors
   // Just save errors for now
   error: null, // String
 
@@ -19,7 +19,7 @@ This file documents how Snippets stores data
         renamed: 'new-name', // String or false
         content: {
           local: 'abcd', // String
-          remote: 'defg' // String
+          remote: 'defg' // String or false
       }
     }
   }
