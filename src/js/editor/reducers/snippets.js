@@ -3,9 +3,10 @@ import {
   RENAME_SNIPPET,
   UPDATE_SNIPPET,
   DELETE_SNIPPET,
-  LOADED_SNIPPETS
+  LOADED_SNIPPETS,
+  UPLOADED_SNIPPETS
 } from '../actions/snippets.js'
-import * as RemoteData from '../RemoteData'
+import { mergeDeep as merge } from '../deep-merge.js'
 
 /* eslint-disable no-unused-vars */
 const welcomeSnippet = `
@@ -46,46 +47,96 @@ HAPPY CODING!
 */
 `
 
-const defaultState = RemoteData.loading()
+const nextUniqueName = (name, existingNames, append = 0) =>
+  existingNames.includes(name + (append ? '-' + append : ''))
+    ? nextUniqueName(name, existingNames, append + 1)
+    : name + (append ? '-' + append : '')
+
+const defaultState = {
+  loading: false,
+  error: null,
+  data: null
+}
+
+const mergeState = oldState => newState =>
+  merge({}, oldState, newState)
 
 const snippets = (state = defaultState, action) => {
+  const update = mergeState(state)
   switch (action.type) {
     case CREATE_SNIPPET:
-      return Object.assign({},
-        state,
-        {
-          [action.id]: {
-            name: action.name,
-            body: ''
+      return !state.loading && state.data
+        ? update({
+          data: {
+            [nextUniqueName('untitled', Object.keys(state.data))]: {
+              deleted: false,
+              renamed: false,
+              content: {
+                local: 'abcd',
+                remote: false
+              }
+            }
           }
-        }
-      )
+        })
+        : state
     case RENAME_SNIPPET:
-      return Object.assign({},
-        state,
-        {
-          [action.id]: {
-            name: action.newName,
-            body: state[action.id].body
+      return !state.loading && state.data && state.data[action.oldName]
+        ? update({
+          data: {
+            [action.oldName]: {
+              renamed: action.newName
+            }
           }
-        }
-      )
+        })
+        : state
     case UPDATE_SNIPPET:
-      return Object.assign({},
-        state,
-        {
-          [action.id]: {
-            name: state[action.id].name,
-            body: action.newBody
+      return !state.loading && state.data
+        ? update({
+          data: {
+            [action.name]: {
+              content: {
+                local: action.newBody
+              }
+            }
           }
-        }
-      )
+        })
+        : state
     case DELETE_SNIPPET:
-      const newState = Object.assign({}, state)
-      delete newState[action.id]
-      return newState
+      return !state.loading && state.data
+        ? update({
+          data: {
+            [action.name]: {
+              deleted: true
+            }
+          }
+        })
+        : state
     case LOADED_SNIPPETS:
-      return action.snippets
+      return action.error
+        ? update({ loading: false, error: action.error })
+        : update({ loading: false, data: action.snippets })
+    case UPLOADED_SNIPPETS:
+      return action.error
+        ? update({ loading: false, error: action.error })
+        : update({
+          loading: false,
+          data: Object.entries(state.data)
+            .reduce((accum, [name, snippet]) => {
+              if (!snippet.deleted) {
+                accum[snippet.renamed ? snippet.renamed : name] =
+                  merge(snippet, {
+                    renamed: false,
+                    content: {
+                      local: snippet.local,
+                      remote: snippet.local
+                    }
+                  })
+              }
+              return accum
+            },
+            {}
+            )
+        })
     default:
       return state
   }
