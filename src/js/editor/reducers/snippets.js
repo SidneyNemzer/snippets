@@ -72,7 +72,7 @@ const snippets = (state = defaultState, action) => {
               deleted: false,
               renamed: false,
               content: {
-                local: 'abcd',
+                local: '',
                 remote: false
               }
             }

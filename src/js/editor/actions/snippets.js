@@ -1,5 +1,3 @@
-/* global crypto */
-
 import GithubApi from 'github'
 
 const github = new GithubApi({
