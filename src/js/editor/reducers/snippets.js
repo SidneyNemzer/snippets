@@ -114,7 +114,21 @@ const snippets = (state = defaultState, action) => {
     case LOADED_SNIPPETS:
       return action.error
         ? update({ loading: false, error: action.error })
-        : update({ loading: false, data: action.snippets })
+        : update({
+          loading: false,
+          data: Object.entries(action.snippets)
+            .reduce((snippets, [ name, { body } ]) => {
+              snippets[name] = {
+                deleted: false,
+                renamed: false,
+                content: {
+                  local: body,
+                  remote: body
+                }
+              }
+              return snippets
+            }, {})
+        })
     case UPLOADED_SNIPPETS:
       return action.error
         ? update({ loading: false, error: action.error })
