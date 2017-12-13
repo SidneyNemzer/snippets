@@ -8,7 +8,6 @@ import {
   deleteSnippet
 } from '../actions/snippets.js'
 import { actions as settingsActions } from '../actions/settings'
-import * as RemoteData from '../RemoteData'
 
 import Sidepane from './Sidepane'
 import Header from './Header'
@@ -37,30 +36,28 @@ class Main extends React.Component {
 
   selectPreviousSnippet() {
     const { selectedSnippet } = this.state
-    const { snippets } = this.props
+    const { snippets: snippetsState } = this.props
 
-    RemoteData.ifSuccess({
-      then: snippets => {
-        if (Object.keys(snippets).length < 2) {
-          return this.selectSnippet(null)
-        }
+    if (snippetsState.loaded && snippetsState.data) {
+      const { data: snippets } = snippetsState
+      if (Object.keys(snippets).length < 2) {
+        return this.selectSnippet(null)
+      }
 
-        if (selectedSnippet === null) {
-          return this.selectSnippet(Object.keys(snippets)[0])
-        }
+      if (selectedSnippet === null) {
+        return this.selectSnippet(Object.keys(snippets)[0])
+      }
 
-        const selectedIndex = Object.keys(snippets).findIndex(snippetId => {
-          return snippetId === selectedSnippet
-        })
+      const selectedIndex = Object.keys(snippets).findIndex(snippetId => {
+        return snippetId === selectedSnippet
+      })
 
-        if (selectedIndex > 0) {
-          return this.selectSnippet(Object.keys(snippets)[selectedIndex - 1])
-        } else {
-          return this.selectSnippet(Object.keys(snippets)[1])
-        }
-      },
-      else: () => {}
-    }, snippets)
+      if (selectedIndex > 0) {
+        return this.selectSnippet(Object.keys(snippets)[selectedIndex - 1])
+      } else {
+        return this.selectSnippet(Object.keys(snippets)[1])
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -118,7 +115,7 @@ try {
     if (selectedSnippet !== null) {
       return (
         <Editor
-          value={snippets[selectedSnippet].body}
+          value={snippets[selectedSnippet].content.local}
           onChange={this.handleEditorChange}
         />
       )
@@ -196,11 +193,14 @@ try {
   }
 
   render() {
-    return RemoteData.split({
-      loading: <Loading />,
-      success: this.renderMain.bind(this),
-      failure: this.handleError.bind(this)
-    }, this.props.snippets)
+    const { snippets: snippetsState } = this.props
+    if (snippetsState.loading || !snippetsState.data) {
+      return <Loading />
+    } else if (snippetsState.error) {
+      return this.handleError(snippetsState.error)
+    } else {
+      return this.renderMain(snippetsState.data)
+    }
   }
 }
 

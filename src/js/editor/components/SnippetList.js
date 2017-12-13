@@ -7,15 +7,15 @@ const SnippetList = props => (
   <List>
     {
       Object.entries(props.snippets)
-        .map(([snippetId, snippet]) => (
+        .map(([name, snippet]) => (
           <SnippetSelector
-            key={snippetId}
-            selectSnippet={() => props.selectSnippet(snippetId)}
-            selected={props.selectedSnippet === snippetId}
-            updateName={newName => props.renameSnippet(snippetId, newName)}
-            name={snippet.name}
-            deleteSnippet={() => props.deleteSnippet(snippetId)}
-            runSnippet={() => props.runSnippet(snippet.body)}
+            key={name}
+            selectSnippet={() => props.selectSnippet(name)}
+            selected={props.selectedSnippet === name}
+            updateName={newName => props.renameSnippet(name, newName)}
+            name={name}
+            deleteSnippet={() => props.deleteSnippet(name)}
+            runSnippet={() => props.runSnippet(snippet.content.local)}
           />
         ))
     }
