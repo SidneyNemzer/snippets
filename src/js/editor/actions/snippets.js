@@ -44,6 +44,7 @@ export const loadSnippets = (token, gistId) => dispatch => {
   github.gists.get({ id: gistId })
     .then(({ data: gist }) => {
       dispatch(loadedSnippets(
+        null,
         Object.entries(gist.files)
           .reduce((snippets, [ fileName, { truncated, content } ]) => {
             snippets[fileName] = {
