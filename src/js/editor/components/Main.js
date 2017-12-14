@@ -129,19 +129,22 @@ try {
     }
   }
 
-  renderSaveMessage() {
-    const { saved } = this.props
-    if (saved === true) {
-      return <span>Saved</span>
-    } else if (saved === false) {
-      return <span>Saving...</span>
-    } else if (typeof saved === 'object') {
-      if (saved.moreInfo) {
-        return <a className="save-error" target="_blank" href={saved.moreInfo}>{saved.reason}</a>
-      } else {
-        return <span className="save-error">{saved.reason}</span>
-      }
-    }
+  isSaved(snippets) {
+    return !Object.values(snippets)
+      .find(({ content: { local, remote }, deleted, renamed }) =>
+        local !== remote || deleted || renamed
+      )
+  }
+
+  renderSaveMessage(snippets) {
+    return (
+      <span>
+        {this.isSaved(snippets)
+          ? 'Saved'
+          : 'You have unsaved changes'
+        }
+      </span>
+    )
   }
 
   renderMain(snippets) {
@@ -163,7 +166,7 @@ try {
         />
         <div className="editor-container">
           <Header>
-            {this.renderSaveMessage()}
+            {this.renderSaveMessage(snippets)}
           </Header>
           {this.renderEditor(snippets)}
         </div>
@@ -205,8 +208,7 @@ try {
 }
 
 const mapStateToProps = (state, props) => ({
-  snippets: state.snippets,
-  saved: state.saved
+  snippets: state.snippets
 })
 
 const mapDispatchToProps = (dispatch) =>
