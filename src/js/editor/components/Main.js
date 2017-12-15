@@ -208,7 +208,20 @@ try {
 }
 
 const mapStateToProps = (state, props) => ({
-  snippets: state.snippets
+  snippets: {
+    loading: state.snippets.loading,
+    error: state.snippets.error,
+    data:
+      state.snippets.data
+        ? Object.entries(state.snippets.data)
+          .reduce((snippets, [name, snippet]) => {
+            if (!snippet.deleted) {
+              snippets[name] = snippet
+            }
+            return snippets
+          }, {})
+        : state.snippets.data
+  }
 })
 
 const mapDispatchToProps = (dispatch) =>
