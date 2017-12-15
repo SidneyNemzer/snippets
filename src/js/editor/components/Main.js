@@ -37,7 +37,7 @@ class Main extends React.Component {
     const { selectedSnippet } = this.state
     const { snippets: snippetsState } = this.props
 
-    if (snippetsState.loaded && snippetsState.data) {
+    if (!snippetsState.loading && snippetsState.data) {
       const { data: snippets } = snippetsState
       if (Object.keys(snippets).length < 2) {
         return this.selectSnippet(null)
