@@ -22,8 +22,7 @@ class Main extends React.Component {
     super(props)
 
     this.state = {
-      selectedSnippet: null,
-      confirmingDelete: false
+      selectedSnippet: null
     }
 
     this.selectSnippet = this.selectSnippet.bind(this)
@@ -160,7 +159,6 @@ try {
           renameSnippet={this.props.renameSnippet}
           createSnippet={this.props.createSnippet}
           deleteSnippet={this.deleteSnippet}
-          confirmingDelete={this.state.confirmingDelete}
           runSnippet={this.runSnippet}
           handleOpenSettings={this.props.handleOpenSettings}
         />
