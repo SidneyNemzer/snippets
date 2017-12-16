@@ -84,7 +84,9 @@ const snippets = (state = defaultState, action) => {
         ? update({
           data: {
             [action.oldName]: {
-              renamed: action.newName
+              renamed: action.newName === action.oldName
+                ? false
+                : action.newName
             }
           }
         })
