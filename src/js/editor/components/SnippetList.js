@@ -13,7 +13,7 @@ const SnippetList = props => (
             selectSnippet={() => props.selectSnippet(name)}
             selected={props.selectedSnippet === name}
             updateName={newName => props.renameSnippet(name, newName)}
-            name={name}
+            name={snippet.renamed || name}
             deleteSnippet={() => props.deleteSnippet(name)}
             runSnippet={() => props.runSnippet(snippet.content.local)}
           />
