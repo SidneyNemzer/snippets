@@ -26,10 +26,11 @@ const rootReducer = combineReducers({
 const reducer = (state, action) => {
   const newState = rootReducer(state, action)
 
-  if (newState !== state &&
-   action.type !== '@@redux/INIT' &&
-   action.type !== SAVED &&
-   action.type !== SAVE_FAILED
+  if (
+    newState !== state
+    && action.type !== '@@redux/INIT'
+    && action.type !== SAVED
+    && action.type !== SAVE_FAILED
   ) {
     newState.saved = false
   }
