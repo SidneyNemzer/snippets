@@ -80,7 +80,7 @@ const snippets = (state = defaultState, action) => {
         })
         : state
     case RENAME_SNIPPET:
-      return !state.loading && state.data && state.data[action.oldName]
+      return !state.loading && state.data && state.data[action.oldName] && action.newName
         ? update({
           data: {
             [action.oldName]: {
