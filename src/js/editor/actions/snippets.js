@@ -11,7 +11,7 @@ export const RENAME_SNIPPET = 'RENAME_SNIPPET'
 export const UPDATE_SNIPPET = 'UPDATE_SNIPPET'
 export const DELETE_SNIPPET = 'DELETE_SNIPPET'
 export const LOADED_SNIPPETS = 'LOADED_SNIPPETS'
-export const UPLOADED_SNIPPETS = 'UPLOADED_SNIPPETS'
+export const SAVED_SNIPPETS = 'SAVED_SNIPPETS'
 
 export const createSnippet = () => ({
   type: CREATE_SNIPPET
@@ -59,5 +59,35 @@ export const loadSnippets = (token, gistId) => dispatch => {
 export const loadedSnippets = (error, snippets = {}) => ({
   type: LOADED_SNIPPETS,
   snippets,
+  error
+})
+
+export const saveSnippets = (token, gistId) => (dispatch, getState) => {
+  const { data } = getState()
+  console.log('data', data)
+  if (!data) return
+
+  const files = Object.entries()
+    .reduce((files, [name, snippet]) => {
+      files[name] =
+        snippet.deleted
+          ? null
+          : {
+            content: snippet.local,
+            filename: snippet.renamed || undefined
+          }
+    }, {})
+  console.log('files', files)
+  github.authenticate({ type: 'token', token })
+  github.gists.edit({
+    id: gistId,
+    files
+  })
+    .then(() => dispatch(savedSnippets(null)))
+    .catch(error => dispatch(savedSnippets(error)))
+}
+
+export const savedSnippets = error => ({
+  type: 'SAVED_SNIPPETS',
   error
 })
