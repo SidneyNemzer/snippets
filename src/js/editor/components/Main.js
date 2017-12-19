@@ -5,7 +5,8 @@ import {
   createSnippet,
   renameSnippet,
   updateSnippet,
-  deleteSnippet
+  deleteSnippet,
+  saveSnippets
 } from '../actions/snippets.js'
 import { actions as settingsActions } from '../actions/settings'
 
@@ -145,14 +146,14 @@ try {
   }
 
   renderSaveMessage(snippets) {
-    return (
-      <span>
-        {this.isSaved(snippets)
-          ? 'Saved'
-          : 'You have unsaved changes'
-        }
+    const { accessToken, gistId } = this.props.settings
+    return this.isSaved(snippets)
+      ? <span>Saved</span>
+      : <span
+        onClick={() => this.props.saveSnippets(accessToken, gistId)}
+      >
+        You have unsaved changes -- click to save
       </span>
-    )
   }
 
   renderMain(snippets) {
@@ -215,6 +216,7 @@ try {
 }
 
 const mapStateToProps = (state, props) => ({
+  settings: state.settings,
   snippets: {
     loading: state.snippets.loading,
     error: state.snippets.error,
@@ -237,6 +239,7 @@ const mapDispatchToProps = (dispatch) =>
     renameSnippet,
     updateSnippet,
     deleteSnippet,
+    saveSnippets,
     accessToken: settingsActions.accessToken,
     gistId: settingsActions.gistId
   }, dispatch)

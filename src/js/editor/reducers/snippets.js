@@ -143,8 +143,8 @@ const snippets = (state = defaultState, action) => {
                   renamed: false,
                   deleted: false,
                   content: {
-                    local: snippet.local,
-                    remote: snippet.local
+                    local: snippet.content.local,
+                    remote: snippet.content.local
                   }
                 }
               }

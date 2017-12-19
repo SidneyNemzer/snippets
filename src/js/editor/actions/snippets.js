@@ -63,19 +63,20 @@ export const loadedSnippets = (error, snippets = {}) => ({
 })
 
 export const saveSnippets = (token, gistId) => (dispatch, getState) => {
-  const { data } = getState()
+  const { snippets: { data } } = getState()
   console.log('data', data)
   if (!data) return
 
-  const files = Object.entries()
+  const files = Object.entries(data)
     .reduce((files, [name, snippet]) => {
       files[name] =
         snippet.deleted
           ? null
           : {
-            content: snippet.local,
+            content: snippet.content.local,
             filename: snippet.renamed || undefined
           }
+      return files
     }, {})
   console.log('files', files)
   github.authenticate({ type: 'token', token })
