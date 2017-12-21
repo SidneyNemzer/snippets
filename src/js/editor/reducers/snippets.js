@@ -134,8 +134,9 @@ const snippets = (state = defaultState, action) => {
     case SAVED_SNIPPETS:
       return action.error
         ? update({ loading: false, error: action.error })
-        : update({
+        : {
           loading: false,
+          error: state.error,
           data: Object.entries(state.data)
             .reduce((accum, [name, snippet]) => {
               if (!snippet.deleted) {
@@ -152,7 +153,7 @@ const snippets = (state = defaultState, action) => {
             },
             {}
             )
-        })
+        }
     default:
       return state
   }
