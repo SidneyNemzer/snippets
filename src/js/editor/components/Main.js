@@ -64,14 +64,23 @@ class Main extends React.Component {
 
   componentWillReceiveProps({ snippets: { data: newData } }) {
     const { snippets: { data } } = this.props
+    const { selectedSnippet } = this.state
     if (
       (newData && Object.keys(newData))
       && (!data || !Object.keys(data))
-      && !this.state.selectSnippet
+      && !selectedSnippet
     ) {
       this.setState({
         selectedSnippet: Object.keys(newData)[0]
       })
+    } else if (!newData[selectedSnippet]) {
+      if (Object.keys(newData)) {
+        this.setState({
+          selectedSnippet: Object.keys(newData)[0]
+        })
+      } else {
+        this.setState({ selectedSnippet: null })
+      }
     }
   }
 
