@@ -151,16 +151,9 @@ try {
     }
   }
 
-  isSaved(snippets) {
-    return !Object.values(snippets)
-      .find(({ content: { local, remote }, deleted, renamed }) =>
-        local !== remote || deleted || renamed
-      )
-  }
-
   renderSaveMessage(snippets) {
     const { accessToken, gistId } = this.props.settings
-    return this.isSaved(snippets)
+    return this.props.saved
       ? <span>Saved</span>
       : <span
         onClick={() => this.props.saveSnippets(accessToken, gistId)}
@@ -243,7 +236,16 @@ const mapStateToProps = (state, props) => ({
             return snippets
           }, {})
         : state.snippets.data
-  }
+  },
+  saved:
+    state.snippets.data
+      ? !Object.entries(state.snippets.data)
+        .find(([name, { content: { local, remote }, deleted, renamed }]) => {
+          const unsaved = local !== remote || deleted || renamed
+          console.log(name, ':', unsaved)
+          return unsaved
+        })
+      : true
 })
 
 const mapDispatchToProps = (dispatch) =>
