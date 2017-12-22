@@ -74,7 +74,11 @@ class Main extends React.Component {
         selectedSnippet: Object.keys(newData)[0]
       })
     } else if (!newData[selectedSnippet]) {
-      if (Object.keys(newData)) {
+      if (newData[data[selectedSnippet].renamed]) {
+        this.setState({
+          selectedSnippet: data[selectedSnippet].renamed
+        })
+      } else if (Object.keys(newData)) {
         this.setState({
           selectedSnippet: Object.keys(newData)[0]
         })
