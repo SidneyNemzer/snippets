@@ -12,6 +12,7 @@ This file documents how Snippets stores data
 
   snippets: {
     loading: false, // Boolean
+    saving: false, // Boolean
     error: null, // String or null
     data: {
       [name]: {

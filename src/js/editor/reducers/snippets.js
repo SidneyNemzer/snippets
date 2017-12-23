@@ -4,6 +4,7 @@ import {
   UPDATE_SNIPPET,
   DELETE_SNIPPET,
   LOADED_SNIPPETS,
+  SAVING_SNIPPETS,
   SAVED_SNIPPETS
 } from '../actions/snippets.js'
 import { mergeDeep as merge } from '../deep-merge.js'
@@ -131,11 +132,14 @@ const snippets = (state = defaultState, action) => {
               return snippets
             }, {})
         })
+    case SAVING_SNIPPETS:
+      return update({ saving: true })
     case SAVED_SNIPPETS:
       return action.error
-        ? update({ loading: false, error: action.error })
+        ? update({ loading: false, saving: false, error: action.error })
         : {
           loading: false,
+          saving: false,
           error: state.error,
           data: Object.entries(state.data)
             .reduce((accum, [name, snippet]) => {

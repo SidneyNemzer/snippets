@@ -11,6 +11,7 @@ export const RENAME_SNIPPET = 'RENAME_SNIPPET'
 export const UPDATE_SNIPPET = 'UPDATE_SNIPPET'
 export const DELETE_SNIPPET = 'DELETE_SNIPPET'
 export const LOADED_SNIPPETS = 'LOADED_SNIPPETS'
+export const SAVING_SNIPPETS = 'SAVING_SNIPPETS'
 export const SAVED_SNIPPETS = 'SAVED_SNIPPETS'
 
 export const createSnippet = () => ({
@@ -67,6 +68,8 @@ export const saveSnippets = (token, gistId) => (dispatch, getState) => {
   console.log('data', data)
   if (!data) return
 
+  dispatch({ type: SAVING_SNIPPETS })
+
   const files = Object.entries(data)
     .reduce((files, [name, snippet]) => {
       files[name] =
@@ -89,6 +92,6 @@ export const saveSnippets = (token, gistId) => (dispatch, getState) => {
 }
 
 export const savedSnippets = error => ({
-  type: 'SAVED_SNIPPETS',
+  type: SAVED_SNIPPETS,
   error
 })

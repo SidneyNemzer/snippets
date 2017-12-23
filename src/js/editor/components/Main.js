@@ -18,6 +18,12 @@ import ErrorPage from './ErrorPage'
 
 import logo from '../../../../images/logo-transparent.png'
 
+const saveStatus = {
+  SAVING: 'SAVING',
+  SAVED: 'SAVED',
+  UNSAVED: 'UNSAVED'
+}
+
 class Main extends React.Component {
   constructor(props) {
     super(props)
@@ -153,14 +159,23 @@ try {
 
   renderSaveMessage(snippets) {
     const { accessToken, gistId } = this.props.settings
-    return this.props.saved
-      ? <span>Saved</span>
-      : <span
-        style={{cursor: 'pointer'}}
-        onClick={() => this.props.saveSnippets(accessToken, gistId)}
-      >
-        You have unsaved changes -- click to save
-      </span>
+    switch (this.props.saveStatus) {
+      case saveStatus.SAVED:
+        return <span>Saved</span>
+      case saveStatus.SAVING:
+        return <span>Saving...</span>
+      case saveStatus.UNSAVED:
+        return (
+          <span
+            style={{cursor: 'pointer'}}
+            onClick={() => this.props.saveSnippets(accessToken, gistId)}
+          >
+            You have unsaved changes -- click to save
+          </span>
+        )
+      default:
+        throw new Error('Unexpected save status:' + this.props.saveStatus)
+    }
   }
 
   renderMain(snippets) {
@@ -238,15 +253,18 @@ const mapStateToProps = (state, props) => ({
           }, {})
         : state.snippets.data
   },
-  saved:
-    state.snippets.data
-      ? !Object.entries(state.snippets.data)
-        .find(([name, { content: { local, remote }, deleted, renamed }]) => {
-          const unsaved = local !== remote || deleted || renamed
-          console.log(name, ':', unsaved)
-          return unsaved
-        })
-      : true
+  saveStatus:
+    state.snippets.saving
+      ? saveStatus.SAVING
+      : state.snippets.data
+        ? Object.entries(state.snippets.data)
+          .find(([name, { content: { local, remote }, deleted, renamed }]) => {
+            const unsaved = local !== remote || deleted || renamed
+            return unsaved
+          })
+          ? saveStatus.UNSAVED
+          : saveStatus.SAVED
+        : saveStatus.SAVED
 })
 
 const mapDispatchToProps = (dispatch) =>
