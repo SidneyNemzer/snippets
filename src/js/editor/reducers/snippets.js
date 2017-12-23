@@ -136,7 +136,7 @@ const snippets = (state = defaultState, action) => {
       return update({ saving: true })
     case SAVED_SNIPPETS:
       return action.error
-        ? update({ loading: false, saving: false, error: action.error })
+        ? { loading: false, saving: false, error: action.error, data: state.data }
         : {
           loading: false,
           saving: false,
