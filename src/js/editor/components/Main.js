@@ -215,7 +215,7 @@ try {
       : error.status === 'Not Found'
         ? <ErrorPage
           title="Failed to load snippets"
-          message="The gist ID '' doesn't seem to exist"
+          message={`The gist ID '${this.props.settings.gistId}' doesn't seem to exist`}
           actionButton="Reset Gist ID"
           onActionButtonClick={() => this.props.gistId(false)}
         />
