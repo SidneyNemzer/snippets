@@ -159,6 +159,18 @@ try {
 
   renderSaveMessage(snippets) {
     const { accessToken, gistId } = this.props.settings
+    if (this.props.snippets.error) {
+      return (
+        <span
+          style={{cursor: 'pointer'}}
+          onClick={() => this.props.saveSnippets(accessToken, gistId)}
+        >
+          Error while saving:{' '}
+          {this.props.snippets.error.message}{' '}
+          -- click to retry
+        </span>
+      )
+    }
     switch (this.props.saveStatus) {
       case saveStatus.SAVED:
         return <span>Saved</span>
@@ -229,7 +241,7 @@ try {
     const { snippets: snippetsState } = this.props
     if (snippetsState.loading || !snippetsState.data) {
       return <Loading />
-    } else if (snippetsState.error) {
+    } else if (snippetsState.error && !snippetsState.data) {
       return this.handleError(snippetsState.error)
     } else {
       return this.renderMain(snippetsState.data)
