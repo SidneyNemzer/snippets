@@ -19,7 +19,15 @@ module.exports = {
   devServer: {
     contentBase: './static',
     watchContentBase: true,
-    publicPath: '/'
+    publicPath: '/',
+    before: app => {
+      app.use('/', (req, res, next) => {
+        if (req.path === '/') {
+          return res.redirect('/test.html')
+        }
+        next()
+      })
+    }
   },
 
   devtool: 'cheap-module-source-map',
