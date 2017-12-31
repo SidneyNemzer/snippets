@@ -20,6 +20,7 @@ module.exports = {
     contentBase: './static',
     watchContentBase: true,
     publicPath: '/',
+    clientLogLevel: 'none',
     before: app => {
       app.use('/', (req, res, next) => {
         if (req.path === '/') {
