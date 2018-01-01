@@ -61,20 +61,6 @@ module.exports = {
     // This makes missing exports an error instead of a warning
     strictExportPresence: true,
     rules: [
-      // Run ESLint on JavaScript files
-      {
-        test: /\.(js|jsx)$/,
-        enforce: 'pre',
-        use: [
-          {
-            options: {
-              eslintPath: require.resolve('eslint')
-            },
-            loader: require.resolve('eslint-loader')
-          }
-        ],
-        include: path.resolve('./src')
-      },
       {
         // "oneOf" will traverse its loaders until one matchs the requirements.
         // When no loader matches it will fall back to the "file" loader at the
