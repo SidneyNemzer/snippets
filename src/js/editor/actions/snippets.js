@@ -6,6 +6,28 @@ const github = new GithubApi({
   }
 })
 
+const processGithubError = error => {
+  console.log('process error', error)
+  if (error.message) {
+    if (error.message === 'Bad credentials') {
+      return 'Invalid access token'
+    } else if (error.message === 'Failed to fetch') {
+      return 'Are you connected to the internet?'
+    } else {
+      try {
+        const parsed = JSON.parse(error.message)
+        if (parsed.message) {
+          return parsed.message
+        }
+        return parsed
+      } catch (e) {
+        return error.message
+      }
+    }
+  }
+  return error
+}
+
 export const CREATE_SNIPPET = 'CREATE_SNIPPET'
 export const RENAME_SNIPPET = 'RENAME_SNIPPET'
 export const UPDATE_SNIPPET = 'UPDATE_SNIPPET'
@@ -87,7 +109,7 @@ export const saveSnippets = (token, gistId) => (dispatch, getState) => {
     files
   })
     .then(() => dispatch(savedSnippets(null)))
-    .catch(error => dispatch(savedSnippets(error)))
+    .catch(error => dispatch(savedSnippets(processGithubError(error))))
 }
 
 export const savedSnippets = error => ({
