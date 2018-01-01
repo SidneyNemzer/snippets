@@ -239,7 +239,7 @@ try {
 
   render() {
     const { snippets: snippetsState } = this.props
-    if (snippetsState.loading || !snippetsState.data) {
+    if (snippetsState.loading) {
       return <Loading />
     } else if (snippetsState.error && !snippetsState.data) {
       return this.handleError(snippetsState.error)
