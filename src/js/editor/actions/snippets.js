@@ -66,7 +66,6 @@ export const loadedSnippets = (error, snippets = {}) => ({
 
 export const saveSnippets = (token, gistId) => (dispatch, getState) => {
   const { snippets: { data } } = getState()
-  console.log('data', data)
   if (!data) return
 
   dispatch({ type: SAVING_SNIPPETS })
@@ -82,7 +81,6 @@ export const saveSnippets = (token, gistId) => (dispatch, getState) => {
           }
       return files
     }, {})
-  console.log('files', files)
   github.authenticate({ type: 'token', token })
   github.gists.edit({
     id: gistId,
