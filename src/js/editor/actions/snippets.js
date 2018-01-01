@@ -35,10 +35,11 @@ export const deleteSnippet = name => ({
   name
 })
 
-export const loadSnippets = (token, gistId) => dispatch => {
+export const loadSnippets = () => (dispatch, getState) => {
+  const { settings: { accessToken, gistId } } = getState()
   github.authenticate({
     type: 'token',
-    token
+    token: accessToken
   })
   github.gists.get({ id: gistId })
     .then(({ data: gist }) => {

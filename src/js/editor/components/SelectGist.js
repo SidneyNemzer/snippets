@@ -31,7 +31,7 @@ class SelectGist extends React.Component {
     const { accessToken } = this.props
     this.props.gistId(this.state.gistIdInput)
     if (accessToken) {
-      this.props.loadSnippets(accessToken, this.state.gistIdInput)
+      this.props.loadSnippets()
     }
   }
 

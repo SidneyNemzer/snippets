@@ -30,7 +30,7 @@ class App extends React.Component {
   componentDidMount() {
     const { accessToken, gistId } = this.props.settings
     if (accessToken && gistId) {
-      this.props.loadSnippets(accessToken, gistId)
+      this.props.loadSnippets()
     }
   }
 
