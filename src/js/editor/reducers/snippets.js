@@ -54,7 +54,7 @@ const nextUniqueName = (name, existingNames, append = 0) =>
     : name + (append ? '-' + append : '')
 
 const defaultState = {
-  loading: false,
+  loading: true,
   error: null,
   data: null
 }
