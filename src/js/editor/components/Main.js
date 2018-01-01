@@ -166,7 +166,7 @@ try {
           onClick={() => this.props.saveSnippets(accessToken, gistId)}
         >
           Error while saving:{' '}
-          {this.props.snippets.error.message}{' '}
+          {this.props.snippets.error}{' '}
           -- click to retry
         </span>
       )
