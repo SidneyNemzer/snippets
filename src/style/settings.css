@@ -57,16 +57,20 @@
   margin-top: 20px;
 }
 
-.settings .sync-description {
-  color: gray;
-  font-style: italic;
-  padding: 20px;
-  text-align: center;
+.settings .secondary-with-text-input {
+  margin: -13px 11px 0 0;
+}
+
+.settings .gist-id-input {
+  width: 34%;
+}
+
+.settings .settings-input {
+  margin-right: 20px;
 }
 
 .settings .tab-size-input {
   width: 50px;
-  margin-right: 20px;
 }
 
 .settings .tab-size-input input {

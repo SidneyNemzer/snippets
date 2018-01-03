@@ -4,11 +4,13 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { actions } from '../actions/settings.js'
+import { loadSnippets } from '../actions/snippets.js'
 
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
 import ArrowBackIcon from 'material-ui-icons/ArrowBack'
+import RefreshIcon from 'material-ui-icons/Refresh'
 import Button from 'material-ui/Button'
 import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
 import Divider from 'material-ui/Divider'
@@ -157,10 +159,49 @@ class Settings extends React.Component {
           <SettingsGroup
             label="Sync"
           >
-            <p className="sync-description">
-              Your snippets are being synced to your Google account
-              (if you&apos;re signed into Chrome)
-            </p>
+            <List>
+              <ListItem>
+                <ListItemText
+                  primary="Github Access Token"
+                  secondary="Token is hidden for security"
+                />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    onClick={() => this.props.accessToken(false)}
+                  >
+                    <RefreshIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Divider />
+              <ListItem>
+                <ListItemText primary="Github Gist ID" />
+                <ListItemSecondaryAction className="secondary-with-text-input gist-id-input">
+                  <TextField
+                    value={this.props.settings.gistId}
+                    onChange={event => this.props.gistId(event.target.value)}
+                    fullWidth
+                  />
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Divider />
+              <ListItem>
+                <ListItemText
+                  primary="Reload Snippets"
+                  secondary="Reload Snippets from Github"
+                />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    onClick={() => {
+                      this.props.handleCloseSettings()
+                      this.props.loadSnippets()
+                    }}
+                  >
+                    <RefreshIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            </List>
           </SettingsGroup>
           <SettingsGroup
             label="Editor"
@@ -170,7 +211,7 @@ class Settings extends React.Component {
                 <ListItemText primary="Tab Size" />
                 <ListItemSecondaryAction>
                   <TextField
-                    className="tab-size-input"
+                    className="settings-input tab-size-input"
                     type="number"
                     value={this.props.settings.tabSize}
                     onChange={event => this.props.tabSize(parseInt(event.target.value))}
@@ -242,6 +283,9 @@ const mapStateToProps = (state, props) => ({
 })
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(actions, dispatch)
+  bindActionCreators(
+    Object.assign({ loadSnippets }, actions),
+    dispatch
+  )
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings)
