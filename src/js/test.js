@@ -12,6 +12,7 @@ import { types } from './editor/actions/settings'
 import { defaultState as defaultSettings } from './editor/reducers/settings'
 import createEditor from './editor'
 import settingsMiddleware from './editor/middleware/settings'
+import saveMiddleware from './editor/middleware/save-when-inactive'
 import { createLogger } from 'redux-logger'
 
 // const debounce = (func, wait, immediate) => {
@@ -52,7 +53,7 @@ const store = createStore(rootReducer, {
       return accum
     }, {})
   )
-}, applyMiddleware(thunk, settingsMiddleware(storage), createLogger({ collapsed: true })))
+}, applyMiddleware(thunk, settingsMiddleware(storage), saveMiddleware, createLogger({ collapsed: true })))
 
 // store.subscribe(debounce(() => {
 //   const state = store.getState()
