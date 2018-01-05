@@ -182,7 +182,7 @@ try {
             style={{cursor: 'pointer'}}
             onClick={() => this.props.saveSnippets(accessToken, gistId)}
           >
-            You have unsaved changes -- click to save
+            You have unsaved changes
           </span>
         )
       default:
