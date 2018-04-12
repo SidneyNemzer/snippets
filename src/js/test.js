@@ -42,18 +42,29 @@ const storage = {
   }
 }
 
-const store = createStore(rootReducer, {
-  settings: Object.assign(
-    defaultSettings,
-    Object.keys(types).reduce((accum, key) => {
-      const storageValue = JSON.parse(localStorage.getItem(localStoragePrefix + key))
-      accum[key] = storageValue === null
-        ? defaultSettings[key]
-        : storageValue
-      return accum
-    }, {})
+const store =
+  createStore(
+    rootReducer,
+    {
+      settings: Object.assign(
+        defaultSettings,
+        Object.keys(types)
+          .reduce((accum, key) => {
+            const storageValue =
+              JSON.parse(localStorage.getItem(localStoragePrefix + key))
+            accum[key] =
+              storageValue === null ? defaultSettings[key] : storageValue
+            return accum
+          }, {})
+      )
+    },
+    applyMiddleware(
+      thunk,
+      settingsMiddleware(storage),
+      saveMiddleware,
+      createLogger({ collapsed: true })
+    )
   )
-}, applyMiddleware(thunk, settingsMiddleware(storage), saveMiddleware, createLogger({ collapsed: true })))
 
 // store.subscribe(debounce(() => {
 //   const state = store.getState()

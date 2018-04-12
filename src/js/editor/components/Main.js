@@ -1,6 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+
 import {
   createSnippet,
   renameSnippet,
@@ -9,7 +10,6 @@ import {
   saveSnippets
 } from '../actions/snippets.js'
 import { actions as settingsActions } from '../actions/settings'
-
 import Sidepane from './Sidepane'
 import Header from './Header'
 import Editor from './Editor'

@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 
 import { actions } from '../actions/settings.js'
 import { loadSnippets } from '../actions/snippets.js'
-
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
@@ -16,7 +15,6 @@ import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-
 import Divider from 'material-ui/Divider'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import TextField from 'material-ui/TextField'
-
 import SettingsGroup from './SettingsGroup'
 import Switch from 'material-ui/Switch'
 
