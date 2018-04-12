@@ -3,6 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import { pages } from '../constants'
 import { actions as settingsActions } from '../actions/settings'
 import { loadSnippets } from '../actions/snippets'
 
@@ -28,8 +29,14 @@ class Login extends React.Component {
   }
 
   done() {
+    const { gistId } = this.props
     this.props.accessToken(this.state.accessTokenInput)
-    this.props.loadSnippets()
+    if (gistId) {
+      this.props.loadSnippets()
+      this.props.history.push(pages.MAIN)
+    } else {
+      this.props.history.push(pages.SELECT_GIST)
+    }
   }
 
   render() {
@@ -47,10 +54,12 @@ class Login extends React.Component {
   }
 }
 
+const mapStateToProps = ({ settings: { gistId } }) => ({ gistId })
+
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({
     accessToken: settingsActions.accessToken,
     loadSnippets
   }, dispatch)
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

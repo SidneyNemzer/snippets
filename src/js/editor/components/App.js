@@ -2,31 +2,26 @@ import React from 'react'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import {
+  MemoryRouter as Router,
+  Route,
+  Redirect
+} from 'react-router-dom'
+import { AnimatedSwitch } from 'react-router-transition'
 
+import { pages } from '../constants'
 import { loadSnippets } from '../actions/snippets'
-
-import { CSSTransitionGroup } from 'react-transition-group'
 import Main from './Main'
 import Settings from './Settings'
 import Login from './Login'
 import SelectGist from './SelectGist'
+import Welcome from './Welcome'
 
 import 'typeface-roboto'
 import '../../../style/main.css'
 import '../../../style/settings.css'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      showSettings: false
-    }
-
-    this.handleOpenSettings = this.handleOpenSettings.bind(this)
-    this.handleCloseSettings = this.handleCloseSettings.bind(this)
-  }
-
   componentDidMount() {
     const { accessToken, gistId } = this.props.settings
     if (accessToken && gistId) {
@@ -34,20 +29,21 @@ class App extends React.Component {
     }
   }
 
-  handleOpenSettings() {
-    this.setState({
-      showSettings: true
-    })
-  }
-
-  handleCloseSettings() {
-    this.setState({
-      showSettings: false
-    })
+  // Choose a page based whether or not a Gist ID and token have
+  // been entered
+  choosePage() {
+    const { accessToken, gistId } = this.props.settings
+    return !accessToken && !gistId
+      ? pages.WELCOME
+      : !accessToken
+        ? pages.LOGIN
+        : !gistId
+          ? pages.SELECT_GIST
+          : pages.MAIN
   }
 
   renderSettings() {
-    return this.state.showSettings && (
+    return this.state.page === pages.SETTINGS && (
       <Settings
         key="settings"
         handleCloseSettings={this.handleCloseSettings}
@@ -55,26 +51,37 @@ class App extends React.Component {
     )
   }
 
+  renderLogin() {
+    return this.state.page === pages.LOGIN && (
+      <Login />
+    )
+  }
+
+  renderSelectGist() {
+    return this.state.page === pages.SELECT_GIST && (
+      <SelectGist />
+    )
+  }
+
   render() {
-    if (!this.props.settings.accessToken) {
-      return <Login />
-    } else if (!this.props.settings.gistId) {
-      return <SelectGist />
-    }
     return (
-      <div>
-        <CSSTransitionGroup
-          transitionName="view-transition"
-          transitionEnterTimeout={400}
-          transitionLeaveTimeout={400}
-        >
-          {this.renderSettings()}
-        </CSSTransitionGroup>
-        <Main
-          {...this.props}
-          handleOpenSettings={this.handleOpenSettings}
-        />
-      </div>
+      <Router>
+        <div>
+          <AnimatedSwitch
+            atEnter={{ opacity: 0 }}
+            atLeave={{ opacity: 0 }}
+            atActive={{ opacity: 1 }}
+            className="switch-wrapper"
+          >
+            <Route path={pages.WELCOME} component={Welcome} />
+            <Route path={pages.LOGIN} component={Login} />
+            <Route path={pages.SELECT_GIST} component={SelectGist} />
+            <Route path={pages.MAIN} component={Main} />
+            <Route path={pages.SETTINGS} component={Settings} />
+            <Redirect from="/" to={this.choosePage()} exact />
+          </AnimatedSwitch>
+        </div>
+      </Router>
     )
   }
 }

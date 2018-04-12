@@ -151,18 +151,13 @@ button.delete:hover {
   display: block;
 }
 
-
-.view-transition-enter {
-  opacity: 0.01;
+.switch-wrapper {
+  position: relative;
 }
-.view-transition-enter.view-transition-enter-active {
-  opacity: 1;
-  transition: opacity 400ms ease-out;
-}
-.view-transition-leave {
-  opacity: 1;
-}
-.view-transition-leave.view-transition-leave-active {
-  opacity: 0.01;
-  transition: opacity 400ms ease-out;
+.switch-wrapper > div {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }

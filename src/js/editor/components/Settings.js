@@ -3,6 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import { pages } from '../constants'
 import { actions } from '../actions/settings.js'
 import { loadSnippets } from '../actions/snippets.js'
 import AppBar from 'material-ui/AppBar'
@@ -20,6 +21,7 @@ import Switch from 'material-ui/Switch'
 
 import logo from '../../../../images/logo-transparent.png'
 
+// TODO Move these to ../constants
 const themes = {
   github: 'Github',
   tomorrow_night: 'Tomorrow Night'
@@ -120,7 +122,7 @@ class Settings extends React.Component {
         <AppBar position="static">
           <Toolbar>
             <IconButton
-              onClick={this.props.handleCloseSettings}
+              onClick={() => this.props.history.push(pages.MAIN)}
             >
               <ArrowBackIcon />
             </IconButton>

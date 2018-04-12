@@ -3,6 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import { pages } from '../constants'
 import { actions as settingsActions } from '../actions/settings'
 import { loadSnippets } from '../actions/snippets'
 
@@ -32,6 +33,9 @@ class SelectGist extends React.Component {
     this.props.gistId(this.state.gistIdInput)
     if (accessToken) {
       this.props.loadSnippets()
+      this.props.history.push(pages.MAIN)
+    } else {
+      this.props.history.push(pages.LOGIN)
     }
   }
 

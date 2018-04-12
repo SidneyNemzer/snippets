@@ -2,6 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import { pages } from '../constants'
 import {
   createSnippet,
   renameSnippet,
@@ -204,7 +205,7 @@ try {
           createSnippet={this.props.createSnippet}
           deleteSnippet={this.deleteSnippet}
           runSnippet={this.runSnippet}
-          handleOpenSettings={this.props.handleOpenSettings}
+          handleOpenSettings={() => this.props.history.push(pages.SETTINGS)}
         />
         <div className="editor-container">
           <Header>
