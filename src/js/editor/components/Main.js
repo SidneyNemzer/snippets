@@ -30,7 +30,10 @@ class Main extends React.Component {
     super(props)
 
     this.state = {
-      selectedSnippet: null
+      selectedSnippet:
+        props.snippets.data
+          ? Object.keys(props.snippets.data)[0]
+          : null
     }
 
     this.selectSnippet = this.selectSnippet.bind(this)
