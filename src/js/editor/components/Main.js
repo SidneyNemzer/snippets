@@ -46,26 +46,26 @@ class Main extends React.Component {
 
   selectPreviousSnippet() {
     const { selectedSnippet } = this.state
-    const { snippets: snippetsState } = this.props
+    const { snippets: { loading, data } } = this.props
 
-    if (!snippetsState.loading && snippetsState.data) {
-      const { data: snippets } = snippetsState
-      if (Object.keys(snippets).length < 2) {
+    if (!loading && data) {
+      const snippetKeys = Object.keys(data)
+
+      if (snippetKeys.length < 2) {
         return this.selectSnippet(null)
       }
 
       if (selectedSnippet === null) {
-        return this.selectSnippet(Object.keys(snippets)[0])
+        return this.selectSnippet(snippetKeys[0])
       }
 
-      const selectedIndex = Object.keys(snippets).findIndex(snippetId => {
-        return snippetId === selectedSnippet
-      })
+      const selectedIndex = snippetKeys
+        .findIndex(snippetId => snippetId === selectedSnippet)
 
       if (selectedIndex > 0) {
-        return this.selectSnippet(Object.keys(snippets)[selectedIndex - 1])
+        return this.selectSnippet(snippetKeys[selectedIndex - 1])
       } else {
-        return this.selectSnippet(Object.keys(snippets)[1])
+        return this.selectSnippet(snippetKeys[1])
       }
     } else {
       return Promise.resolve()
