@@ -33,13 +33,15 @@ class App extends React.Component {
   // been entered
   choosePage() {
     const { accessToken, gistId } = this.props.settings
-    return !accessToken && !gistId
-      ? pages.WELCOME
-      : !accessToken
-        ? pages.LOGIN
-        : !gistId
-          ? pages.SELECT_GIST
-          : pages.MAIN
+    if (!accessToken && !gistId) {
+      return pages.WELCOME
+    } else if (!accessToken) {
+      return pages.LOGIN
+    } else if (!gistId) {
+      return pages.SELECT_GIST
+    } else {
+      return pages.MAIN
+    }
   }
 
   renderSettings() {
