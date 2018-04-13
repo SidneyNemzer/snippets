@@ -3,6 +3,7 @@ import {
   RENAME_SNIPPET,
   UPDATE_SNIPPET,
   DELETE_SNIPPET,
+  SAVING_SNIPPETS,
   saveSnippets
 } from '../actions/snippets'
 
@@ -25,6 +26,8 @@ let timer = null
 export default store => next => action => {
   if (modifyActions.includes(action.type)) {
     timer = resetSaveTimer(timer, () => store.dispatch(saveSnippets()))
+  } else if (action.type === SAVING_SNIPPETS) {
+    clearTimeout(timer)
   }
   next(action)
 }
