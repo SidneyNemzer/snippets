@@ -193,7 +193,7 @@ class Settings extends React.Component {
                 <ListItemSecondaryAction>
                   <IconButton
                     onClick={() => {
-                      this.props.handleCloseSettings()
+                      this.props.history.push(pages.MAIN)
                       this.props.loadSnippets()
                     }}
                   >
