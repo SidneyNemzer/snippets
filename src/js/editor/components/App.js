@@ -68,21 +68,19 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div>
-          <AnimatedSwitch
-            atEnter={{ opacity: 0 }}
-            atLeave={{ opacity: 0 }}
-            atActive={{ opacity: 1 }}
-            className="switch-wrapper"
-          >
-            <Route path={pages.WELCOME} component={Welcome} />
-            <Route path={pages.LOGIN} component={Login} />
-            <Route path={pages.SELECT_GIST} component={SelectGist} />
-            <Route path={pages.MAIN} component={Main} />
-            <Route path={pages.SETTINGS} component={Settings} />
-            <Redirect from="/" to={this.choosePage()} exact />
-          </AnimatedSwitch>
-        </div>
+        <AnimatedSwitch
+          atEnter={{ opacity: 0 }}
+          atLeave={{ opacity: 0 }}
+          atActive={{ opacity: 1 }}
+          className="switch-wrapper"
+        >
+          <Route path={pages.WELCOME} component={Welcome} />
+          <Route path={pages.LOGIN} component={Login} />
+          <Route path={pages.SELECT_GIST} component={SelectGist} />
+          <Route path={pages.MAIN} component={Main} />
+          <Route path={pages.SETTINGS} component={Settings} />
+          <Redirect from="/" to={this.choosePage()} exact />
+        </AnimatedSwitch>
       </Router>
     )
   }
