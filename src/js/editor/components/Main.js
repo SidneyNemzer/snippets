@@ -231,14 +231,20 @@ try {
         title="Failed to load snippets"
         message="Github didn't accept the access token"
         actionButton="Reset access token"
-        onActionButtonClick={() => this.props.accessToken(false)}
+        onActionButtonClick={() => {
+          this.props.accessToken(false)
+          this.props.history.push(pages.LOGIN)
+        }}
       />
       : error.status === 'Not Found'
         ? <ErrorPage
           title="Failed to load snippets"
           message={`The gist ID '${this.props.settings.gistId}' doesn't seem to exist`}
           actionButton="Reset Gist ID"
-          onActionButtonClick={() => this.props.gistId(false)}
+          onActionButtonClick={() => {
+            this.props.gistId(false)
+            this.props.history.push(pages.SELECT_GIST)
+          }}
         />
         : <ErrorPage
           title="Failed to load snippets"
