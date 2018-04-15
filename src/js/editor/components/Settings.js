@@ -167,7 +167,10 @@ class Settings extends React.Component {
                 />
                 <ListItemSecondaryAction>
                   <IconButton
-                    onClick={() => this.props.accessToken(false)}
+                    onClick={() => {
+                      this.props.accessToken(false)
+                      this.props.history.push(pages.LOGIN)
+                    }}
                   >
                     <RefreshIcon />
                   </IconButton>
