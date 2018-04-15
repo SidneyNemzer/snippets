@@ -117,7 +117,9 @@ const snippets = (state = defaultState, action) => {
     case LOADED_SNIPPETS:
       return action.error
         ? update({ loading: false, error: action.error })
-        : update({
+        : {
+          saving: state.saving,
+          error: state.error,
           loading: false,
           data: Object.entries(action.snippets)
             .reduce((snippets, [ name, { body } ]) => {
@@ -131,7 +133,7 @@ const snippets = (state = defaultState, action) => {
               }
               return snippets
             }, {})
-        })
+        }
     case SAVING_SNIPPETS:
       return update({ saving: true, error: null })
     case SAVED_SNIPPETS:
