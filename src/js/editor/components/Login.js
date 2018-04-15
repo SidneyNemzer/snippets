@@ -28,15 +28,21 @@ class Login extends React.Component {
     this.updateAccessTokenInput = updater('accessTokenInput', this)
   }
 
-  done() {
-    const { gistId } = this.props
-    this.props.accessToken(this.state.accessTokenInput)
-    if (gistId) {
-      this.props.loadSnippets()
-      this.props.history.push(pages.MAIN)
-    } else {
-      this.props.history.push(pages.SELECT_GIST)
+  componentWillReceiveProps({ settingsAccessToken: nextAccessToken }) {
+    const { gistId, settingsAccessToken } = this.props
+    console.log('componentWillReceiveProps', nextAccessToken, settingsAccessToken)
+    if (nextAccessToken && nextAccessToken !== settingsAccessToken) {
+      if (gistId) {
+        this.props.loadSnippets()
+        this.props.history.push(pages.MAIN)
+      } else {
+        this.props.history.push(pages.SELECT_GIST)
+      }
     }
+  }
+
+  submitAccessToken() {
+    this.props.accessToken(this.state.accessTokenInput)
   }
 
   render() {
@@ -47,14 +53,17 @@ class Login extends React.Component {
           value={this.state.accessTokenInput}
           onInput={event => this.updateAccessTokenInput(event.target.value)}
         />
-        <button onClick={() => this.done()}>Done</button>
+        <button onClick={() => this.submitAccessToken()}>Done</button>
         <p>You can make one <a href={accessTokenUrl} target='_blank'>here</a></p>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ settings: { gistId } }) => ({ gistId })
+const mapStateToProps = ({ settings: { gistId, accessToken: settingsAccessToken } }) => ({
+  gistId,
+  settingsAccessToken
+})
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({

@@ -28,15 +28,20 @@ class SelectGist extends React.Component {
     this.updateGistIdInput = updater('gistIdInput', this)
   }
 
-  done() {
-    const { accessToken } = this.props
-    this.props.gistId(this.state.gistIdInput)
-    if (accessToken) {
-      this.props.loadSnippets()
-      this.props.history.push(pages.MAIN)
-    } else {
-      this.props.history.push(pages.LOGIN)
+  componentWillReceiveProps({ settingsGistId: nextGistId }) {
+    const { accessToken, settingsGistId } = this.props
+    if (nextGistId && nextGistId !== settingsGistId) {
+      if (accessToken) {
+        this.props.loadSnippets()
+        this.props.history.push(pages.MAIN)
+      } else {
+        this.props.history.push(pages.LOGIN)
+      }
     }
+  }
+
+  submitGistId() {
+    this.props.gistId(this.state.gistIdInput)
   }
 
   render() {
@@ -47,7 +52,7 @@ class SelectGist extends React.Component {
           value={this.state.gistIdInput}
           onInput={event => this.updateGistIdInput(event.target.value)}
         />
-        <button onClick={() => this.done()}>Done</button>
+        <button onClick={() => this.submitGistId()}>Done</button>
         <p>
           <a href={usersGists} target='_blank'>
             Open GitHub Gists
@@ -59,7 +64,8 @@ class SelectGist extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  accessToken: state.settings.accessToken
+  accessToken: state.settings.accessToken,
+  settingsGistId: state.settings.gistId
 })
 
 const mapDispatchToProps = dispatch =>
