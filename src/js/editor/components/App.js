@@ -44,27 +44,6 @@ class App extends React.Component {
     }
   }
 
-  renderSettings() {
-    return this.state.page === pages.SETTINGS && (
-      <Settings
-        key="settings"
-        handleCloseSettings={this.handleCloseSettings}
-      />
-    )
-  }
-
-  renderLogin() {
-    return this.state.page === pages.LOGIN && (
-      <Login />
-    )
-  }
-
-  renderSelectGist() {
-    return this.state.page === pages.SELECT_GIST && (
-      <SelectGist />
-    )
-  }
-
   render() {
     return (
       <Router>
