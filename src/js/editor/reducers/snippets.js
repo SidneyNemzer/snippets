@@ -119,7 +119,7 @@ const snippets = (state = defaultState, action) => {
         ? update({ loading: false, error: action.error })
         : {
           saving: state.saving,
-          error: state.error,
+          error: null,
           loading: false,
           data: Object.entries(action.snippets)
             .reduce((snippets, [ name, { body } ]) => {
