@@ -225,7 +225,7 @@ try {
     )
   }
 
-  handleError(error) {
+  renderError(error) {
     return error.status === 'Unauthorized'
       ? <ErrorPage
         title="Failed to load snippets"
@@ -257,7 +257,7 @@ try {
     if (snippetsState.loading) {
       return <Loading />
     } else if (snippetsState.error && !snippetsState.data) {
-      return this.handleError(snippetsState.error)
+      return this.renderError(snippetsState.error)
     } else {
       return this.renderMain(snippetsState.data)
     }
