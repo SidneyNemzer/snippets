@@ -1,6 +1,17 @@
 import React from 'react'
 import Button from 'material-ui/Button'
 
+const renderTitle = (context, title) => (
+  <h1>
+    {
+      context
+        ? 'Failed to ' + context
+        : title
+        || 'Error'
+    }
+  </h1>
+)
+
 const renderError = errorText => (
   errorText !== undefined
     ? typeof errorText === 'object'
@@ -27,7 +38,7 @@ const ErrorPage = (props) => {
   console.error(props.message)
   return (
     <div className="error">
-      <h1>{props.title}</h1>
+      {renderTitle(props.context, props.title)}
       <p>{props.message.toString()}</p>
       {renderError(props.error)}
       {renderAction(props.action, props.actionButton, props.onActionButtonClick)}

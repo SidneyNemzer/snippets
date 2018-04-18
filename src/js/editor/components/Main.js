@@ -228,7 +228,7 @@ try {
   renderError(error) {
     return error.status === 'Unauthorized'
       ? <ErrorPage
-        title="Failed to load snippets"
+        context={error.context}
         message="Github didn't accept the access token"
         actionButton="Reset access token"
         onActionButtonClick={() => {
@@ -238,7 +238,7 @@ try {
       />
       : error.status === 'Not Found'
         ? <ErrorPage
-          title="Failed to load snippets"
+          context={error.context}
           message={`The gist ID '${this.props.settings.gistId}' doesn't seem to exist`}
           actionButton="Reset Gist ID"
           onActionButtonClick={() => {
@@ -247,7 +247,7 @@ try {
           }}
         />
         : <ErrorPage
-          title="Failed to load snippets"
+          context={error.context}
           message={error}
         />
   }
