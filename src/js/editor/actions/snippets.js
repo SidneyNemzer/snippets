@@ -1,10 +1,6 @@
 import GithubApi from 'github'
 
-const github = new GithubApi({
-  headers: {
-    'user-agent': 'snippets'
-  }
-})
+const github = new GithubApi({ headers: { 'user-agent': 'snippets' } })
 
 export const CREATE_SNIPPET = 'CREATE_SNIPPET'
 export const RENAME_SNIPPET = 'RENAME_SNIPPET'
@@ -37,10 +33,7 @@ export const deleteSnippet = name => ({
 
 export const loadSnippets = () => (dispatch, getState) => {
   const { settings: { accessToken, gistId } } = getState()
-  github.authenticate({
-    type: 'token',
-    token: accessToken
-  })
+  github.authenticate({ type: 'token', token: accessToken })
   github.gists.get({ id: gistId })
     .then(({ data: gist }) => {
       dispatch(loadedSnippets(
@@ -89,10 +82,7 @@ export const saveSnippets = () => (dispatch, getState) => {
       return files
     }, {})
   github.authenticate({ type: 'token', token: accessToken })
-  github.gists.edit({
-    id: gistId,
-    files
-  })
+  github.gists.edit({ id: gistId, files })
     .then(() => dispatch(savedSnippets(null)))
     .catch(error => {
       error.context = 'save snippets'

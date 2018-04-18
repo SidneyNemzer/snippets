@@ -65,7 +65,7 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = state => ({
   settings: state.settings
 })
 
