@@ -7,6 +7,7 @@ import {
   SAVING_SNIPPETS,
   SAVED_SNIPPETS
 } from '../actions/snippets.js'
+import * as settingsActions from '../actions/settings'
 import { mergeDeep as merge } from '../deep-merge.js'
 
 /* eslint-disable no-unused-vars */
@@ -160,6 +161,9 @@ const snippets = (state = defaultState, action) => {
             {}
             )
         }
+    case settingsActions.types.gistId:
+    case settingsActions.types.accessToken:
+      return update({ error: null, data: null })
     default:
       return state
   }
