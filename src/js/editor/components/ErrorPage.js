@@ -35,7 +35,6 @@ const renderLink = link => (
 )
 
 const ErrorPage = (props) => {
-  console.error(props.message)
   return (
     <div className="error">
       {renderTitle(props.context, props.title)}
