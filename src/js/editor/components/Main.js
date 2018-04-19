@@ -258,6 +258,15 @@ try {
       return <Loading />
     } else if (snippetsState.error && !snippetsState.data) {
       return this.renderError(snippetsState.error)
+    } else if (!snippetsState.data) {
+      return (
+        <ErrorPage
+          title="No Snippets are loaded"
+          message="Maybe you changed your Gist ID or access token? In that case, you'll need to reload the Gist"
+          actionButton="Reload"
+          onActionButtonClick={this.props.loadSnippets}
+        />
+      )
     } else {
       return this.renderMain(snippetsState.data)
     }
@@ -301,6 +310,7 @@ const mapDispatchToProps = (dispatch) =>
     updateSnippet,
     deleteSnippet,
     saveSnippets,
+    loadSnippets,
     accessToken: settingsActions.accessToken,
     gistId: settingsActions.gistId
   }, dispatch)
