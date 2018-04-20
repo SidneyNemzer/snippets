@@ -3,6 +3,7 @@ import {
   RENAME_SNIPPET,
   UPDATE_SNIPPET,
   DELETE_SNIPPET,
+  LOADING_SNIPPETS,
   LOADED_SNIPPETS,
   SAVING_SNIPPETS,
   SAVED_SNIPPETS
@@ -115,6 +116,8 @@ const snippets = (state = defaultState, action) => {
           }
         })
         : state
+    case LOADING_SNIPPETS:
+      return update({ loading: true, error: null })
     case LOADED_SNIPPETS:
       return action.error
         ? update({ loading: false, error: action.error })

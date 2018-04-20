@@ -6,6 +6,7 @@ export const CREATE_SNIPPET = 'CREATE_SNIPPET'
 export const RENAME_SNIPPET = 'RENAME_SNIPPET'
 export const UPDATE_SNIPPET = 'UPDATE_SNIPPET'
 export const DELETE_SNIPPET = 'DELETE_SNIPPET'
+export const LOADING_SNIPPETS = 'LOADING_SNIPPETS'
 export const LOADED_SNIPPETS = 'LOADED_SNIPPETS'
 export const SAVING_SNIPPETS = 'SAVING_SNIPPETS'
 export const SAVED_SNIPPETS = 'SAVED_SNIPPETS'
@@ -33,6 +34,9 @@ export const deleteSnippet = name => ({
 
 export const loadSnippets = () => (dispatch, getState) => {
   const { settings: { accessToken, gistId } } = getState()
+
+  dispatch({ type: LOADING_SNIPPETS })
+
   github.authenticate({ type: 'token', token: accessToken })
   github.gists.get({ id: gistId })
     .then(({ data: gist }) => {
