@@ -7,11 +7,11 @@ import {
   LOADED_SNIPPETS,
   SAVING_SNIPPETS,
   SAVED_SNIPPETS
-} from '../actions/snippets.js'
+} from '../actions/snippets'
 import * as settingsActions from '../actions/settings'
 import { mergeDeep as merge } from '../util/deep-merge'
 
-/* eslint-disable no-unused-vars */
+// eslint-disable-next-line no-unused-vars
 const welcomeSnippet = `
 /***********************
 * Welcome to snippets! *
