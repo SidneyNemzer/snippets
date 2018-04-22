@@ -1,4 +1,4 @@
-import { generateTypes, generateActions } from '../generate-redux'
+import { generateTypes, generateActions } from '../util/generate-redux'
 
 const typeNames = {
   tabSize: true,

@@ -9,7 +9,7 @@ import {
   SAVED_SNIPPETS
 } from '../actions/snippets.js'
 import * as settingsActions from '../actions/settings'
-import { mergeDeep as merge } from '../deep-merge.js'
+import { mergeDeep as merge } from '../util/deep-merge'
 
 /* eslint-disable no-unused-vars */
 const welcomeSnippet = `

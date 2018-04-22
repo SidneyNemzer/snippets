@@ -1,4 +1,4 @@
-import { generateReducer } from '../generate-redux'
+import { generateReducer } from '../util/generate-redux'
 import { types } from '../actions/settings'
 
 export const defaultState = {

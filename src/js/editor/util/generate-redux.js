@@ -1,3 +1,6 @@
+// TODO this file needs to be cleaned up
+
+// TODO Move to separate file or use Ramda
 export const mapObject = (callback, obj) =>
   Object.entries(obj)
     .reduce((newObj, [key, value]) => {
