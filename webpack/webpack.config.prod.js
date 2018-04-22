@@ -91,7 +91,7 @@ module.exports = {
               // It enables caching results in ./node_modules/.cache/babel-loader/
               // directory for faster rebuilds.
               cacheDirectory: true,
-              presets: ['env', 'react']
+              presets: ['env', 'react', 'stage-2']
             }
           },
           // 'css-loader' resolves paths in CSS and adds assets as dependencies.

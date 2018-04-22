@@ -20,9 +20,11 @@
   "homepage": "https://github.com/SidneyNemzer/snippets#readme",
   "devDependencies": {
     "babel-core": "^6.25.0",
+    "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "clean-webpack-plugin": "^0.1.17",
     "copy-webpack-plugin": "^4.1.1",
     "css-loader": "^0.28.0",
