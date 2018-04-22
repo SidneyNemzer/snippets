@@ -3,7 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { pages } from '../constants'
+import { pages, CREATE_ACCESS_TOKEN_URL } from '../constants'
 import { actions as settingsActions } from '../actions/settings'
 import { loadSnippets } from '../actions/snippets'
 
@@ -54,7 +54,7 @@ class Login extends React.Component {
           onInput={event => this.updateAccessTokenInput(event.target.value)}
         />
         <button onClick={() => this.submitAccessToken()}>Done</button>
-        <p>You can make one <a href={accessTokenUrl} target='_blank'>here</a></p>
+        <p>You can make one <a href={CREATE_ACCESS_TOKEN_URL} target='_blank'>here</a></p>
       </div>
     )
   }
