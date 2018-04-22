@@ -19,6 +19,7 @@
     "react/prop-types": "off",
     "spaced-comment": "off",
     "prefer-promise-reject-errors": "off",
-    "operator-linebreak": ["error", "before", { "overrides": { "=": "after" } }]
+    "operator-linebreak": ["error", "before", { "overrides": { "=": "after" } }],
+    "react/no-unescaped-entities": "off"
   }
 }
