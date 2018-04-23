@@ -1,31 +1,24 @@
 import React from 'react'
-
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Button from 'material-ui/Button'
+import TextField from 'material-ui/TextField'
 
 import { pages } from '../constants'
 import { actions as settingsActions } from '../actions/settings'
 import { loadSnippets } from '../actions/snippets'
 
-// TODO Move this to utility file
-const updater =
-  (key, context) =>
-    newValue =>
-      context.setState({
-        [key]: newValue
-      })
-
 const usersGists = 'https://gist.github.com/'
 
 class SelectGist extends React.Component {
-  constructor(props) {
-    super(props)
+  state = {
+    gistIdInput: ''
+  }
 
-    this.state = {
-      gistIdInput: ''
-    }
-
-    this.updateGistIdInput = updater('gistIdInput', this)
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    })
   }
 
   componentWillReceiveProps({ settingsGistId: nextGistId }) {
@@ -40,19 +33,23 @@ class SelectGist extends React.Component {
     }
   }
 
-  submitGistId() {
-    this.props.gistId(this.state.gistIdInput)
-  }
-
   render() {
     return (
-      <div>
-        <h1>Please enter the ID of a Gist to store snippets in</h1>
-        <input
+      <div style={{ maxWidth: 700, margin: '10vh auto', textAlign: 'center' }}>
+        <h1>Choose a Gist</h1>
+        <p>Please enter the ID of the Gist to store snippets in</p>
+        <TextField
+          label="Enter Gist ID"
           value={this.state.gistIdInput}
-          onInput={event => this.updateGistIdInput(event.target.value)}
+          onChange={this.handleChange('gistIdInput')}
         />
-        <button onClick={() => this.submitGistId()}>Done</button>
+        <Button
+          raised
+          color="primary"
+          onClick={() => this.props.gistId(this.state.gistIdInput)}
+        >
+          Save
+        </Button>
         <p>
           <a href={usersGists} target='_blank'>
             Open GitHub Gists
