@@ -141,8 +141,7 @@ button.delete:hover {
   color: red;
   white-space: pre-wrap;
 }
-.error h1,
-.error p {
+.error h1 {
   margin: 10px 0 0;
 }
 
