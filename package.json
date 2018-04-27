@@ -5,7 +5,7 @@
   "scripts": {
     "build:prod": "webpack --config webpack/webpack.config.prod.js",
     "build:dev": "webpack --config webpack/webpack.config.dev.js",
-    "start": "webpack-dev-server --config webpack/webpack.config.dev.js",
+    "start": "webpack-dev-server --config webpack/dev-server.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -44,6 +44,7 @@
     "redux-logger": "^3.0.6",
     "style-loader": "^0.16.1",
     "todo-webpack-plugin": "^1.8.0",
+    "uglifyjs-webpack-plugin": "^1.1.8",
     "url-loader": "^0.5.9",
     "webpack": "^3.7.1",
     "webpack-dev-server": "^2.9.7"
