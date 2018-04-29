@@ -63,5 +63,3 @@ module.exports = {
     hints: false
   }
 }
-
-console.log(module.exports)
