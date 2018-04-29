@@ -15,30 +15,11 @@ import settingsMiddleware from './editor/middleware/settings'
 import saveMiddleware from './editor/middleware/save-when-inactive'
 import { createLogger } from 'redux-logger'
 
-// const debounce = (func, wait, immediate) => {
-//   let timeout = null
-//   return function (...args) {
-//     const context = this
-//     const later = () => {
-//       timeout = null
-//       if (!immediate) {
-//         func.apply(context, args)
-//       }
-//     }
-//     const callNow = immediate && !timeout
-//     clearTimeout(timeout)
-//     timeout = setTimeout(later, wait)
-//     if (callNow) {
-//       func.apply(context, args)
-//     }
-//   }
-// }
-
-const localStoragePrefix = 'snippets-settings:'
+const LOCAL_STORAGE_PREFIX = 'snippets-settings:'
 
 const storage = {
   set: (path, data) => {
-    localStorage[localStoragePrefix + path] = JSON.stringify(data)
+    localStorage[LOCAL_STORAGE_PREFIX + path] = JSON.stringify(data)
   }
 }
 
@@ -51,7 +32,7 @@ const store =
         Object.keys(types)
           .reduce((accum, key) => {
             const storageValue =
-              JSON.parse(localStorage.getItem(localStoragePrefix + key))
+              JSON.parse(localStorage.getItem(LOCAL_STORAGE_PREFIX + key))
             accum[key] =
               storageValue === null ? defaultSettings[key] : storageValue
             return accum
