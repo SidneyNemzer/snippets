@@ -47,19 +47,6 @@ const store =
     )
   )
 
-// store.subscribe(debounce(() => {
-//   const state = store.getState()
-//   if (state.settings.accessToken !== accessToken) {
-//     localStorage[lsAccessTokenKey] = state.settings.accessToken
-//     accessToken = state.settings.accessToken
-//     console.log('Updated access token in local storage')
-//   }
-//   if (!state.saved) {
-//     console.log('[Noop] save store:', state)
-//     store.dispatch(saved())
-//   }
-// }, 1500))
-
 const fakeStore = {
   dispatch: (...args) => {
     // Delay dispatches by 2 ms to simulate the delay in react-chrome-redux
@@ -69,17 +56,21 @@ const fakeStore = {
   }
 }
 
-/* eslint-disable no-eval */
-createEditor(eval, new Proxy(
-  store,
-  {
-    get: (target, key) => {
-      if (key === 'dispatch') {
-        return fakeStore.dispatch
-      } else {
-        return target[key]
+createEditor(
+  // eslint-disable-next-line no-eval
+  eval,
+  new Proxy(
+    store,
+    {
+      get: (target, key) => {
+        if (key === 'dispatch') {
+          return fakeStore.dispatch
+        } else {
+          return target[key]
+        }
       }
     }
-  }))
+  )
+)
 // Simulate react-chrome-redux store load event
 store.dispatch({ type: 'LOADED' })
