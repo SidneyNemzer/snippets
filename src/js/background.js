@@ -1,38 +1,21 @@
 /* global chrome */
-import { createStore } from 'redux'
-import { wrapStore } from 'react-chrome-redux'
-import { saved, saveFailed } from './editor/actions'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import { wrapStore, alias } from 'react-chrome-redux'
+import settingsMiddleware from './editor/middleware/settings'
+import saveMiddleware from './editor/middleware/save-when-inactive'
+import { defaultState as defaultSettings } from './editor/reducers/settings'
 import rootReducer from './editor/reducers'
 
-const debounce = (func, wait, immediate) => {
-  let timeout = null
-  return function (...args) {
-    const context = this
-    const later = () => {
-      timeout = null
-      if (!immediate) {
-        func.apply(context, args)
-      }
-    }
-    const callNow = immediate && !timeout
-    clearTimeout(timeout)
-    timeout = setTimeout(later, wait)
-    if (callNow) {
-      func.apply(context, args)
-    }
-  }
-}
-
-const getStorage = () =>
+const chromeSyncStorageGet = () =>
   new Promise(resolve => {
-    chrome.storage.sync.get(null, storage => {
+    chrome.storage.sync.get(storage => {
       resolve(storage)
     })
   })
 
-const saveStorageMerge = (newStorage) =>
-  // Retrieve the previous value so we can merge with the new value
-  getStorage()
+const chromeSyncStorageSetMerge = newStorage =>
+  chromeSyncStorageGet()
     .then(oldStorage =>
       new Promise((resolve, reject) => {
         const mergedValue = Object.assign({}, oldStorage, newStorage)
@@ -46,30 +29,16 @@ const saveStorageMerge = (newStorage) =>
       })
     )
 
-const saveStore = (store) => {
-  const state = store.getState()
-  if (!state.saved) {
-    const copyState = Object.assign({}, state)
-    delete copyState.saved
-    saveStorageMerge(copyState)
-      .then(() => {
-        store.dispatch(saved())
-      })
-      .catch(error => {
-        console.error('Error while saving:', error)
-        if (error.message === 'QUOTA_BYTES_PER_ITEM quota exceeded') {
-          store.dispatch(saveFailed(
-            'Storage limit exceeded! Click for more info',
-            'https://github.com/SidneyNemzer/snippets#warning')
-          )
-        } else {
-          store.dispatch(saveFailed('Error while saving: ' + error.message))
-        }
-      })
-  }
+const settingsStorage = {
+  set: (key, data) =>
+    chromeSyncStorageSetMerge({
+      settings: {
+        [key]: data
+      }
+    })
 }
 
-getStorage()
+chromeSyncStorageGet()
   .then(result => {
     console.log('loaded data:', result)
     if (result.snippets) {
@@ -81,8 +50,16 @@ getStorage()
       })
     }
     console.log('proccessed data:', result)
-    const store = createStore(rootReducer, result)
-    wrapStore(store, {portName: 'SNIPPETS'})
-
-    store.subscribe(debounce(() => saveStore(store), 1500))
+    const store = createStore(
+      rootReducer,
+      {
+        settings: Object.assign(defaultSettings, result.settings)
+      },
+      applyMiddleware(
+        thunk,
+        settingsMiddleware(settingsStorage),
+        saveMiddleware
+      )
+    )
+    wrapStore(store, { portName: 'SNIPPETS' })
   })
