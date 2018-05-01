@@ -6,6 +6,7 @@ import settingsMiddleware from './editor/middleware/settings'
 import saveMiddleware from './editor/middleware/save-when-inactive'
 import { defaultState as defaultSettings } from './editor/reducers/settings'
 import rootReducer from './editor/reducers'
+import aliases from './editor/aliases'
 
 const chromeSyncStorageGet = () =>
   new Promise(resolve => {
@@ -56,6 +57,7 @@ chromeSyncStorageGet()
         settings: Object.assign(defaultSettings, result.settings)
       },
       applyMiddleware(
+        alias(aliases),
         thunk,
         settingsMiddleware(settingsStorage),
         saveMiddleware
