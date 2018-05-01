@@ -35,6 +35,13 @@ This file documents how Snippets stores data
     accessToken: 'abcd', // false or String
     gistId: 'abcd',     // false or String
   }
+
+  legacySnippets: {
+    [id]: {
+      body: 'content',
+      name: 'name'
+    }
+  }
 }
 ```
 
