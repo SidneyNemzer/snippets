@@ -1,4 +1,5 @@
 /* global chrome */
+import * as R from 'ramda'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { wrapStore, alias } from 'react-chrome-redux'
@@ -19,7 +20,7 @@ const chromeSyncStorageSetMerge = newStorage =>
   chromeSyncStorageGet()
     .then(oldStorage =>
       new Promise((resolve, reject) => {
-        const mergedValue = Object.assign({}, oldStorage, newStorage)
+        const mergedValue = R.mergeDeepRight(oldStorage, newStorage)
         chrome.storage.sync.set(mergedValue, () => {
           if (chrome.runtime.lastError) {
             reject(chrome.runtime.lastError)
