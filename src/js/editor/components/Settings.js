@@ -11,6 +11,7 @@ import Toolbar from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
 import ArrowBackIcon from 'material-ui-icons/ArrowBack'
 import RefreshIcon from 'material-ui-icons/Refresh'
+import FileUploadIcon from 'material-ui-icons/FileUpload'
 import Button from 'material-ui/Button'
 import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
 import Divider from 'material-ui/Divider'
@@ -274,6 +275,25 @@ class Settings extends React.Component {
             </List>
             {this.renderMenu()}
           </SettingsGroup>
+          <SettingsGroup
+            label="Legacy"
+          >
+            <List>
+              <ListItem>
+                <ListItemText
+                  primary="Recover Legacy Snippets"
+                  secondary="Check Chrome sync storage for snippets and move them to Gist storage"
+                />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    onClick={() => {}}
+                  >
+                    <FileUploadIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            </List>
+          </SettingsGroup>
         </main>
       </div>
     )
@@ -281,8 +301,7 @@ class Settings extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  settings: state.settings,
-  saved: state.saved
+  settings: state.settings
 })
 
 const mapDispatchToProps = (dispatch) =>
