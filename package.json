@@ -54,6 +54,7 @@
     "material-design-icons": "^3.0.1",
     "material-ui": "^1.0.0-beta.4",
     "material-ui-icons": "^1.0.0-alpha.19",
+    "ramda": "^0.25.0",
     "react": "^15.5.4",
     "react-ace": "^4.3.0",
     "react-chrome-redux": "^1.3.3",
