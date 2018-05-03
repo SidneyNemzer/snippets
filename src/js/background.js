@@ -41,17 +41,8 @@ const settingsStorage = {
 }
 
 chromeSyncStorageGet()
-  .then(result => {
-    console.log('loaded data:', result)
-    if (result.snippets) {
-      Object.entries(result.snippets).forEach(([id, value]) => {
-        const { content, body } = value
-        if (content && typeof body === 'undefined') {
-          result.snippets[id].body = content
-        }
-      })
-    }
-    console.log('proccessed data:', result)
+  .then(storage => {
+    console.log('loaded storage:', storage)
     const store = createStore(
       rootReducer,
       {
