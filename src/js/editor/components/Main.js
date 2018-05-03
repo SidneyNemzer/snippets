@@ -261,7 +261,7 @@ try {
     } else if (!snippetsState.data) {
       return (
         <ErrorPage
-          title="No Snippets are loaded"
+          title="No snippets are loaded"
           message="Maybe you changed your Gist ID or access token? In that case, you'll need to reload the Gist"
           actionButton="Reload"
           onActionButtonClick={this.props.loadSnippets}
