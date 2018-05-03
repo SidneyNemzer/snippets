@@ -8,7 +8,8 @@ import {
   renameSnippet,
   updateSnippet,
   deleteSnippet,
-  saveSnippets
+  saveSnippets,
+  loadSnippets
 } from '../actions/snippets.js'
 import { actions as settingsActions } from '../actions/settings'
 import Sidepane from './Sidepane'
@@ -167,12 +168,12 @@ try {
   }
 
   renderSaveMessage(snippets) {
-    const { accessToken, gistId } = this.props.settings
-    if (this.props.snippets.error) {
+    const { snippets: { error } } = this.props
+    if (error) {
       return (
         <span
           style={{cursor: 'pointer'}}
-          onClick={() => this.props.saveSnippets(accessToken, gistId)}
+          onClick={this.props.saveSnippets}
         >
           Error while saving:{' '}
           {this.props.snippets.error}{' '}
@@ -189,7 +190,7 @@ try {
         return (
           <span
             style={{cursor: 'pointer'}}
-            onClick={() => this.props.saveSnippets(accessToken, gistId)}
+            onClick={this.props.saveSnippets}
           >
             You have unsaved changes
           </span>
