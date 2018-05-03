@@ -226,30 +226,41 @@ try {
   }
 
   renderError(error) {
-    return error.status === 'Unauthorized'
-      ? <ErrorPage
-        context={error.context}
-        message="Github didn't accept the access token"
-        actionButton="Reset access token"
-        onActionButtonClick={() => {
-          this.props.accessToken(false)
-          this.props.history.push(pages.LOGIN)
-        }}
-      />
-      : error.status === 'Not Found'
-        ? <ErrorPage
-          context={error.context}
-          message={`The gist ID '${this.props.settings.gistId}' doesn't seem to exist`}
-          actionButton="Reset Gist ID"
-          onActionButtonClick={() => {
-            this.props.gistId(false)
-            this.props.history.push(pages.SELECT_GIST)
-          }}
-        />
-        : <ErrorPage
-          context={error.context}
-          message={error}
-        />
+    switch (error.status) {
+      case 'Unauthorized':
+        return (
+          <ErrorPage
+            context={error.context}
+            message="Github didn't accept the access token"
+            actionButton="Reset access token"
+            onActionButtonClick={() => {
+              this.props.accessToken(false)
+              this.props.history.push(pages.LOGIN)
+            }}
+          />
+        )
+
+      case 'Not Found':
+        return (
+          <ErrorPage
+            context={error.context}
+            message={`The gist ID '${this.props.settings.gistId}' doesn't seem to exist`}
+            actionButton="Reset Gist ID"
+            onActionButtonClick={() => {
+              this.props.gistId(false)
+              this.props.history.push(pages.SELECT_GIST)
+            }}
+          />
+        )
+
+      default:
+        return (
+          <ErrorPage
+            context={error.context}
+            error={error}
+          />
+        )
+    }
   }
 
   render() {
