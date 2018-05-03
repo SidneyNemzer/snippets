@@ -46,8 +46,7 @@ chromeSyncStorageGet()
     const store = createStore(
       rootReducer,
       {
-        legacySnippets: result.snippets,
-        settings: Object.assign(defaultSettings, result.settings)
+        settings: Object.assign(defaultSettings, storage.settings)
       },
       applyMiddleware(
         alias(aliases),
