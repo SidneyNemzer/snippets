@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import { pages } from '../constants'
 import { actions } from '../actions/settings.js'
-import { loadSnippets } from '../actions/snippets.js'
+import { loadSnippets, loadLegacySnippets } from '../actions/snippets.js'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
@@ -286,7 +286,10 @@ class Settings extends React.Component {
                 />
                 <ListItemSecondaryAction>
                   <IconButton
-                    onClick={() => {}}
+                    onClick={() => {
+                      this.props.loadLegacySnippets()
+                      this.props.history.push(pages.MAIN)
+                    }}
                   >
                     <FileUploadIcon />
                   </IconButton>
@@ -306,7 +309,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
-    Object.assign({ loadSnippets }, actions),
+    Object.assign({ loadSnippets, loadLegacySnippets }, actions),
     dispatch
   )
 

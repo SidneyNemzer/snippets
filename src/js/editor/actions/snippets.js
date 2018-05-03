@@ -8,6 +8,8 @@ export const SAVING_SNIPPETS = 'SAVING_SNIPPETS'
 export const SAVED_SNIPPETS = 'SAVED_SNIPPETS'
 export const LOAD_SNIPPETS = 'LOAD_SNIPPETS'
 export const SAVE_SNIPPETS = 'SAVE_SNIPPETS'
+export const LOAD_LEGACY_SNIPPETS = 'LOAD_LEGACY_SNIPPETS'
+export const LOADED_LEGACY_SNIPPETS = 'LOADED_LEGACY_SNIPPETS'
 
 export const createSnippet = () => ({
   type: CREATE_SNIPPET
@@ -32,6 +34,10 @@ export const deleteSnippet = name => ({
 
 export const loadSnippets = () => ({
   type: LOAD_SNIPPETS
+})
+
+export const loadLegacySnippets = () => ({
+  type: LOAD_LEGACY_SNIPPETS
 })
 
 export const loadedSnippets = (error, snippets = {}) => ({

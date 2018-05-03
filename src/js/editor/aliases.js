@@ -1,3 +1,5 @@
+/* global chrome */
+
 /**
  * Redux actions that are usually thunks must be implemented with aliases
  * https://github.com/tshaddix/react-chrome-redux/wiki/Advanced-Usage
@@ -7,6 +9,8 @@ import GithubApi from 'github'
 import {
   LOAD_SNIPPETS,
   LOADING_SNIPPETS,
+  LOAD_LEGACY_SNIPPETS,
+  LOADED_LEGACY_SNIPPETS,
   SAVE_SNIPPETS,
   SAVING_SNIPPETS,
   loadedSnippets,
@@ -71,7 +75,32 @@ const saveSnippets = () => (dispatch, getState) => {
     })
 }
 
+const loadLegacySnippets = () => (dispatch, getState) => {
+  chrome.storage.sync.get(storage => {
+    const snippets =
+      Object
+        .entries(storage.snippets)
+        .reduce(
+          (snippets, [ id, value ]) => {
+            const { content, body, name } = value
+            if (body || content) {
+              snippets[name] = body || content
+            }
+            return snippets
+          },
+          {}
+        )
+
+    dispatch({
+      type: LOADED_LEGACY_SNIPPETS,
+      error: null,
+      snippets
+    })
+  })
+}
+
 export default {
   [LOAD_SNIPPETS]: loadSnippets,
-  [SAVE_SNIPPETS]: saveSnippets
+  [SAVE_SNIPPETS]: saveSnippets,
+  [LOAD_LEGACY_SNIPPETS]: loadLegacySnippets
 }

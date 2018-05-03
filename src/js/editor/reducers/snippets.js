@@ -6,7 +6,8 @@ import {
   LOADING_SNIPPETS,
   LOADED_SNIPPETS,
   SAVING_SNIPPETS,
-  SAVED_SNIPPETS
+  SAVED_SNIPPETS,
+  LOADED_LEGACY_SNIPPETS
 } from '../actions/snippets'
 import * as settingsActions from '../actions/settings'
 import { mergeDeep as merge } from '../util/deep-merge'
@@ -162,6 +163,29 @@ const snippets = (state = defaultState, action) => {
               return accum
             },
             {}
+            )
+        }
+    case LOADED_LEGACY_SNIPPETS:
+      return action.error
+        ? { loading: false, saving: false, error: action.error, data: state.data }
+        : {
+          loading: false,
+          saving: false,
+          error: null,
+          data: Object.entries(action.snippets)
+            .reduce(
+              (snippets, [ name, body ]) => {
+                snippets[name] = {
+                  renamed: false,
+                  deleted: false,
+                  content: {
+                    local: body,
+                    remote: snippets[name] && snippets[name].content.remote
+                  }
+                }
+                return snippets
+              },
+              state.data
             )
         }
     case settingsActions.types.gistId:
