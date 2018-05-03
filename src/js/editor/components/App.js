@@ -23,8 +23,11 @@ import '../../../style/settings.css'
 
 class App extends React.Component {
   componentDidMount() {
-    const { accessToken, gistId } = this.props.settings
-    if (accessToken && gistId) {
+    const {
+      settings: { accessToken, gistId },
+      snippets: { data }
+    } = this.props
+    if (!data && accessToken && gistId) {
       this.props.loadSnippets()
     }
   }
@@ -66,7 +69,8 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  settings: state.settings
+  settings: state.settings,
+  snippets: state.snippets
 })
 
 const mapDispatchToProps = dispatch =>
