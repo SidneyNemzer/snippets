@@ -8,12 +8,14 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
+import { alias } from 'react-chrome-redux'
 import rootReducer from './editor/reducers'
 import { types } from './editor/actions/settings'
 import { defaultState as defaultSettings } from './editor/reducers/settings'
 import createEditor from './editor'
 import settingsMiddleware from './editor/middleware/settings'
 import saveMiddleware from './editor/middleware/save-when-inactive'
+import aliases from './editor/aliases'
 
 const LOCAL_STORAGE_PREFIX = 'snippets-settings:'
 
@@ -40,6 +42,7 @@ const store =
       )
     },
     applyMiddleware(
+      alias(aliases),
       thunk,
       settingsMiddleware(storage),
       saveMiddleware,
