@@ -175,7 +175,7 @@ try {
           style={{cursor: 'pointer'}}
           onClick={this.props.saveSnippets}
         >
-          {error.context ? 'Error while ' + error.context : 'Error'}:{' '}
+          {error.context ? 'Failed to ' + error.context : 'Error'}:{' '}
           {error.message}{' '}
           -- click to retry
         </span>
