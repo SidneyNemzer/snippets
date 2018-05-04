@@ -16,12 +16,13 @@ const modifyActions = [
   LOADED_LEGACY_SNIPPETS
 ]
 
-let saveDelay = 5 * 1000
 let timer = null
 
-const restartSaveTimer = save => {
+const restartSaveTimer = (delay, save) => {
   clearTimeout(timer)
-  timer = setTimeout(save, saveDelay)
+  if (delay > 0) {
+    timer = setTimeout(save, delay)
+  }
 }
 
 const stopSaveTimer = () => {
@@ -31,7 +32,10 @@ const stopSaveTimer = () => {
 
 export default store => next => action => {
   if (modifyActions.includes(action.type)) {
-    restartSaveTimer(() => store.dispatch(saveSnippets()))
+    restartSaveTimer(
+      store.getState().settings.autosaveTimer * 1000,
+      () => store.dispatch(saveSnippets())
+    )
   } else if (action.type === SAVING_SNIPPETS) {
     stopSaveTimer()
   }

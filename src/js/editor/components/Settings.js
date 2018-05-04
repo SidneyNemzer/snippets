@@ -205,6 +205,26 @@ class Settings extends React.Component {
                   </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
+              <Divider />
+              <ListItem>
+                <ListItemText
+                  primary="Autosave Frequency (seconds)"
+                  secondary="Set to 0 to disable autosave"
+                />
+                <ListItemSecondaryAction>
+                  <TextField
+                    className="settings-input small-number-input"
+                    type="number"
+                    value={this.props.settings.autosaveTimer}
+                    onChange={event => {
+                      const inputInt = parseInt(event.target.value)
+                      if (!Number.isNaN(inputInt)) {
+                        this.props.autosaveTimer(inputInt)
+                      }
+                    }}
+                  />
+                </ListItemSecondaryAction>
+              </ListItem>
             </List>
           </SettingsGroup>
           <SettingsGroup
@@ -215,10 +235,15 @@ class Settings extends React.Component {
                 <ListItemText primary="Tab Size" />
                 <ListItemSecondaryAction>
                   <TextField
-                    className="settings-input tab-size-input"
+                    className="settings-input small-number-input"
                     type="number"
                     value={this.props.settings.tabSize}
-                    onChange={event => this.props.tabSize(parseInt(event.target.value))}
+                    onChange={event => {
+                      const inputInt = parseInt(event.target.value)
+                      if (!Number.isNaN(inputInt)) {
+                        this.props.autosaveTimer(inputInt)
+                      }
+                    }}
                   />
                 </ListItemSecondaryAction>
               </ListItem>

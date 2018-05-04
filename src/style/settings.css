@@ -63,10 +63,10 @@
   margin-right: 20px;
 }
 
-.settings .tab-size-input {
+.settings .small-number-input {
   width: 50px;
 }
 
-.settings .tab-size-input input {
+.settings .small-number-input input {
   text-align: center;
 }

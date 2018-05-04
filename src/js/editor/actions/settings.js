@@ -8,7 +8,8 @@ const typeNames = {
   lineWrap: true,
   linter: true,
   accessToken: true,
-  gistId: true
+  gistId: true,
+  autosaveTimer: true
 }
 
 export const types = generateTypes(typeNames)
