@@ -1,6 +1,6 @@
 body {
   font-family: Roboto;
-  font-size: 15px;
+  font-size: 13px;
   margin: 0;
 }
 
@@ -34,7 +34,7 @@ body {
 }
 
 .ace_editor {
-  font-size: 1.1em;
+  font-size: 1.2em;
   flex-grow: 1;
 }
 
