@@ -209,7 +209,7 @@ class Settings extends React.Component {
               <ListItem>
                 <ListItemText
                   primary="Autosave Frequency (seconds)"
-                  secondary="Set to 0 to disable autosave"
+                  secondary="Saves automatically after you stop typing for this many seconds. Set to 0 to disable."
                 />
                 <ListItemSecondaryAction>
                   <TextField
