@@ -14,6 +14,7 @@ const Editor = (props) => {
       mode="javascript"
       name="editor"
       width="100%"
+      height="auto"
       theme={props.settings.theme}
       value={props.value}
       onChange={(newValue) => {
