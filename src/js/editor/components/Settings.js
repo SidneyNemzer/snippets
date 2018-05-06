@@ -167,14 +167,14 @@ class Settings extends React.Component {
                   secondary="Token is hidden for security"
                 />
                 <ListItemSecondaryAction>
-                  <IconButton
+                  <Button
                     onClick={() => {
                       this.props.accessToken(false)
                       this.props.history.push(pages.LOGIN)
                     }}
                   >
-                    <RefreshIcon />
-                  </IconButton>
+                    Reset
+                  </Button>
                 </ListItemSecondaryAction>
               </ListItem>
               <Divider />
