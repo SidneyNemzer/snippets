@@ -61,6 +61,13 @@ module.exports = {
               ]
             })
           },
+          {
+            test: /\.(ttf|eot|woff|woff2)$/,
+            loader: require.resolve('file-loader'),
+            options: {
+              name: '/fonts/[name].[ext]'
+            }
+          },
           base.globalLoaders.file
         ]
       }
