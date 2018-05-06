@@ -33,7 +33,7 @@ body {
   flex-direction: column;
 }
 
-.ace_editor {
+div.ace_editor {
   font-size: 1.0em;
   flex-grow: 1;
 }
