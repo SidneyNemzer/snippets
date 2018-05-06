@@ -28,6 +28,8 @@ module.exports = {
   },
 
   module: {
+    ...base.baseConfig.module,
+
     rules: [
       {
         oneOf: [
@@ -61,8 +63,7 @@ module.exports = {
           base.globalLoaders.file
         ]
       }
-    ],
-    ...base.baseConfig.module
+    ]
   },
 
   plugins: [
