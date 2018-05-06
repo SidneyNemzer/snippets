@@ -6,10 +6,6 @@ This file documents how Snippets stores data
 
 ```javascript
 {
-  // Global errors
-  // Just save errors for now
-  error: null, // String
-
   snippets: {
     loading: false, // Boolean
     saving: false, // Boolean
@@ -34,13 +30,6 @@ This file documents how Snippets stores data
     linter: true,       // Boolean
     accessToken: 'abcd', // false or String
     gistId: 'abcd',     // false or String
-  }
-
-  legacySnippets: {
-    [id]: {
-      body: 'content',
-      name: 'name'
-    }
   }
 }
 ```
