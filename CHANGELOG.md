@@ -1,3 +1,15 @@
+## 2.0.0
+
+### Features
+
+* Snippets are now stored in a Github Gist (instead of Chrome Sync Storage)
+* Added a setting to configure autosave time
+
+### Changes / Bug Fixes
+
+* Slightly reduced editor font size
+* The code editor (Ace) wouldn't get shorter than 500px
+
 ## 1.1.2
 
 ### Features
