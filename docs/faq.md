@@ -1,5 +1,7 @@
 # FAQ
 
+*If your question isn't answered here, you can [open an issue](https://github.com/SidneyNemzer/snippets/issues/new)*
+
 ## How do I use this extension?
 
 After installing the extension, open the Chrome Devtools on any webpage. This extension adds a new tab called "Snippets", where you can view, edit, and run your JavaScript code snippets.
