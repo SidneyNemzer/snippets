@@ -1,11 +1,3 @@
-# WARNING
-
-Currently, you can only store up to about 8000 bytes across all your snippets, due to the way Chrome's Sync storage works.
-
-**If you exceed this amount, the new data will be lost!**
-
-You'll see a warning if this happens. For now, you can avoid the issue by deleting snippets you aren't using. In the next few days, I'll be able to switch to a different storage method with a much higher limit. See issue [#5](https://github.com/SidneyNemzer/snippets/issues/5)
-
 ![Snippets](images/logo-transparent.png)
 
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/fakjeijchchmicjllnabpdkclfkpbiag.svg)][chrome-web-store]
