@@ -33,7 +33,7 @@ const renderLink = link =>
 const ErrorPage = props => (
   <div className="error">
     {renderTitle(props.context, props.title)}
-    <p>{props.message.toString()}</p>
+    {props.message && <p>{props.message}</p>}
     {renderError(props.error)}
     {renderAction(props.action, props.actionButton, props.onActionButtonClick)}
     {renderLink(props.link)}
