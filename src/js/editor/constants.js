@@ -7,3 +7,5 @@ export const pages = {
 }
 
 export const CREATE_ACCESS_TOKEN_URL = 'https://github.com/settings/tokens/new?description=Snippets%20Access%20Token&scopes=gist'
+
+export const SNIPPETS_ISSUES_URL = 'https://github.com/SidneyNemzer/snippets/issues/new'

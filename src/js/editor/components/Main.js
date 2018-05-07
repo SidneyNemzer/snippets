@@ -2,7 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { pages } from '../constants'
+import { pages, SNIPPETS_ISSUES_URL } from '../constants'
 import {
   createSnippet,
   renameSnippet,
@@ -259,6 +259,10 @@ try {
           <ErrorPage
             context={error.context}
             error={error}
+            message="Maybe you can fix this by changing a setting? Open an issue if this happens again."
+            actionButton="Open Settings"
+            onActionButtonClick={() => this.props.history.push(pages.SETTINGS)}
+            link={SNIPPETS_ISSUES_URL}
           />
         )
     }
