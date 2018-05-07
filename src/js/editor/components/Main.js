@@ -1,26 +1,40 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+
+import { pages, SNIPPETS_ISSUES_URL } from '../constants'
 import {
   createSnippet,
   renameSnippet,
   updateSnippet,
-  deleteSnippet
+  deleteSnippet,
+  saveSnippets,
+  loadSnippets
 } from '../actions/snippets.js'
-
+import { actions as settingsActions } from '../actions/settings'
 import Sidepane from './Sidepane'
 import Header from './Header'
 import Editor from './Editor'
+import Loading from './Loading'
+import ErrorPage from './ErrorPage'
 
 import logo from '../../../../images/logo-transparent.png'
+
+const saveStatus = {
+  SAVING: 'SAVING',
+  SAVED: 'SAVED',
+  UNSAVED: 'UNSAVED'
+}
 
 class Main extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      selectedSnippet: Object.keys(props.snippets)[0] || null,
-      confirmingDelete: false
+      selectedSnippet:
+        props.snippets.data
+          ? Object.keys(props.snippets.data)[0]
+          : null
     }
 
     this.selectSnippet = this.selectSnippet.bind(this)
@@ -33,24 +47,60 @@ class Main extends React.Component {
 
   selectPreviousSnippet() {
     const { selectedSnippet } = this.state
-    const { snippets } = this.props
+    const { snippets: { loading, data } } = this.props
 
-    if (Object.keys(snippets).length < 2) {
-      return this.selectSnippet(null)
-    }
+    if (!loading && data) {
+      const snippetKeys = Object.keys(data)
 
-    if (selectedSnippet === null) {
-      return this.selectSnippet(Object.keys(snippets)[0])
-    }
+      if (snippetKeys.length < 2) {
+        return this.selectSnippet(null)
+      }
 
-    const selectedIndex = Object.keys(snippets).findIndex(snippetId => {
-      return snippetId === selectedSnippet
-    })
+      if (selectedSnippet === null) {
+        return this.selectSnippet(snippetKeys[0])
+      }
 
-    if (selectedIndex > 0) {
-      return this.selectSnippet(Object.keys(snippets)[selectedIndex - 1])
+      const selectedIndex = snippetKeys
+        .findIndex(snippetId => snippetId === selectedSnippet)
+
+      if (selectedIndex > 0) {
+        return this.selectSnippet(snippetKeys[selectedIndex - 1])
+      } else {
+        return this.selectSnippet(snippetKeys[1])
+      }
     } else {
-      return this.selectSnippet(Object.keys(snippets)[1])
+      return Promise.resolve()
+    }
+  }
+
+  componentWillReceiveProps({ snippets: { data: newData } }) {
+    const { snippets: { data } } = this.props
+    const { selectedSnippet } = this.state
+
+    if (!selectedSnippet) {
+      if (newData) {
+        this.setState({
+          selectedSnippet: Object.keys(newData)[0]
+        })
+      }
+    } else {
+      if (newData && !newData[selectedSnippet]) {
+        if (
+          data[selectedSnippet]
+          && data[selectedSnippet].renamed
+          && newData[data[selectedSnippet].renamed]
+        ) {
+          this.setState({
+            selectedSnippet: data[selectedSnippet].renamed
+          })
+        } else {
+          this.setState({
+            selectedSnippet: Object.keys(newData)[0]
+          })
+        }
+      } else if (!newData) {
+        this.setState({ selectedSnippet: null })
+      }
     }
   }
 
@@ -97,14 +147,13 @@ try {
     }
   }
 
-  renderEditor() {
+  renderEditor(snippets) {
     const { selectedSnippet } = this.state
-    const { snippets } = this.props
 
     if (selectedSnippet !== null) {
       return (
         <Editor
-          value={snippets[selectedSnippet].body}
+          value={snippets[selectedSnippet].content.local}
           onChange={this.handleEditorChange}
         />
       )
@@ -118,52 +167,156 @@ try {
     }
   }
 
-  renderSaveMessage() {
-    const { saved } = this.props
-    if (saved === true) {
-      return <span>Saved</span>
-    } else if (saved === false) {
-      return <span>Saving...</span>
-    } else if (typeof saved === 'object') {
-      if (saved.moreInfo) {
-        return <a className="save-error" target="_blank" href={saved.moreInfo}>{saved.reason}</a>
-      } else {
-        return <span className="save-error">{saved.reason}</span>
-      }
+  renderSaveMessage(snippets) {
+    const { snippets: { error } } = this.props
+    if (error) {
+      return (
+        <span
+          style={{cursor: 'pointer'}}
+          onClick={this.props.saveSnippets}
+        >
+          {error.context ? 'Failed to ' + error.context : 'Error'}:{' '}
+          {error.message}{' '}
+          -- click to retry
+        </span>
+      )
+    }
+    switch (this.props.saveStatus) {
+      case saveStatus.SAVED:
+        return <span>Saved</span>
+      case saveStatus.SAVING:
+        return <span>Saving...</span>
+      case saveStatus.UNSAVED:
+        return (
+          <span
+            style={{cursor: 'pointer'}}
+            onClick={this.props.saveSnippets}
+          >
+            You have unsaved changes
+          </span>
+        )
+      default:
+        throw new Error('Unexpected save status:' + this.props.saveStatus)
     }
   }
 
-  render() {
+  renderMain(snippets) {
     return (
       <div
         className="home"
         onKeyDown={this.handleKeyPress}
       >
         <Sidepane
-          snippets={this.props.snippets}
+          snippets={snippets}
           selectedSnippet={this.state.selectedSnippet}
           selectSnippet={this.selectSnippet}
           renameSnippet={this.props.renameSnippet}
           createSnippet={this.props.createSnippet}
           deleteSnippet={this.deleteSnippet}
-          confirmingDelete={this.state.confirmingDelete}
           runSnippet={this.runSnippet}
-          handleOpenSettings={this.props.handleOpenSettings}
+          handleOpenSettings={() => this.props.history.push(pages.SETTINGS)}
         />
         <div className="editor-container">
           <Header>
-            {this.renderSaveMessage()}
+            {this.renderSaveMessage(snippets)}
           </Header>
-          {this.renderEditor()}
+          {this.renderEditor(snippets)}
         </div>
       </div>
     )
   }
+
+  renderError(error) {
+    switch (error.status) {
+      case 'Unauthorized':
+        return (
+          <ErrorPage
+            context={error.context}
+            message="Github didn't accept the access token"
+            actionButton="Reset access token"
+            onActionButtonClick={() => {
+              this.props.accessToken(false)
+              this.props.history.push(pages.LOGIN)
+            }}
+          />
+        )
+
+      case 'Not Found':
+        return (
+          <ErrorPage
+            context={error.context}
+            message={`The gist ID '${this.props.settings.gistId}' doesn't seem to exist`}
+            actionButton="Reset Gist ID"
+            onActionButtonClick={() => {
+              this.props.gistId(false)
+              this.props.history.push(pages.SELECT_GIST)
+            }}
+          />
+        )
+
+      default:
+        return (
+          <ErrorPage
+            context={error.context}
+            error={error}
+            message="Maybe you can fix this by changing a setting? Open an issue if this happens again."
+            actionButton="Open Settings"
+            onActionButtonClick={() => this.props.history.push(pages.SETTINGS)}
+            link={SNIPPETS_ISSUES_URL}
+          />
+        )
+    }
+  }
+
+  render() {
+    const { snippets: snippetsState } = this.props
+    if (snippetsState.loading) {
+      return <Loading />
+    } else if (snippetsState.error && !snippetsState.data) {
+      return this.renderError(snippetsState.error)
+    } else if (!snippetsState.data) {
+      return (
+        <ErrorPage
+          title="No snippets are loaded"
+          message="Maybe you changed your Gist ID or access token? In that case, you'll need to reload the Gist"
+          actionButton="Reload"
+          onActionButtonClick={this.props.loadSnippets}
+        />
+      )
+    } else {
+      return this.renderMain(snippetsState.data)
+    }
+  }
 }
 
 const mapStateToProps = (state, props) => ({
-  snippets: state.snippets,
-  saved: state.saved
+  settings: state.settings,
+  snippets: {
+    loading: state.snippets.loading,
+    error: state.snippets.error,
+    data:
+      state.snippets.data
+        ? Object.entries(state.snippets.data)
+          .reduce((snippets, [name, snippet]) => {
+            if (!snippet.deleted) {
+              snippets[name] = snippet
+            }
+            return snippets
+          }, {})
+        : state.snippets.data
+  },
+  saveStatus:
+    state.snippets.saving
+      ? saveStatus.SAVING
+      : state.snippets.data
+        ? Object.entries(state.snippets.data)
+          .find(([name, { content: { local, remote }, deleted, renamed }]) => {
+            const unsaved = local !== remote || deleted || renamed
+            return unsaved
+          })
+          ? saveStatus.UNSAVED
+          : saveStatus.SAVED
+        : saveStatus.SAVED
 })
 
 const mapDispatchToProps = (dispatch) =>
@@ -171,7 +324,11 @@ const mapDispatchToProps = (dispatch) =>
     createSnippet,
     renameSnippet,
     updateSnippet,
-    deleteSnippet
+    deleteSnippet,
+    saveSnippets,
+    loadSnippets,
+    accessToken: settingsActions.accessToken,
+    gistId: settingsActions.gistId
   }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

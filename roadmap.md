@@ -1,21 +1,26 @@
 # Next version
 
-* New storage method for snippets
+* Store Snippets as a Github Gist
+  * Upload to GH after 30 seconds (?) of inactivity or browser is closed
+  * Download from GH when background page is loaded
+    * Download all Snippets at once
 
 # Soon
 
+* Restructure app
+  * See https://www.smashingmagazine.com/2016/09/how-to-scale-react-applications/
 * Allow the sidebar to be hidden/resized
 * Better linter defaults (seems to have an ES5 preset currently)
 * Allow snippets to be run automatically when a URL is visited
-* Add a popup page which allows you to:
+* Add an extension badge popup which allows you to:
   * view your snippets
   * run snippets in the current page
-  * rename snippets
   * (?) open snippets in the editor
+    * I'd like to do this but I don't think extensions can programmatically open the devtools
 
 # Later
 
 * (?) More editor themes
-* (?) Allow a snippet to be sent to a Github Gist and/or Pastebin?
-* (?) Allow snippets to be downloaded
-* Support other browsers (using the WebExtensions API)
+* Support other browsers (using WebExtensions API)
+* Search Snippets
+* Tag Snippets

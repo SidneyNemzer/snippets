@@ -10,7 +10,6 @@ import Menu, { MenuItem } from 'material-ui/Menu'
 import MoreVert from 'material-ui-icons/MoreVert'
 import Edit from 'material-ui-icons/Edit'
 import PlayArrow from 'material-ui-icons/PlayArrow'
-import Check from 'material-ui-icons/Check'
 import Delete from 'material-ui-icons/Delete'
 
 class SnippetSelector extends React.Component {
@@ -96,7 +95,7 @@ class SnippetSelector extends React.Component {
       // TODO use material ui input
       return (
         <input
-          ref={input => this.nameInput = input}
+          ref={input => { this.nameInput = input }}
           value={this.state.currentInput}
           onChange={this.handleChange}
           onBlur={this.handleBlur}
@@ -132,7 +131,7 @@ class SnippetSelector extends React.Component {
                 if (!selected) {
                   this.props.selectSnippet()
                 }
-              
+
                 this.handleMenuOpen(event)
               }}
             />

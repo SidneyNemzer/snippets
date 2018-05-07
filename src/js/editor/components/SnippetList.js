@@ -3,34 +3,23 @@ import React from 'react'
 import List from 'material-ui/List'
 import SnippetSelector from './SnippetSelector'
 
-class SnippetList extends React.Component {
-  renderRows() {
-    return (
-      Object.keys(this.props.snippets)
-        .map(snippetID => {
-          const selected = this.props.selectedSnippet === snippetID
-          return (
-            <SnippetSelector
-              key={snippetID}
-              selectSnippet={() => this.props.selectSnippet(snippetID)}
-              selected={selected}
-              updateName={newName => this.props.renameSnippet(snippetID, newName)}
-              name={this.props.snippets[snippetID].name}
-              deleteSnippet={() => this.props.deleteSnippet(snippetID)}
-              runSnippet={() => this.props.runSnippet(this.props.snippets[snippetID].body)}
-            />
-          )
-        })
-    )
-  }
-
-  render() {
-    return (
-      <List>
-        {this.renderRows()}
-      </List>
-    )
-  }
-}
+const SnippetList = props => (
+  <List>
+    {
+      Object.entries(props.snippets)
+        .map(([name, snippet]) => (
+          <SnippetSelector
+            key={name}
+            selectSnippet={() => props.selectSnippet(name)}
+            selected={props.selectedSnippet === name}
+            updateName={newName => props.renameSnippet(name, newName)}
+            name={snippet.renamed || name}
+            deleteSnippet={() => props.deleteSnippet(name)}
+            runSnippet={() => props.runSnippet(snippet.content.local)}
+          />
+        ))
+    }
+  </List>
+)
 
 export default SnippetList

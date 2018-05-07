@@ -3,30 +3,26 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import {
-  tabSize,
-  autoComplete,
-  softTabs,
-  theme,
-  lineWrap,
-  linter
-} from '../actions/settings.js'
-
+import { pages } from '../constants'
+import { actions } from '../actions/settings.js'
+import { loadSnippets, loadLegacySnippets } from '../actions/snippets.js'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
 import ArrowBackIcon from 'material-ui-icons/ArrowBack'
+import RefreshIcon from 'material-ui-icons/Refresh'
+import FileUploadIcon from 'material-ui-icons/FileUpload'
 import Button from 'material-ui/Button'
 import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
 import Divider from 'material-ui/Divider'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import TextField from 'material-ui/TextField'
-
 import SettingsGroup from './SettingsGroup'
 import Switch from 'material-ui/Switch'
 
 import logo from '../../../../images/logo-transparent.png'
 
+// TODO Move these to ../constants
 const themes = {
   github: 'Github',
   tomorrow_night: 'Tomorrow Night'
@@ -42,6 +38,8 @@ const menus = {
   TAB_CHAR: 'TAB_CHAR'
 }
 
+// This variable is injected by webpack
+/* eslint-disable no-undef */
 const VERSION = SNIPPETS_VERSION
 
 class Settings extends React.Component {
@@ -68,10 +66,10 @@ class Settings extends React.Component {
     switch (this.state.menu) {
       case menus.THEME:
         this.props.theme(newValue)
-        break;
+        break
       case menus.TAB_CHAR:
         this.props.softTabs(newValue)
-        break;
+        break
       default:
         throw new Error('Unknown menu')
     }
@@ -90,7 +88,7 @@ class Settings extends React.Component {
             onClick={event => this.handleMenuItemClick(event, option)}
           >
             {themes[option]}
-          </MenuItem>,
+          </MenuItem>
         )
       case menus.TAB_CHAR:
         return Object.keys(tabTypes).map((tabType, index) =>
@@ -100,7 +98,7 @@ class Settings extends React.Component {
             onClick={event => this.handleMenuItemClick(event, tabType)}
           >
             {tabTypes[tabType]}
-          </MenuItem>,
+          </MenuItem>
         )
       default:
     }
@@ -125,7 +123,7 @@ class Settings extends React.Component {
         <AppBar position="static">
           <Toolbar>
             <IconButton
-              onClick={this.props.handleCloseSettings}
+              onClick={() => this.props.history.push(pages.MAIN)}
             >
               <ArrowBackIcon />
             </IconButton>
@@ -152,6 +150,7 @@ class Settings extends React.Component {
             <a
               href="https://github.com/SidneyNemzer/snippets"
               target="_blank"
+              rel='noopener noreferrer'
             >
               <Button className="repo">
                 Github Repo
@@ -161,10 +160,72 @@ class Settings extends React.Component {
           <SettingsGroup
             label="Sync"
           >
-            <p className="sync-description">
-              Your snippets are being synced to your Google account
-              (if you're signed into Chrome)
-            </p>
+            <List>
+              <ListItem>
+                <ListItemText
+                  primary="Github Access Token"
+                  secondary="Token is hidden for security"
+                />
+                <ListItemSecondaryAction>
+                  <Button
+                    onClick={() => {
+                      this.props.accessToken(false)
+                      this.props.history.push(pages.LOGIN)
+                    }}
+                  >
+                    Reset
+                  </Button>
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Divider />
+              <ListItem>
+                <ListItemText primary="Github Gist ID" />
+                <ListItemSecondaryAction className="secondary-with-text-input gist-id-input">
+                  <TextField
+                    value={this.props.settings.gistId}
+                    onChange={event => this.props.gistId(event.target.value)}
+                    fullWidth
+                  />
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Divider />
+              <ListItem>
+                <ListItemText
+                  primary="Reload Snippets"
+                  secondary="Reload Snippets from Github"
+                />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    onClick={() => {
+                      this.props.history.push(pages.MAIN)
+                      this.props.loadSnippets()
+                    }}
+                  >
+                    <RefreshIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Divider />
+              <ListItem>
+                <ListItemText
+                  primary="Autosave Frequency (seconds)"
+                  secondary="Saves automatically after you stop typing for this many seconds. Set to 0 to disable."
+                />
+                <ListItemSecondaryAction>
+                  <TextField
+                    className="settings-input small-number-input"
+                    type="number"
+                    value={this.props.settings.autosaveTimer}
+                    onChange={event => {
+                      const inputInt = parseInt(event.target.value)
+                      if (!Number.isNaN(inputInt)) {
+                        this.props.autosaveTimer(inputInt)
+                      }
+                    }}
+                  />
+                </ListItemSecondaryAction>
+              </ListItem>
+            </List>
           </SettingsGroup>
           <SettingsGroup
             label="Editor"
@@ -174,10 +235,15 @@ class Settings extends React.Component {
                 <ListItemText primary="Tab Size" />
                 <ListItemSecondaryAction>
                   <TextField
-                    className="tab-size-input"
+                    className="settings-input small-number-input"
                     type="number"
                     value={this.props.settings.tabSize}
-                    onChange={event => this.props.tabSize(parseInt(event.target.value))}
+                    onChange={event => {
+                      const inputInt = parseInt(event.target.value)
+                      if (!Number.isNaN(inputInt)) {
+                        this.props.autosaveTimer(inputInt)
+                      }
+                    }}
                   />
                 </ListItemSecondaryAction>
               </ListItem>
@@ -234,6 +300,28 @@ class Settings extends React.Component {
             </List>
             {this.renderMenu()}
           </SettingsGroup>
+          <SettingsGroup
+            label="Legacy"
+          >
+            <List>
+              <ListItem>
+                <ListItemText
+                  primary="Recover Legacy Snippets"
+                  secondary="Check Chrome sync storage for snippets and move them to Gist storage"
+                />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    onClick={() => {
+                      this.props.loadLegacySnippets()
+                      this.props.history.push(pages.MAIN)
+                    }}
+                  >
+                    <FileUploadIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            </List>
+          </SettingsGroup>
         </main>
       </div>
     )
@@ -241,18 +329,13 @@ class Settings extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  settings: state.settings,
-  saved: state.saved
+  settings: state.settings
 })
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({
-    tabSize,
-    autoComplete,
-    softTabs,
-    theme,
-    lineWrap,
-    linter
-  }, dispatch)
+  bindActionCreators(
+    Object.assign({ loadSnippets, loadLegacySnippets }, actions),
+    dispatch
+  )
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings)

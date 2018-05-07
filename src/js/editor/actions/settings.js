@@ -1,36 +1,16 @@
-export const TAB_SIZE = 'TAB_SIZE'
-export const AUTO_COMPLETE = 'AUTO_COMPLETE'
-export const SOFT_TABS = 'SOFT_TABS'
-export const THEME = 'THEME'
-export const LINE_WRAP = 'LINE_WRAP'
-export const LINTER = 'LINTER'
+import { generateTypes, generateActions } from '../util/generate-redux'
 
-export const tabSize = size => ({
-  type: TAB_SIZE,
-  size
-})
+const typeNames = {
+  tabSize: true,
+  autoComplete: true,
+  softTabs: true,
+  theme: true,
+  lineWrap: true,
+  linter: true,
+  accessToken: true,
+  gistId: true,
+  autosaveTimer: true
+}
 
-export const autoComplete = shouldAutoComplete => ({
-  type: AUTO_COMPLETE,
-  shouldAutoComplete
-})
-
-export const softTabs = useSoftTabs => ({
-  type: SOFT_TABS,
-  useSoftTabs
-})
-
-export const theme = theme => ({
-  type: THEME,
-  theme
-})
-
-export const lineWrap = lineWrap => ({
-  type: LINE_WRAP,
-  lineWrap
-})
-
-export const linter = linter => ({
-  type: LINTER,
-  linter
-})
+export const types = generateTypes(typeNames)
+export const actions = generateActions(typeNames)

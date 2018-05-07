@@ -1,125 +1,59 @@
-import { createStore } from 'redux'
-import { wrapStore } from 'react-chrome-redux'
-import { saved, saveFailed } from './editor/actions'
+/* global chrome */
+import * as R from 'ramda'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import { wrapStore, alias } from 'react-chrome-redux'
+import settingsMiddleware from './editor/middleware/settings'
+import saveMiddleware from './editor/middleware/save-when-inactive'
+import { defaultState as defaultSettings } from './editor/reducers/settings'
 import rootReducer from './editor/reducers'
+import aliases from './editor/aliases'
 
-function debounce(func, wait, immediate) {
-	var timeout;
-	return function() {
-		var context = this, args = arguments
-		var later = function() {
-			timeout = null
-			if (!immediate) func.apply(context, args)
-		};
-		var callNow = immediate && !timeout
-		clearTimeout(timeout)
-		timeout = setTimeout(later, wait)
-		if (callNow)
-      func.apply(context, args)
-	}
-}
-
-/**
- * Save data to Chrome's Sync storage
- * @param  {string} key        A key, which is used to reference this data in the storage
- * @param  {*} value           A value to store
- * @param  {boolean} mergeValue If `value` is an object, setting this to true will keep keys
- *                              from the original value that are unchaned in the new value
- * @return {Promise}            The promise is resolved when the operation has completed
- * @resolves {undefined}        No value is passed
- */
-function saveToStorage(key, value, mergeValue) {
-  return new Promise(function (resolve, reject) {
-    if (mergeValue) {
-      // We'll need to retrieve the previous value first
-      chrome.storage.sync.get(null, function (storage) {
-        const previousValue =
-          key === undefined
-            ? storage
-            : storage[key]
-        // Merge the old and new values
-        const newValue = Object.assign({}, previousValue, value)
-        chrome.storage.sync.set(
-          key === undefined
-            ? newValue
-            : {[key]: newValue},
-          function() {
-						if (chrome.runtime.lastError) {
-							reject(chrome.runtime.lastError)
-						} else {
-	            resolve()
-						}
-        })
-      })
-    } else {
-      const newVal =
-        key === undefined
-          ? value
-          : {[key]: value}
-      chrome.storage.sync.set(
-        newVal,
-        function() {
-					if (chrome.runtime.lastError) {
-						reject(chrome.runtime.lastError)
-					} else {
-						resolve()
-					}
-      })
-    }
-  })
-}
-
-/**
- * Retrieves data from Chrome's sync storage
- * @param   {string}  key   The key to retrieve
- * @returns {Promise}       Resolves when the data has been retrieved
- * @resolves {*}            The value of the key. It may be any value allowed in Chrome storage.
- */
-function loadFromStorage(key) {
-  return new Promise(function (resolve, reject) {
-    chrome.storage.sync.get(null, function (storage) {
-      if (key !== undefined) {
-        resolve(storage[key])
-      } else {
-        resolve(storage)
-      }
+const chromeSyncStorageGet = () =>
+  new Promise(resolve => {
+    chrome.storage.sync.get(storage => {
+      resolve(storage)
     })
   })
-}
 
-const saveStore = (store) => {
-  const state = store.getState()
-  if (!state.saved) {
-    const copyState = Object.assign({}, state)
-    delete copyState.saved
-    saveToStorage(undefined, copyState, true)
-      .then(() => {
-        store.dispatch(saved())
+const chromeSyncStorageSetMerge = newStorage =>
+  chromeSyncStorageGet()
+    .then(oldStorage =>
+      new Promise((resolve, reject) => {
+        const mergedValue = R.mergeDeepRight(oldStorage, newStorage)
+        chrome.storage.sync.set(mergedValue, () => {
+          if (chrome.runtime.lastError) {
+            reject(chrome.runtime.lastError)
+          } else {
+            resolve()
+          }
+        })
       })
-			.catch(error => {
-				console.error('Error while saving:', error)
-				if (error.message === 'QUOTA_BYTES_PER_ITEM quota exceeded')
-					store.dispatch(saveFailed('Storage limit exceeded! Click for more info', 'https://github.com/SidneyNemzer/snippets#warning'))
-				else
-					store.dispatch(saveFailed('An unknown error occurred while saving: ' + error.message))
-			})
-  }
+    )
+
+const settingsStorage = {
+  set: (key, data) =>
+    chromeSyncStorageSetMerge({
+      settings: {
+        [key]: data
+      }
+    })
 }
 
-loadFromStorage()
-  .then(result => {
-		console.log('loaded data:', result)
-		if (result.snippets) {
-			Object.entries(result.snippets).forEach(([id, value]) => {
-				const { content, body } = value
-				if (content && typeof body === 'undefined') {
-					result.snippets[id].body = content
-				}
-			})
-		}
-		console.log('proccessed data:', result)
-    const store = createStore(rootReducer, result)
-    wrapStore(store, {portName: 'SNIPPETS'})
-
-    store.subscribe(debounce(() => saveStore(store), 1500))
+chromeSyncStorageGet()
+  .then(storage => {
+    console.log('loaded storage:', storage)
+    const store = createStore(
+      rootReducer,
+      {
+        settings: Object.assign(defaultSettings, storage.settings)
+      },
+      applyMiddleware(
+        alias(aliases),
+        thunk,
+        settingsMiddleware(settingsStorage),
+        saveMiddleware
+      )
+    )
+    wrapStore(store, { portName: 'SNIPPETS' })
   })

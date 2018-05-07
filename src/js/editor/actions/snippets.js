@@ -2,34 +2,55 @@ export const CREATE_SNIPPET = 'CREATE_SNIPPET'
 export const RENAME_SNIPPET = 'RENAME_SNIPPET'
 export const UPDATE_SNIPPET = 'UPDATE_SNIPPET'
 export const DELETE_SNIPPET = 'DELETE_SNIPPET'
+export const LOADING_SNIPPETS = 'LOADING_SNIPPETS'
+export const LOADED_SNIPPETS = 'LOADED_SNIPPETS'
+export const SAVING_SNIPPETS = 'SAVING_SNIPPETS'
+export const SAVED_SNIPPETS = 'SAVED_SNIPPETS'
+export const LOAD_SNIPPETS = 'LOAD_SNIPPETS'
+export const SAVE_SNIPPETS = 'SAVE_SNIPPETS'
+export const LOAD_LEGACY_SNIPPETS = 'LOAD_LEGACY_SNIPPETS'
+export const LOADED_LEGACY_SNIPPETS = 'LOADED_LEGACY_SNIPPETS'
 
-// Generate a unique ID using the crypto API
-// Source: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-function uuidv4() {
-  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-  )
-}
-
-export const createSnippet = name => ({
-  type: CREATE_SNIPPET,
-  id: uuidv4(),
-  name,
+export const createSnippet = () => ({
+  type: CREATE_SNIPPET
 })
 
-export const renameSnippet = (id, newName) => ({
+export const renameSnippet = (oldName, newName) => ({
   type: RENAME_SNIPPET,
-  id,
+  oldName,
   newName
 })
 
-export const updateSnippet = (id, newBody) => ({
+export const updateSnippet = (name, newBody) => ({
   type: UPDATE_SNIPPET,
-  id,
+  name,
   newBody
 })
 
-export const deleteSnippet = id => ({
+export const deleteSnippet = name => ({
   type: DELETE_SNIPPET,
-  id
+  name
+})
+
+export const loadSnippets = () => ({
+  type: LOAD_SNIPPETS
+})
+
+export const loadLegacySnippets = () => ({
+  type: LOAD_LEGACY_SNIPPETS
+})
+
+export const loadedSnippets = (error, snippets = {}) => ({
+  type: LOADED_SNIPPETS,
+  snippets,
+  error
+})
+
+export const saveSnippets = () => ({
+  type: SAVE_SNIPPETS
+})
+
+export const savedSnippets = error => ({
+  type: SAVED_SNIPPETS,
+  error
 })

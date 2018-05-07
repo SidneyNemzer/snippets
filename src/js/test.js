@@ -1,57 +1,79 @@
-/* This file starts the editor to allow for interface development
-   It simulates panel.js (start editor) and background.js (redux store)
+/* global localStorage */
+
+/* This file starts the editor to allow for interface development in a
+   regular webpage. It simulates panel.js (start editor) and background.js
+   (redux store)
 */
 
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import { createLogger } from 'redux-logger'
+import { alias } from 'react-chrome-redux'
 import rootReducer from './editor/reducers'
-import { saved } from './editor/actions'
+import { types } from './editor/actions/settings'
+import { defaultState as defaultSettings } from './editor/reducers/settings'
 import createEditor from './editor'
+import settingsMiddleware from './editor/middleware/settings'
+import saveMiddleware from './editor/middleware/save-when-inactive'
+import aliases from './editor/aliases'
 
-function debounce(func, wait, immediate) {
-	var timeout;
-	return function() {
-		var context = this, args = arguments
-		var later = function() {
-			timeout = null
-			if (!immediate) func.apply(context, args)
-		};
-		var callNow = immediate && !timeout
-		clearTimeout(timeout)
-		timeout = setTimeout(later, wait)
-		if (callNow)
-      func.apply(context, args)
-	}
-}
+const LOCAL_STORAGE_PREFIX = 'snippets-settings:'
 
-const saveStore = (store) => {
-  const state = store.getState()
-  if (!state.saved) {
-    console.log('[Noop] save store:', state)
-    store.dispatch(saved())
+const storage = {
+  set: (path, data) => {
+    localStorage[LOCAL_STORAGE_PREFIX + path] = JSON.stringify(data)
   }
 }
 
-const store = createStore(rootReducer)
-store.subscribe(debounce(() => saveStore(store), 1500))
+const store =
+  createStore(
+    rootReducer,
+    {
+      settings: Object.assign(
+        defaultSettings,
+        Object.keys(types)
+          .reduce((accum, key) => {
+            const storageValue =
+              JSON.parse(localStorage.getItem(LOCAL_STORAGE_PREFIX + key))
+            accum[key] =
+              storageValue === null ? defaultSettings[key] : storageValue
+            return accum
+          }, {})
+      )
+    },
+    applyMiddleware(
+      alias(aliases),
+      thunk,
+      settingsMiddleware(storage),
+      saveMiddleware,
+      createLogger({ collapsed: true })
+    )
+  )
 
 const fakeStore = {
-	dispatch: (...args) => {
-		setTimeout(() => {
-			store.dispatch(...args)
-		}, 2)
-	}
+  dispatch: (...args) => {
+    // Delay dispatches by 2 ms to simulate the delay in react-chrome-redux
+    setTimeout(() => {
+      store.dispatch(...args)
+    }, 2)
+  }
 }
 
-createEditor(eval, new Proxy(
-	store,
-	{
-		get: (target, key) => {
-			if (key === 'dispatch') {
-				return fakeStore.dispatch
-			} else {
-				return target[key]
-			}
-		}
-}))
-// Simulate react-chrome-redux store
+createEditor(
+  // eslint-disable-next-line no-eval
+  eval,
+  new Proxy(
+    store,
+    {
+      get: (target, key) => {
+        if (key === 'dispatch') {
+          return fakeStore.dispatch
+        } else {
+          return target[key]
+        }
+      }
+    }
+  )
+)
+// Simulate react-chrome-redux store load event
 store.dispatch({ type: 'LOADED' })
