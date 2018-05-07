@@ -1,4 +1,4 @@
-![Snippets](images/logo-transparent.png)
+[![Snippets](images/logo-transparent.png)][chrome-web-store]
 
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/fakjeijchchmicjllnabpdkclfkpbiag.svg)][chrome-web-store]
 
