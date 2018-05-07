@@ -50,6 +50,10 @@ class SelectGist extends React.Component {
         >
           Save
         </Button>
+        <p style={{ color: 'gray' }}>
+          Example: <code>5d23ba1a3905cc6e7365bcc00e307069</code><br />
+          Please don't enter the full URL!
+        </p>
         <p>
           <a href={usersGists} target='_blank'>
             Open GitHub Gists
