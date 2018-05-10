@@ -127,7 +127,10 @@ try {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
       const { selectedSnippet } = this.state
       const { snippets } = this.props
-      this.runSnippet(snippets[selectedSnippet].body)
+      const snippet = snippets.data[selectedSnippet]
+      if (snippet) {
+        this.runSnippet(snippet.content.local)
+      }
     }
   }
 

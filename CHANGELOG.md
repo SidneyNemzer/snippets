@@ -1,3 +1,11 @@
+## 2.1.0
+
+### Changes / Bug Fixes
+
+* *Run* button and shortcut (Ctrl/Cmd + Enter) did nothing. Thanks to @bladnman
+  for reporting!
+* An error message is logged if you run a Snippet with a syntax error
+
 ## 2.0.0
 
 ### Features
