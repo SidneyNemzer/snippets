@@ -145,6 +145,10 @@ button.delete:hover {
   margin: 10px 0 0;
 }
 
+.error a {
+  margin-top: 20px;
+}
+
 .error .action,
 .error a {
   font-size: 0.7em;
