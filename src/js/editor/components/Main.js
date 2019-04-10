@@ -231,7 +231,7 @@ try {
 
   renderError(error) {
     switch (error.status) {
-      case 'Unauthorized':
+      case 401: // Unauthorized
         return (
           <ErrorPage
             context={error.context}
@@ -244,7 +244,7 @@ try {
           />
         )
 
-      case 'Not Found':
+      case 404: // Not found
         return (
           <ErrorPage
             context={error.context}

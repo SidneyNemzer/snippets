@@ -5,7 +5,6 @@
  * https://github.com/tshaddix/react-chrome-redux/wiki/Advanced-Usage
  */
 
-import GithubApi from 'github'
 import {
   LOAD_SNIPPETS,
   LOADING_SNIPPETS,
@@ -17,15 +16,10 @@ import {
   savedSnippets
 } from './actions/snippets'
 
-const github = new GithubApi({ headers: { 'user-agent': 'snippets' } })
-
-const loadSnippets = () => (dispatch, getState) => {
-  const { settings: { accessToken, gistId } } = getState()
-
+const loadSnippets = octokit => () => (dispatch, getState) => {
   dispatch({ type: LOADING_SNIPPETS })
 
-  github.authenticate({ type: 'token', token: accessToken })
-  github.gists.get({ id: gistId })
+  octokit.gists.get({ gist_id: getState().settings.gistId })
     .then(({ data: gist }) => {
       dispatch(loadedSnippets(
         null,
@@ -45,10 +39,10 @@ const loadSnippets = () => (dispatch, getState) => {
     })
 }
 
-const saveSnippets = () => (dispatch, getState) => {
+const saveSnippets = octokit => () => (dispatch, getState) => {
   const {
     snippets: { data },
-    settings: { accessToken, gistId }
+    settings: { gistId }
   } = getState()
 
   if (!data) return
@@ -66,8 +60,7 @@ const saveSnippets = () => (dispatch, getState) => {
           }
       return files
     }, {})
-  github.authenticate({ type: 'token', token: accessToken })
-  github.gists.edit({ id: gistId, files })
+  octokit.gists.update({ gist_id: gistId, files })
     .then(() => dispatch(savedSnippets(null)))
     .catch(error => {
       error.context = 'save snippets'
@@ -99,8 +92,8 @@ const loadLegacySnippets = () => (dispatch, getState) => {
   })
 }
 
-export default {
-  [LOAD_SNIPPETS]: loadSnippets,
-  [SAVE_SNIPPETS]: saveSnippets,
+export default octokit => ({
+  [LOAD_SNIPPETS]: loadSnippets(octokit),
+  [SAVE_SNIPPETS]: saveSnippets(octokit),
   [LOAD_LEGACY_SNIPPETS]: loadLegacySnippets
-}
+})

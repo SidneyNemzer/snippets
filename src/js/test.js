@@ -16,7 +16,8 @@ import createEditor from './editor'
 import settingsMiddleware from './editor/middleware/settings'
 import saveMiddleware from './editor/middleware/save-when-inactive'
 import errorMiddleware from './editor/middleware/log-error'
-import aliases from './editor/aliases'
+import createAliases from './editor/aliases'
+import Octokit from '@octokit/rest'
 
 const LOCAL_STORAGE_PREFIX = 'snippets-settings:'
 
@@ -26,7 +27,15 @@ const storage = {
   }
 }
 
-const store =
+// TODO the interaction between octokit and the store is weird, can we untangle
+// this somehow?
+let store
+const octokit = new Octokit({
+  userAgent: 'snippets',
+  auth: () => store.getState().settings.accessToken
+})
+
+store =
   createStore(
     rootReducer,
     {
@@ -43,7 +52,7 @@ const store =
       )
     },
     applyMiddleware(
-      alias(aliases),
+      alias(createAliases(octokit)),
       thunk,
       errorMiddleware,
       settingsMiddleware(storage),
