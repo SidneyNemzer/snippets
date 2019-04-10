@@ -51,13 +51,14 @@ const saveSnippets = octokit => () => (dispatch, getState) => {
 
   const files = Object.entries(data)
     .reduce((files, [name, snippet]) => {
+      const content = snippet.content.local.trim()
+        ? snippet.content.local
+        : "(Github Gists can't be empty so Snippets saved this content)"
+
       files[name] =
         snippet.deleted
           ? null
-          : {
-            content: snippet.content.local,
-            filename: snippet.renamed || undefined
-          }
+          : { content, filename: snippet.renamed || undefined }
       return files
     }, {})
   octokit.gists.update({ gist_id: gistId, files })
