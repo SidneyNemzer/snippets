@@ -33,7 +33,7 @@ const loadSnippets = () => (dispatch, getState) => {
           .reduce((snippets, [ fileName, { truncated, content } ]) => {
             snippets[fileName] = {
               name: fileName,
-              body: truncated ? '(Truncated)' : content
+              body: truncated ? '(Truncated)' : content // TODO handle truncated files
             }
             return snippets
           }, {})
