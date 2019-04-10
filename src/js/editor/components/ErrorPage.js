@@ -1,31 +1,39 @@
 import React from 'react'
 import Button from 'material-ui/Button'
 
-const renderTitle = (context, title) =>
-  <h1>
-    {
-      context
-        ? 'Failed to ' + context
-        : title
-        || 'Error'
-    }
-  </h1>
+const renderTitle = (context, title) => {
+  if (context) {
+    return <h1>Failed to {context}</h1>
+  } else if (title) {
+    return <h1>{title}</h1>
+  } else {
+    return <h1>Error</h1>
+  }
+}
 
-const renderError = errorText =>
-  errorText !== undefined
-    ? typeof errorText === 'object'
-      ? typeof errorText.message === 'string'
-        ? <pre>{errorText.message}</pre>
-        : errorText.toString()
-      : <pre>{errorText}</pre>
-    : false
+const renderError = error => {
+  if (!error) {
+    return false
+  }
 
-const renderAction = (action, actionButton, onClick) =>
-  action
-    ? <p className="action">{action}</p>
-    : actionButton
-      ? <Button raised color="primary" onClick={onClick}>{actionButton}</Button>
-      : false
+  if (typeof error === 'string') {
+    return <pre>{error}</pre>
+  }
+
+  if (error.message) {
+    return <pre>{error.message}</pre>
+  }
+
+  return error.toString()
+}
+
+const renderAction = (action, actionButton, onClick) => {
+  if (action) {
+    return <p className="action">{action}</p>
+  } else if (actionButton) {
+    return <Button raised color="primary" onClick={onClick}>{actionButton}</Button>
+  }
+}
 
 const renderLink = link =>
   link && <a href={link}>{link}</a>
