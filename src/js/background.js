@@ -5,6 +5,7 @@ import thunk from 'redux-thunk'
 import { wrapStore, alias } from 'react-chrome-redux'
 import settingsMiddleware from './editor/middleware/settings'
 import saveMiddleware from './editor/middleware/save-when-inactive'
+import errorMiddleware from './editor/middleware/log-error'
 import { defaultState as defaultSettings } from './editor/reducers/settings'
 import rootReducer from './editor/reducers'
 import aliases from './editor/aliases'
@@ -51,6 +52,7 @@ chromeSyncStorageGet()
       applyMiddleware(
         alias(aliases),
         thunk,
+        errorMiddleware,
         settingsMiddleware(settingsStorage),
         saveMiddleware
       )

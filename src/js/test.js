@@ -15,6 +15,7 @@ import { defaultState as defaultSettings } from './editor/reducers/settings'
 import createEditor from './editor'
 import settingsMiddleware from './editor/middleware/settings'
 import saveMiddleware from './editor/middleware/save-when-inactive'
+import errorMiddleware from './editor/middleware/log-error'
 import aliases from './editor/aliases'
 
 const LOCAL_STORAGE_PREFIX = 'snippets-settings:'
@@ -44,6 +45,7 @@ const store =
     applyMiddleware(
       alias(aliases),
       thunk,
+      errorMiddleware,
       settingsMiddleware(storage),
       saveMiddleware,
       createLogger({ collapsed: true })
