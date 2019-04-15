@@ -4,6 +4,7 @@ const fs = require('fs')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const package_ = require('./package.json')
+const path = require('path')
 const webpack = require('webpack')
 
 const AfterEmitPlugin = fn => ({
@@ -64,6 +65,10 @@ module.exports = (env, args) => {
     devtool: !isProduction && 'cheap-module-eval-source-map',
 
     entry,
+
+    output: {
+      path: path.resolve(__dirname, 'build')
+    },
 
     module: {
       strictExportPresence: true,
