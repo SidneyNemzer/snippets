@@ -3,7 +3,7 @@
 
   "background": {
     "scripts": [
-      "js/background.js"
+      "background.js"
     ]
   },
   "devtools_page": "devtools.html",
