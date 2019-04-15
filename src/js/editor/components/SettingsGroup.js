@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Paper from 'material-ui/Paper'
+import Paper from '@material-ui/core/Paper'
 
 const SettingsGroup = (props) => (
   <div

@@ -55,8 +55,8 @@ div.ace_editor {
   visibility: hidden;
   transition: visibility 150ms cubic-bezier(0.4, 0.0, 0.2, 1) 0ms;
 }
-.sidepane ul > div:hover div .menu-icon,
-.sidepane li.selected + div .menu-icon {
+.sidepane li:hover .menu-icon,
+.sidepane .selected + div .menu-icon {
   visibility: visible;
 }
 

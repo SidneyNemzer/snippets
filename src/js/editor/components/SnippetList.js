@@ -1,10 +1,10 @@
 import React from 'react'
 
-import List from 'material-ui/List'
+import List from '@material-ui/core/List'
 import SnippetSelector from './SnippetSelector'
 
 const SnippetList = props => (
-  <List>
+  <List className="snippet-list">
     {
       Object.entries(props.snippets)
         .map(([name, snippet]) => (

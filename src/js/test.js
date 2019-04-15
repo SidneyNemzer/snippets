@@ -8,7 +8,7 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-import { alias } from 'react-chrome-redux'
+import { alias } from 'webext-redux'
 import rootReducer from './editor/reducers'
 import { types } from './editor/actions/settings'
 import { defaultState as defaultSettings } from './editor/reducers/settings'
@@ -63,7 +63,7 @@ store =
 
 const fakeStore = {
   dispatch: (...args) => {
-    // Delay dispatches by 2 ms to simulate the delay in react-chrome-redux
+    // Delay dispatches by 2 ms to simulate the delay in webext-redux
     setTimeout(() => {
       store.dispatch(...args)
     }, 2)
@@ -86,5 +86,5 @@ createEditor(
     }
   )
 )
-// Simulate react-chrome-redux store load event
+// Simulate webext-redux store load event
 store.dispatch({ type: 'LOADED' })

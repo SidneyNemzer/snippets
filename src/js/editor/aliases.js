@@ -2,7 +2,7 @@
 
 /**
  * Redux actions that are usually thunks must be implemented with aliases
- * https://github.com/tshaddix/react-chrome-redux/wiki/Advanced-Usage
+ * https://github.com/tshaddix/webext-redux/wiki/Advanced-Usage
  */
 
 import {

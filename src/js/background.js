@@ -2,7 +2,7 @@
 import * as R from 'ramda'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import { wrapStore, alias } from 'react-chrome-redux'
+import { wrapStore, alias } from 'webext-redux'
 import settingsMiddleware from './editor/middleware/settings'
 import saveMiddleware from './editor/middleware/save-when-inactive'
 import errorMiddleware from './editor/middleware/log-error'

@@ -12,7 +12,7 @@ Unfortunately, Chrome doesn't allow extensions to access the built-in snippets, 
 
 ## What did you use to make this extension?
 
-The interface uses [React](https://facebook.github.io/react/) and [Material UI](http://www.material-ui.com/#/). The code editor is [react-ace](https://github.com/securingsincity/react-ace). [Redux](http://redux.js.org/) and [react-chrome-redux](https://github.com/tshaddix/react-chrome-redux) are used to sync all panels.
+The interface uses [React](https://facebook.github.io/react/) and [Material UI](https://material-ui.com/). The code editor is [react-ace](https://github.com/securingsincity/react-ace). [Redux](https://redux.js.org/) and [webext-redux](https://github.com/tshaddix/webext-redux) are used to sync all panels.
 
 ## Can you add *[insert feature here]*
 
