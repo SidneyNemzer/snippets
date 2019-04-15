@@ -175,7 +175,7 @@ try {
     if (error) {
       return (
         <span
-          style={{cursor: 'pointer'}}
+          style={{ cursor: 'pointer' }}
           onClick={this.props.saveSnippets}
         >
           {error.context ? 'Failed to ' + error.context : 'Error'}:{' '}
@@ -192,7 +192,7 @@ try {
       case saveStatus.UNSAVED:
         return (
           <span
-            style={{cursor: 'pointer'}}
+            style={{ cursor: 'pointer' }}
             onClick={this.props.saveSnippets}
           >
             You have unsaved changes

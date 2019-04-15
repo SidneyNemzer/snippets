@@ -254,7 +254,7 @@ class Settings extends React.Component {
               <Divider />
               <ListItem
                 button
-                onClick={event => this.setState({menu: menus.TAB_CHAR, menuAnchor: event.currentTarget})}
+                onClick={event => this.setState({ menu: menus.TAB_CHAR, menuAnchor: event.currentTarget })}
               >
                 <ListItemText
                   primary="Tab Character"
@@ -264,7 +264,7 @@ class Settings extends React.Component {
               <Divider />
               <ListItem
                 button
-                onClick={event => this.setState({menu: menus.THEME, menuAnchor: event.currentTarget})}
+                onClick={event => this.setState({ menu: menus.THEME, menuAnchor: event.currentTarget })}
               >
                 <ListItemText
                   primary="Theme"
