@@ -51,7 +51,12 @@ class Login extends React.Component {
         >
           Save
         </Button>
-        <p>You can make one <a href={CREATE_ACCESS_TOKEN_URL} target='_blank'>here</a></p>
+        <p>
+          You can make one
+          <a href={CREATE_ACCESS_TOKEN_URL} target="_blank" rel="noopener noreferrer">
+            here
+          </a>
+        </p>
       </div>
     )
   }

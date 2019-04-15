@@ -55,7 +55,7 @@ class SelectGist extends React.Component {
           Please don't enter the full URL!
         </p>
         <p>
-          <a href={usersGists} target='_blank'>
+          <a href={usersGists} target="_blank" rel="noopener noreferrer">
             Open GitHub Gists
           </a>
         </p>
