@@ -40,6 +40,13 @@ const Editor = (props) => {
       setOptions={{
         useWorker: props.settings.linter
       }}
+      onLoad={ace => {
+        ace.container.addEventListener('keydown', event => {
+          if (event.key === '?') {
+            event.stopPropagation()
+          }
+        })
+      }}
     />
   )
 }
