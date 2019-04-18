@@ -18,7 +18,7 @@ const Welcome = () => (
       to authenticate with Github. <br /> (We'll use an access token to do that).
     </p>
     <Link to={pages.LOGIN} style={{ textDecoration: 'none' }}>
-      <Button raised color="primary">Login</Button>
+      <Button variant="contained" color="primary">Login</Button>
     </Link>
     <p style={{ color: 'gray', fontStyle: 'italic' }}>
       Note to users Snippets before version 2.0: <br />you can import snippets from Chrome storage in the settings, after you login

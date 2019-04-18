@@ -31,7 +31,7 @@ const renderAction = (action, actionButton, onClick) => {
   if (action) {
     return <p className="action">{action}</p>
   } else if (actionButton) {
-    return <Button raised color="primary" onClick={onClick}>{actionButton}</Button>
+    return <Button variant="contained" color="primary" onClick={onClick}>{actionButton}</Button>
   }
 }
 

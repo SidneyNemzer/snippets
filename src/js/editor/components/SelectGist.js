@@ -44,7 +44,7 @@ class SelectGist extends React.Component {
           onChange={this.handleChange('gistIdInput')}
         />
         <Button
-          raised
+          variant="contained"
           color="primary"
           onClick={() => this.props.gistId(this.state.gistIdInput)}
         >
