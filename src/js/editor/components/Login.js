@@ -33,30 +33,32 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div style={{ maxWidth: 700, margin: '10vh auto', textAlign: 'center' }}>
+      <div style={{ maxWidth: 600, margin: '10vh auto', textAlign: 'center' }}>
         <h1>Authenticate with Github</h1>
         <p>
           In order to store snippets in a Github Gist, you'll need to provide a
-          Github access token. It must have the "Gist" scope.
+          Github access token. It must have the "gist" scope.
         </p>
-        <TextField
-          label="Enter access token"
-          value={this.state.accessTokenInput}
-          onChange={this.handleChange('accessTokenInput')}
-        />
-        <Button
-          raised
-          color="primary"
-          onClick={() => this.props.accessToken(this.state.accessTokenInput)}
-        >
-          Save
-        </Button>
-        <p>
-          You can make one
+        <div style={{ marginBottom: '20px' }}>
           <a href={CREATE_ACCESS_TOKEN_URL} target="_blank" rel="noopener noreferrer">
-            here
+            Click here to make an access token
           </a>
-        </p>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <TextField
+            label="Enter access token"
+            value={this.state.accessTokenInput}
+            onChange={this.handleChange('accessTokenInput')}
+            style={{ marginRight: '20px' }}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => this.props.accessToken(this.state.accessTokenInput)}
+          >
+            Save
+          </Button>
+        </div>
       </div>
     )
   }
