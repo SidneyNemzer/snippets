@@ -33,30 +33,32 @@ class SelectGist extends React.Component {
     }
   }
 
+  loadGist = () => {
+    this.props.gistId(this.state.gistIdInput)
+  }
+
   render() {
     return (
       <div style={{ maxWidth: 700, margin: '10vh auto', textAlign: 'center' }}>
-        <h1>Choose a Gist</h1>
-        <p>Please enter the ID of the Gist to store snippets in</p>
-        <TextField
-          label="Enter Gist ID"
-          value={this.state.gistIdInput}
-          onChange={this.handleChange('gistIdInput')}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => this.props.gistId(this.state.gistIdInput)}
-        >
-          Save
-        </Button>
-        <p style={{ color: 'gray' }}>
-          Example: <code>5d23ba1a3905cc6e7365bcc00e307069</code><br />
-          Please don't enter the full URL!
-        </p>
+        <h1>Choose a Gist to store Snippets</h1>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <TextField
+            label="Enter Gist ID"
+            placeholder="example: 1c5f2cf34939336ecb79b97bb89d9da6"
+            value={this.state.gistIdInput}
+            onChange={this.handleChange('gistIdInput')}
+            style={{ marginRight: '15px', width: '290px' }}
+          />
+          <Button
+            color="primary"
+            onClick={this.loadGist}
+          >
+            Save
+          </Button>
+        </div>
         <p>
           <a href={usersGists} target="_blank" rel="noopener noreferrer">
-            Open GitHub Gists
+            Click here to open GitHub Gists
           </a>
         </p>
       </div>
