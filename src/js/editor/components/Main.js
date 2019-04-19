@@ -73,7 +73,7 @@ class Main extends React.Component {
     }
   }
 
-  componentWillReceiveProps({ snippets: { data: newData } }) {
+  UNSAFE_componentWillReceiveProps({ snippets: { data: newData } }) {
     const { snippets: { data } } = this.props
     const { selectedSnippet } = this.state
 

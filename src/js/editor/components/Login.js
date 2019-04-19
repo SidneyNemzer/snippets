@@ -19,7 +19,7 @@ class Login extends React.Component {
     })
   }
 
-  componentWillReceiveProps({ settingsAccessToken: nextAccessToken }) {
+  UNSAFE_componentWillReceiveProps({ settingsAccessToken: nextAccessToken }) {
     const { gistId, settingsAccessToken } = this.props
     if (nextAccessToken && nextAccessToken !== settingsAccessToken) {
       if (gistId) {

@@ -21,7 +21,7 @@ class SelectGist extends React.Component {
     })
   }
 
-  componentWillReceiveProps({ settingsGistId: nextGistId }) {
+  UNSAFE_componentWillReceiveProps({ settingsGistId: nextGistId }) {
     const { accessToken, settingsGistId } = this.props
     if (nextGistId && nextGistId !== settingsGistId) {
       if (accessToken) {
