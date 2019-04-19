@@ -20,6 +20,7 @@
     "spaced-comment": "off",
     "prefer-promise-reject-errors": "off",
     "operator-linebreak": ["error", "before", { "overrides": { "=": "after" } }],
-    "react/no-unescaped-entities": "off"
+    "react/no-unescaped-entities": "off",
+    "camelcase": "off"
   }
 }
