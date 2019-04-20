@@ -156,6 +156,7 @@ try {
     if (selectedSnippet !== null) {
       return (
         <Editor
+          key={selectedSnippet}
           value={snippets[selectedSnippet].content.local}
           onChange={this.handleEditorChange}
         />
