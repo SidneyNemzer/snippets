@@ -100,6 +100,7 @@ const snippets = (state = defaultState, action) => {
         ? update({
           data: {
             [action.name]: {
+              lastUpdatedBy: action.editorId,
               content: {
                 local: action.newBody
               }

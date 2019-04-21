@@ -137,7 +137,8 @@ try {
   handleEditorChange(newValue) {
     this.props.updateSnippet(
       this.state.selectedSnippet,
-      newValue
+      newValue,
+      chrome.devtools.inspectedWindow.tabId
     )
   }
 
@@ -151,14 +152,17 @@ try {
   }
 
   renderEditor(snippets) {
-    const { selectedSnippet } = this.state
+    const { selectedSnippet: snippetId } = this.state
 
-    if (selectedSnippet !== null) {
+    if (snippetId !== null) {
+      const snippet = snippets[snippetId]
       return (
         <Editor
-          key={selectedSnippet}
-          value={snippets[selectedSnippet].content.local}
+          key={snippetId}
+          value={snippet.content.local}
           onChange={this.handleEditorChange}
+          editorId={chrome.devtools.inspectedWindow.tabId}
+          lastUpdatedBy={snippet.lastUpdatedBy}
         />
       )
     } else {

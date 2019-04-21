@@ -7,48 +7,54 @@ import 'brace/mode/javascript'
 import 'brace/theme/github'
 import 'brace/theme/tomorrow_night'
 
-const Editor = (props) => {
-  let timer
-  return (
-    <AceEditor
-      mode="javascript"
-      name="editor"
-      width="100%"
-      height="auto"
-      theme={props.settings.theme}
-      value={props.value}
-      onChange={(newValue) => {
-        if (timer) {
-          clearTimeout(timer)
-          timer = undefined
-          props.onChange(newValue)
-        } else {
-          timer = setTimeout(() => {
-            props.onChange(newValue)
-          }, 5)
-        }
-      }}
-      highlightActiveLine={false}
-      enableBasicAutocompletion={props.settings.autoComplete}
-      enableLiveAutocompletion={props.settings.autoComplete}
-      tabSize={props.settings.tabSize}
-      wrapEnabled={props.settings.lineWrap}
-      editorProps={{
-        $blockScrolling: Infinity,
-        useSoftTabs: props.settings.softTabs
-      }}
-      setOptions={{
-        useWorker: props.settings.linter
-      }}
-      onLoad={ace => {
-        ace.container.addEventListener('keydown', event => {
-          if (event.key === '?') {
-            event.stopPropagation()
-          }
-        })
-      }}
-    />
-  )
+class Editor extends React.Component {
+  static getDerivedStateFromProps(props, state) {
+    if (!state) {
+      return { value: props.value }
+    } else if (props.lastUpdatedBy !== props.editorId) {
+      return { value: props.value }
+    } else {
+      return null
+    }
+  }
+
+  handleChange = value => {
+    this.setState({ value })
+    this.props.onChange(value)
+  }
+
+  render() {
+    return (
+      <AceEditor
+        mode="javascript"
+        name="editor"
+        width="100%"
+        height="auto"
+        theme={this.props.settings.theme}
+        value={this.state.value}
+        onChange={this.handleChange}
+        highlightActiveLine={false}
+        enableBasicAutocompletion={this.props.settings.autoComplete}
+        enableLiveAutocompletion={this.props.settings.autoComplete}
+        tabSize={this.props.settings.tabSize}
+        wrapEnabled={this.props.settings.lineWrap}
+        editorProps={{
+          $blockScrolling: Infinity,
+          useSoftTabs: this.props.settings.softTabs
+        }}
+        setOptions={{
+          useWorker: this.props.settings.linter
+        }}
+        onLoad={ace => {
+          ace.container.addEventListener('keydown', event => {
+            if (event.key === '?') {
+              event.stopPropagation()
+            }
+          })
+        }}
+      />
+    )
+  }
 }
 
 const mapStateToProps = (state) => ({
