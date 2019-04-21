@@ -16,8 +16,8 @@ The interface uses [React](https://facebook.github.io/react/) and [Material UI](
 
 ## Can you add *[insert feature here]*
 
-See [the roadmap](roadmap.md) for planned features. [Open an issue](https://github.com/SidneyNemzer/snippets/issues) if you'd like to suggest a feature.
+See [the Github Project](https://github.com/SidneyNemzer/snippets/projects/1) for planned features. [Open an issue](https://github.com/SidneyNemzer/snippets/issues) if you'd like to suggest a feature.
 
 ## What font is the logo in?
 
-Freestyle Script. Maybe you don't find that too interesting, but I'll forget it if I don't write it somewhere...
+Freestyle Script. Maybe you don't find that too interesting, but I'll forget it if I don't write it down somewhere...
