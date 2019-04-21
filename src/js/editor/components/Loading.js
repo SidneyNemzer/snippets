@@ -2,8 +2,11 @@ import React from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 const Loading = () => (
-  <div style={{ maxWidth: 700, margin: '10vh auto', textAlign: 'center' }}>
-    <h1>Loading <CircularProgress /></h1>
+  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '10vh' }}>
+    <h1 style={{ marginRight: '10px' }}>
+      Loading
+    </h1>
+    <CircularProgress />
   </div>
 )
 
