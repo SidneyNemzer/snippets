@@ -138,7 +138,7 @@ try {
     this.props.updateSnippet(
       this.state.selectedSnippet,
       newValue,
-      chrome.devtools.inspectedWindow.tabId
+      this.props.editorId
     )
   }
 
@@ -161,7 +161,7 @@ try {
           key={snippetId}
           value={snippet.content.local}
           onChange={this.handleEditorChange}
-          editorId={chrome.devtools.inspectedWindow.tabId}
+          editorId={this.props.editorId}
           lastUpdatedBy={snippet.lastUpdatedBy}
         />
       )

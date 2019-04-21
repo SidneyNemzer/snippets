@@ -58,6 +58,7 @@ class App extends React.Component {
             path={pages.MAIN}
             component={Main}
             runInInspectedWindow={this.props.runInInspectedWindow}
+            editorId={this.props.editorId}
           />
           <Route path={pages.SETTINGS} component={Settings} />
           <Redirect from="/" to={this.choosePage()} exact />

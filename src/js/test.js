@@ -74,6 +74,7 @@ const fakeStore = {
 createEditor(
   // eslint-disable-next-line no-eval
   eval,
+  'test-tab',
   new Proxy(
     store,
     {
