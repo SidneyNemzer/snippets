@@ -8,10 +8,13 @@ import 'brace/theme/github'
 import 'brace/theme/tomorrow_night'
 
 class Editor extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { value: props.value }
+  }
+
   static getDerivedStateFromProps(props, state) {
-    if (!state) {
-      return { value: props.value }
-    } else if (props.lastUpdatedBy !== props.editorId) {
+    if (props.lastUpdatedBy && props.lastUpdatedBy !== props.editorId) {
       return { value: props.value }
     } else {
       return null
