@@ -63,10 +63,11 @@ store =
 
 const fakeStore = {
   dispatch: (...args) => {
-    // Delay dispatches by 2 ms to simulate the delay in webext-redux
+    // Delay dispatches to the next tick simulate the asynchronous updates in
+    // webext-redux
     setTimeout(() => {
       store.dispatch(...args)
-    }, 2)
+    }, 0)
   }
 }
 
