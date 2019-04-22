@@ -1,8 +1,8 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Button from 'material-ui/Button'
-import TextField from 'material-ui/TextField'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 
 import { pages, CREATE_ACCESS_TOKEN_URL } from '../constants'
 import { actions as settingsActions } from '../actions/settings'
@@ -19,7 +19,7 @@ class Login extends React.Component {
     })
   }
 
-  componentWillReceiveProps({ settingsAccessToken: nextAccessToken }) {
+  UNSAFE_componentWillReceiveProps({ settingsAccessToken: nextAccessToken }) {
     const { gistId, settingsAccessToken } = this.props
     if (nextAccessToken && nextAccessToken !== settingsAccessToken) {
       if (gistId) {
@@ -33,25 +33,32 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div style={{ maxWidth: 700, margin: '10vh auto', textAlign: 'center' }}>
+      <div style={{ maxWidth: 600, margin: '10vh auto', textAlign: 'center' }}>
         <h1>Authenticate with Github</h1>
         <p>
           In order to store snippets in a Github Gist, you'll need to provide a
-          Github access token. It must have the "Gist" scope.
+          Github access token. It must have the "gist" scope.
         </p>
-        <TextField
-          label="Enter access token"
-          value={this.state.accessTokenInput}
-          onChange={this.handleChange('accessTokenInput')}
-        />
-        <Button
-          raised
-          color="primary"
-          onClick={() => this.props.accessToken(this.state.accessTokenInput)}
-        >
-          Save
-        </Button>
-        <p>You can make one <a href={CREATE_ACCESS_TOKEN_URL} target='_blank'>here</a></p>
+        <div style={{ marginBottom: '20px' }}>
+          <a href={CREATE_ACCESS_TOKEN_URL} target="_blank" rel="noopener noreferrer">
+            Click here to make an access token
+          </a>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <TextField
+            label="Enter access token"
+            value={this.state.accessTokenInput}
+            onChange={this.handleChange('accessTokenInput')}
+            style={{ marginRight: '20px' }}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => this.props.accessToken(this.state.accessTokenInput)}
+          >
+            Save
+          </Button>
+        </div>
       </div>
     )
   }

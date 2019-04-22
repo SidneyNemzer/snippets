@@ -2,12 +2,14 @@
 import * as R from 'ramda'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import { wrapStore, alias } from 'react-chrome-redux'
+import { wrapStore, alias } from 'webext-redux'
 import settingsMiddleware from './editor/middleware/settings'
 import saveMiddleware from './editor/middleware/save-when-inactive'
+import errorMiddleware from './editor/middleware/log-error'
 import { defaultState as defaultSettings } from './editor/reducers/settings'
 import rootReducer from './editor/reducers'
-import aliases from './editor/aliases'
+import createAliases from './editor/aliases'
+import Octokit from '@octokit/rest'
 
 const chromeSyncStorageGet = () =>
   new Promise(resolve => {
@@ -40,17 +42,26 @@ const settingsStorage = {
     })
 }
 
+// TODO the interaction between octokit and the store is weird, can we untangle
+// this somehow?
+let store
+const octokit = new Octokit({
+  userAgent: 'snippets',
+  auth: () => store.getState().settings.accessToken
+})
+
 chromeSyncStorageGet()
   .then(storage => {
     console.log('loaded storage:', storage)
-    const store = createStore(
+    store = createStore(
       rootReducer,
       {
         settings: Object.assign(defaultSettings, storage.settings)
       },
       applyMiddleware(
-        alias(aliases),
+        alias(createAliases(octokit)),
         thunk,
+        errorMiddleware,
         settingsMiddleware(settingsStorage),
         saveMiddleware
       )

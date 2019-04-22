@@ -15,4 +15,4 @@ const evalInInspected = content => {
   })
 }
 
-createEditor(evalInInspected)
+createEditor(evalInInspected, chrome.devtools.inspectedWindow.tabId)

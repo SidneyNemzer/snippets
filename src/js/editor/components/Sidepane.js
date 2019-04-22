@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Button from 'material-ui/Button'
-import SettingsIcon from 'material-ui-icons/Settings'
+import Button from '@material-ui/core/Button'
+import SettingsIcon from '@material-ui/icons/Settings'
 import CreateSnippetButton from './CreateSnippetButton'
 import SnippetList from './SnippetList'
 
@@ -18,6 +18,7 @@ const Sidepane = props => (
     />
     <Button
       onClick={props.handleOpenSettings}
+      style={{ padding: '11px' }}
     >
       <SettingsIcon />
     </Button>

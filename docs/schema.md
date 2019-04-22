@@ -14,6 +14,10 @@ This file documents how Snippets stores data
       [name]: {
         deleted: false, // Boolean
         renamed: 'new-name', // String or false
+        lastUpdatedBy: 'chrome-devtools://devt...kSide=undocked', // String or undefined
+          // lastUpdatedBy is used by each panel's editor to know when to update
+          // the editor in response to a change from a different panel. Editors
+          // can ignore their own updates.
         content: {
           local: 'abcd', // String
           remote: 'defg' // String or false

@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import {
   MemoryRouter as Router,
   Route,
-  Redirect
+  Redirect,
+  Switch
 } from 'react-router-dom'
-import { AnimatedSwitch } from 'react-router-transition'
 
 import PropsRoute from './PropsRoute'
 import { pages } from '../constants'
@@ -50,12 +50,7 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <AnimatedSwitch
-          atEnter={{ opacity: 0 }}
-          atLeave={{ opacity: 0 }}
-          atActive={{ opacity: 1 }}
-          className="switch-wrapper"
-        >
+        <Switch className="switch-wrapper">
           <Route path={pages.WELCOME} component={Welcome} />
           <Route path={pages.LOGIN} component={Login} />
           <Route path={pages.SELECT_GIST} component={SelectGist} />
@@ -63,10 +58,11 @@ class App extends React.Component {
             path={pages.MAIN}
             component={Main}
             runInInspectedWindow={this.props.runInInspectedWindow}
+            editorId={this.props.editorId}
           />
           <Route path={pages.SETTINGS} component={Settings} />
           <Redirect from="/" to={this.choosePage()} exact />
-        </AnimatedSwitch>
+        </Switch>
       </Router>
     )
   }

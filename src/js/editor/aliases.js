@@ -2,10 +2,9 @@
 
 /**
  * Redux actions that are usually thunks must be implemented with aliases
- * https://github.com/tshaddix/react-chrome-redux/wiki/Advanced-Usage
+ * https://github.com/tshaddix/webext-redux/wiki/Advanced-Usage
  */
 
-import GithubApi from 'github'
 import {
   LOAD_SNIPPETS,
   LOADING_SNIPPETS,
@@ -17,15 +16,10 @@ import {
   savedSnippets
 } from './actions/snippets'
 
-const github = new GithubApi({ headers: { 'user-agent': 'snippets' } })
-
-const loadSnippets = () => (dispatch, getState) => {
-  const { settings: { accessToken, gistId } } = getState()
-
+const loadSnippets = octokit => () => (dispatch, getState) => {
   dispatch({ type: LOADING_SNIPPETS })
 
-  github.authenticate({ type: 'token', token: accessToken })
-  github.gists.get({ id: gistId })
+  octokit.gists.get({ gist_id: getState().settings.gistId })
     .then(({ data: gist }) => {
       dispatch(loadedSnippets(
         null,
@@ -33,7 +27,7 @@ const loadSnippets = () => (dispatch, getState) => {
           .reduce((snippets, [ fileName, { truncated, content } ]) => {
             snippets[fileName] = {
               name: fileName,
-              body: truncated ? '(Truncated)' : content
+              body: truncated ? '(Truncated)' : content // TODO handle truncated files
             }
             return snippets
           }, {})
@@ -45,10 +39,10 @@ const loadSnippets = () => (dispatch, getState) => {
     })
 }
 
-const saveSnippets = () => (dispatch, getState) => {
+const saveSnippets = octokit => () => (dispatch, getState) => {
   const {
     snippets: { data },
-    settings: { accessToken, gistId }
+    settings: { gistId }
   } = getState()
 
   if (!data) return
@@ -57,17 +51,24 @@ const saveSnippets = () => (dispatch, getState) => {
 
   const files = Object.entries(data)
     .reduce((files, [name, snippet]) => {
-      files[name] =
-        snippet.deleted
-          ? null
-          : {
-            content: snippet.content.local,
-            filename: snippet.renamed || undefined
-          }
+      if (snippet.deleted) {
+        files[name] = null
+      } else if (snippet.content.local !== snippet.content.remote) {
+        const content = snippet.content.local.trim()
+          ? snippet.content.local
+          : "(Github Gists can't be empty so Snippets saved this content)"
+
+        files[name] = { content }
+      }
+
+      if (snippet.renamed) {
+        files[name] = files[name] || {}
+        files[name].filename = snippet.renamed
+      }
+
       return files
     }, {})
-  github.authenticate({ type: 'token', token: accessToken })
-  github.gists.edit({ id: gistId, files })
+  octokit.gists.update({ gist_id: gistId, files })
     .then(() => dispatch(savedSnippets(null)))
     .catch(error => {
       error.context = 'save snippets'
@@ -99,8 +100,8 @@ const loadLegacySnippets = () => (dispatch, getState) => {
   })
 }
 
-export default {
-  [LOAD_SNIPPETS]: loadSnippets,
-  [SAVE_SNIPPETS]: saveSnippets,
+export default octokit => ({
+  [LOAD_SNIPPETS]: loadSnippets(octokit),
+  [SAVE_SNIPPETS]: saveSnippets(octokit),
   [LOAD_LEGACY_SNIPPETS]: loadLegacySnippets
-}
+})

@@ -1,9 +1,9 @@
 import React from 'react'
-import Button from 'material-ui/Button'
+import Button from '@material-ui/core/Button'
 
 const CreateSnippetButton = props => (
   <Button
-    raised
+    varient="contained"
     color="primary"
     className="create"
     onClick={() => props.createSnippet('New Snippet')}

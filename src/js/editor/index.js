@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { Store } from 'react-chrome-redux'
+import { Store } from 'webext-redux'
 import App from './components/App'
 import ErrorPage from './components/ErrorPage'
 
@@ -10,7 +10,11 @@ const chromeReduxStore = () =>
     portName: 'SNIPPETS'
   })
 
-export default (runInInspectedWindow, store = chromeReduxStore()) => {
+export default (
+  runInInspectedWindow,
+  editorId,
+  store = chromeReduxStore()
+) => {
   // Ignore the first event; the store will be empty
   const unsubscribe = store.subscribe(() => {
     unsubscribe()
@@ -21,6 +25,7 @@ export default (runInInspectedWindow, store = chromeReduxStore()) => {
         <Provider store={store}>
           <App
             runInInspectedWindow={runInInspectedWindow}
+            editorId={editorId}
           />
         </Provider>,
         root

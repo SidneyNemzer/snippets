@@ -73,7 +73,7 @@ class Main extends React.Component {
     }
   }
 
-  componentWillReceiveProps({ snippets: { data: newData } }) {
+  UNSAFE_componentWillReceiveProps({ snippets: { data: newData } }) {
     const { snippets: { data } } = this.props
     const { selectedSnippet } = this.state
 
@@ -137,7 +137,8 @@ try {
   handleEditorChange(newValue) {
     this.props.updateSnippet(
       this.state.selectedSnippet,
-      newValue
+      newValue,
+      this.props.editorId
     )
   }
 
@@ -151,13 +152,17 @@ try {
   }
 
   renderEditor(snippets) {
-    const { selectedSnippet } = this.state
+    const { selectedSnippet: snippetId } = this.state
 
-    if (selectedSnippet !== null) {
+    if (snippetId !== null) {
+      const snippet = snippets[snippetId]
       return (
         <Editor
-          value={snippets[selectedSnippet].content.local}
+          key={snippetId}
+          value={snippet.content.local}
           onChange={this.handleEditorChange}
+          editorId={this.props.editorId}
+          lastUpdatedBy={snippet.lastUpdatedBy}
         />
       )
     } else {
@@ -175,7 +180,7 @@ try {
     if (error) {
       return (
         <span
-          style={{cursor: 'pointer'}}
+          style={{ cursor: 'pointer' }}
           onClick={this.props.saveSnippets}
         >
           {error.context ? 'Failed to ' + error.context : 'Error'}:{' '}
@@ -192,7 +197,7 @@ try {
       case saveStatus.UNSAVED:
         return (
           <span
-            style={{cursor: 'pointer'}}
+            style={{ cursor: 'pointer' }}
             onClick={this.props.saveSnippets}
           >
             You have unsaved changes
@@ -231,7 +236,7 @@ try {
 
   renderError(error) {
     switch (error.status) {
-      case 'Unauthorized':
+      case 401: // Unauthorized
         return (
           <ErrorPage
             context={error.context}
@@ -244,7 +249,7 @@ try {
           />
         )
 
-      case 'Not Found':
+      case 404: // Not found
         return (
           <ErrorPage
             context={error.context}

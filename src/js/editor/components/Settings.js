@@ -6,19 +6,23 @@ import { connect } from 'react-redux'
 import { pages } from '../constants'
 import { actions } from '../actions/settings.js'
 import { loadSnippets, loadLegacySnippets } from '../actions/snippets.js'
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
-import IconButton from 'material-ui/IconButton'
-import ArrowBackIcon from 'material-ui-icons/ArrowBack'
-import RefreshIcon from 'material-ui-icons/Refresh'
-import FileUploadIcon from 'material-ui-icons/FileUpload'
-import Button from 'material-ui/Button'
-import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
-import Divider from 'material-ui/Divider'
-import Menu, { MenuItem } from 'material-ui/Menu'
-import TextField from 'material-ui/TextField'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import RefreshIcon from '@material-ui/icons/Refresh'
+import PublishIcon from '@material-ui/icons/Publish'
+import Button from '@material-ui/core/Button'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import Divider from '@material-ui/core/Divider'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@material-ui/core/TextField'
 import SettingsGroup from './SettingsGroup'
-import Switch from 'material-ui/Switch'
+import Switch from '@material-ui/core/Switch'
 
 import logo from '../../../../images/logo-transparent.png'
 
@@ -180,11 +184,11 @@ class Settings extends React.Component {
               <Divider />
               <ListItem>
                 <ListItemText primary="Github Gist ID" />
-                <ListItemSecondaryAction className="secondary-with-text-input gist-id-input">
+                <ListItemSecondaryAction>
                   <TextField
+                    className="settings-input gist-id-input"
                     value={this.props.settings.gistId}
                     onChange={event => this.props.gistId(event.target.value)}
-                    fullWidth
                   />
                 </ListItemSecondaryAction>
               </ListItem>
@@ -250,7 +254,7 @@ class Settings extends React.Component {
               <Divider />
               <ListItem
                 button
-                onClick={event => this.setState({menu: menus.TAB_CHAR, menuAnchor: event.currentTarget})}
+                onClick={event => this.setState({ menu: menus.TAB_CHAR, menuAnchor: event.currentTarget })}
               >
                 <ListItemText
                   primary="Tab Character"
@@ -260,7 +264,7 @@ class Settings extends React.Component {
               <Divider />
               <ListItem
                 button
-                onClick={event => this.setState({menu: menus.THEME, menuAnchor: event.currentTarget})}
+                onClick={event => this.setState({ menu: menus.THEME, menuAnchor: event.currentTarget })}
               >
                 <ListItemText
                   primary="Theme"
@@ -274,6 +278,7 @@ class Settings extends React.Component {
                   <Switch
                     checked={this.props.settings.autoComplete}
                     onChange={() => this.props.autoComplete(!this.props.settings.autoComplete)}
+                    color="primary"
                   />
                 </ListItemSecondaryAction>
               </ListItem>
@@ -284,6 +289,7 @@ class Settings extends React.Component {
                   <Switch
                     checked={this.props.settings.lineWrap}
                     onChange={() => this.props.lineWrap(!this.props.settings.lineWrap)}
+                    color="primary"
                   />
                 </ListItemSecondaryAction>
               </ListItem>
@@ -294,6 +300,7 @@ class Settings extends React.Component {
                   <Switch
                     checked={this.props.settings.linter}
                     onChange={() => this.props.linter(!this.props.settings.linter)}
+                    color="primary"
                   />
                 </ListItemSecondaryAction>
               </ListItem>
@@ -316,7 +323,7 @@ class Settings extends React.Component {
                       this.props.history.push(pages.MAIN)
                     }}
                   >
-                    <FileUploadIcon />
+                    <PublishIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>

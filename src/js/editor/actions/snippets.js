@@ -21,10 +21,11 @@ export const renameSnippet = (oldName, newName) => ({
   newName
 })
 
-export const updateSnippet = (name, newBody) => ({
+export const updateSnippet = (name, newBody, editorId) => ({
   type: UPDATE_SNIPPET,
   name,
-  newBody
+  newBody,
+  editorId
 })
 
 export const deleteSnippet = name => ({

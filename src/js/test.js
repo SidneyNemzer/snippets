@@ -8,14 +8,16 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-import { alias } from 'react-chrome-redux'
+import { alias } from 'webext-redux'
 import rootReducer from './editor/reducers'
 import { types } from './editor/actions/settings'
 import { defaultState as defaultSettings } from './editor/reducers/settings'
 import createEditor from './editor'
 import settingsMiddleware from './editor/middleware/settings'
 import saveMiddleware from './editor/middleware/save-when-inactive'
-import aliases from './editor/aliases'
+import errorMiddleware from './editor/middleware/log-error'
+import createAliases from './editor/aliases'
+import Octokit from '@octokit/rest'
 
 const LOCAL_STORAGE_PREFIX = 'snippets-settings:'
 
@@ -25,7 +27,15 @@ const storage = {
   }
 }
 
-const store =
+// TODO the interaction between octokit and the store is weird, can we untangle
+// this somehow?
+let store
+const octokit = new Octokit({
+  userAgent: 'snippets',
+  auth: () => store.getState().settings.accessToken
+})
+
+store =
   createStore(
     rootReducer,
     {
@@ -42,8 +52,9 @@ const store =
       )
     },
     applyMiddleware(
-      alias(aliases),
+      alias(createAliases(octokit)),
       thunk,
+      errorMiddleware,
       settingsMiddleware(storage),
       saveMiddleware,
       createLogger({ collapsed: true })
@@ -52,16 +63,18 @@ const store =
 
 const fakeStore = {
   dispatch: (...args) => {
-    // Delay dispatches by 2 ms to simulate the delay in react-chrome-redux
+    // Delay dispatches to the next tick simulate the asynchronous updates in
+    // webext-redux
     setTimeout(() => {
       store.dispatch(...args)
-    }, 2)
+    }, 0)
   }
 }
 
 createEditor(
   // eslint-disable-next-line no-eval
   eval,
+  'test-tab',
   new Proxy(
     store,
     {
@@ -75,5 +88,5 @@ createEditor(
     }
   )
 )
-// Simulate react-chrome-redux store load event
+// Simulate webext-redux store load event
 store.dispatch({ type: 'LOADED' })

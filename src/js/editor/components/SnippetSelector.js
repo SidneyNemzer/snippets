@@ -1,16 +1,15 @@
 import React from 'react'
 
-import {
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction
-} from 'material-ui/List'
-import IconButton from 'material-ui/IconButton'
-import Menu, { MenuItem } from 'material-ui/Menu'
-import MoreVert from 'material-ui-icons/MoreVert'
-import Edit from 'material-ui-icons/Edit'
-import PlayArrow from 'material-ui-icons/PlayArrow'
-import Delete from 'material-ui-icons/Delete'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import IconButton from '@material-ui/core/IconButton'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import MoreVert from '@material-ui/icons/MoreVert'
+import Edit from '@material-ui/icons/Edit'
+import PlayArrow from '@material-ui/icons/PlayArrow'
+import Delete from '@material-ui/icons/Delete'
 
 class SnippetSelector extends React.Component {
   constructor(props) {
@@ -125,21 +124,20 @@ class SnippetSelector extends React.Component {
         <ListItemSecondaryAction>
           <IconButton
             className="menu-icon"
-          >
-            <MoreVert
-              onClick={event => {
-                if (!selected) {
-                  this.props.selectSnippet()
-                }
+            onClick={event => {
+              if (!selected) {
+                this.props.selectSnippet()
+              }
 
-                this.handleMenuOpen(event)
-              }}
-            />
+              this.handleMenuOpen(event)
+            }}
+          >
+            <MoreVert />
           </IconButton>
           <Menu
             anchorEl={this.state.menuAnchor}
             open={this.state.menuOpen}
-            onRequestClose={this.handleMenuClose}
+            onClose={this.handleMenuClose}
           >
             <MenuItem
               onClick={this.startRename}
