@@ -1,3 +1,16 @@
+## 2.1.1
+
+### Bug Fixes
+
+* Empty snippets would fail to save. Thanks to @Pfennigbaum for reporting!
+* Typing a question mark would open the devtool's settings
+* Prevent undo (ctrl+z) from undoing a file change
+* Fix an issue that could causes the cursor to jump while typing quickly
+
+### Misc
+
+* Update dependencies
+
 ## 2.1.0
 
 ### Changes / Bug Fixes
