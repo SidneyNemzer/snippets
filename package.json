@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "Snippets",
   "version": "2.1.1",
   "description": "Create and edit JavaScript code snippets, which are synced to all your computers",
@@ -8,16 +9,7 @@
     "start": "webpack-dev-server --progress --env.devServer",
     "format": "prettier --write \"./src/**/*.js\""
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SidneyNemzer/snippets.git"
-  },
-  "author": "Sidney Nemzer",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/SidneyNemzer/snippets/issues"
-  },
-  "homepage": "https://github.com/SidneyNemzer/snippets#readme",
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
