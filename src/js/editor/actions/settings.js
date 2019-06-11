@@ -1,4 +1,4 @@
-import { generateTypes, generateActions } from '../util/generate-redux'
+import { generateTypes, generateActions } from "../util/generate-redux";
 
 const typeNames = {
   tabSize: true,
@@ -10,7 +10,7 @@ const typeNames = {
   accessToken: true,
   gistId: true,
   autosaveTimer: true
-}
+};
 
-export const types = generateTypes(typeNames)
-export const actions = generateActions(typeNames)
+export const types = generateTypes(typeNames);
+export const actions = generateActions(typeNames);

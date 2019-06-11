@@ -1,30 +1,30 @@
-import React from 'react'
-import AceEditor from 'react-ace'
-import { connect } from 'react-redux'
+import React from "react";
+import AceEditor from "react-ace";
+import { connect } from "react-redux";
 
-import 'brace/ext/language_tools'
-import 'brace/mode/javascript'
-import 'brace/theme/github'
-import 'brace/theme/tomorrow_night'
+import "brace/ext/language_tools";
+import "brace/mode/javascript";
+import "brace/theme/github";
+import "brace/theme/tomorrow_night";
 
 class Editor extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = { value: props.value }
+    super(props);
+    this.state = { value: props.value };
   }
 
   static getDerivedStateFromProps(props, state) {
     if (props.lastUpdatedBy && props.lastUpdatedBy !== props.editorId) {
-      return { value: props.value }
+      return { value: props.value };
     } else {
-      return null
+      return null;
     }
   }
 
   handleChange = value => {
-    this.setState({ value })
-    this.props.onChange(value)
-  }
+    this.setState({ value });
+    this.props.onChange(value);
+  };
 
   render() {
     return (
@@ -49,19 +49,19 @@ class Editor extends React.Component {
           useWorker: this.props.settings.linter
         }}
         onLoad={ace => {
-          ace.container.addEventListener('keydown', event => {
-            if (event.key === '?') {
-              event.stopPropagation()
+          ace.container.addEventListener("keydown", event => {
+            if (event.key === "?") {
+              event.stopPropagation();
             }
-          })
+          });
         }}
       />
-    )
+    );
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   settings: state.settings
-})
+});
 
-export default connect(mapStateToProps)(Editor)
+export default connect(mapStateToProps)(Editor);

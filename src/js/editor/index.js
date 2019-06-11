@@ -1,25 +1,21 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { Store } from 'webext-redux'
-import App from './components/App'
-import ErrorPage from './components/ErrorPage'
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { Store } from "webext-redux";
+import App from "./components/App";
+import ErrorPage from "./components/ErrorPage";
 
 const chromeReduxStore = () =>
   new Store({
-    portName: 'SNIPPETS'
-  })
+    portName: "SNIPPETS"
+  });
 
-export default (
-  runInInspectedWindow,
-  editorId,
-  store = chromeReduxStore()
-) => {
+export default (runInInspectedWindow, editorId, store = chromeReduxStore()) => {
   // Ignore the first event; the store will be empty
   const unsubscribe = store.subscribe(() => {
-    unsubscribe()
-    const root = document.createElement('div')
-    document.body.appendChild(root)
+    unsubscribe();
+    const root = document.createElement("div");
+    document.body.appendChild(root);
     try {
       ReactDOM.render(
         <Provider store={store}>
@@ -29,7 +25,7 @@ export default (
           />
         </Provider>,
         root
-      )
+      );
     } catch (error) {
       ReactDOM.render(
         <ErrorPage
@@ -40,8 +36,8 @@ export default (
           link="https://github.com/SidneyNemzer/snippets/issues"
         />,
         root
-      )
-      console.error(error)
+      );
+      console.error(error);
     }
-  })
-}
+  });
+};

@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
-import Button from '@material-ui/core/Button'
-import SettingsIcon from '@material-ui/icons/Settings'
-import CreateSnippetButton from './CreateSnippetButton'
-import SnippetList from './SnippetList'
+import Button from "@material-ui/core/Button";
+import SettingsIcon from "@material-ui/icons/Settings";
+import CreateSnippetButton from "./CreateSnippetButton";
+import SnippetList from "./SnippetList";
 
 const Sidepane = props => (
   <div className="sidepane">
@@ -16,13 +16,10 @@ const Sidepane = props => (
       deleteSnippet={props.deleteSnippet}
       runSnippet={props.runSnippet}
     />
-    <Button
-      onClick={props.handleOpenSettings}
-      style={{ padding: '11px' }}
-    >
+    <Button onClick={props.handleOpenSettings} style={{ padding: "11px" }}>
       <SettingsIcon />
     </Button>
   </div>
-)
+);
 
-export default Sidepane
+export default Sidepane;

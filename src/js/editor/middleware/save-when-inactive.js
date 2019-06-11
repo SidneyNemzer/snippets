@@ -6,7 +6,7 @@ import {
   SAVING_SNIPPETS,
   LOADED_LEGACY_SNIPPETS,
   saveSnippets
-} from '../actions/snippets'
+} from "../actions/snippets";
 
 const modifyActions = [
   CREATE_SNIPPET,
@@ -14,30 +14,29 @@ const modifyActions = [
   UPDATE_SNIPPET,
   DELETE_SNIPPET,
   LOADED_LEGACY_SNIPPETS
-]
+];
 
-let timer = null
+let timer = null;
 
 const restartSaveTimer = (delay, save) => {
-  clearTimeout(timer)
+  clearTimeout(timer);
   if (delay > 0) {
-    timer = setTimeout(save, delay)
+    timer = setTimeout(save, delay);
   }
-}
+};
 
 const stopSaveTimer = () => {
-  clearTimeout(timer)
-  timer = null
-}
+  clearTimeout(timer);
+  timer = null;
+};
 
 export default store => next => action => {
   if (modifyActions.includes(action.type)) {
-    restartSaveTimer(
-      store.getState().settings.autosaveTimer * 1000,
-      () => store.dispatch(saveSnippets())
-    )
+    restartSaveTimer(store.getState().settings.autosaveTimer * 1000, () =>
+      store.dispatch(saveSnippets())
+    );
   } else if (action.type === SAVING_SNIPPETS) {
-    stopSaveTimer()
+    stopSaveTimer();
   }
-  next(action)
-}
+  next(action);
+};

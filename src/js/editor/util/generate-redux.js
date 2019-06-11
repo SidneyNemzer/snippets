@@ -2,11 +2,10 @@
 
 // TODO Move to separate file or use Ramda
 export const mapObject = (callback, obj) =>
-  Object.entries(obj)
-    .reduce((newObj, [key, value]) => {
-      newObj[key] = callback(key, value)
-      return newObj
-    }, {})
+  Object.entries(obj).reduce((newObj, [key, value]) => {
+    newObj[key] = callback(key, value);
+    return newObj;
+  }, {});
 
 /**
  * Generate redux types, actions, and reducer
@@ -71,17 +70,17 @@ export const mapObject = (callback, obj) =>
 //   reducer: generateReducer(description)
 // })
 
-export const generateTypes = typeDescription => (
-  mapObject(type => type, typeDescription)
-)
+export const generateTypes = typeDescription =>
+  mapObject(type => type, typeDescription);
 
-export const generateActions = typeDescription => (
-  mapObject((type, { action }) => (
-    action
-      ? (...args) => Object.assign({ type: type }, action(...args))
-      : arg => ({ type: type, [type]: arg })
-  ), typeDescription)
-)
+export const generateActions = typeDescription =>
+  mapObject(
+    (type, { action }) =>
+      action
+        ? (...args) => Object.assign({ type: type }, action(...args))
+        : arg => ({ type: type, [type]: arg }),
+    typeDescription
+  );
 
 /*
 Creates a reducer from individual update functions
@@ -93,25 +92,22 @@ example updaters object:
   )
 }
 */
-export const createReducer = (updaters, defaultState) =>
-  (state = defaultState, action) => {
-    const updater = updaters[action.type]
-    return updater
-      ? Object.assign({}, state, updater(state, action))
-      : state
-  }
+export const createReducer = (updaters, defaultState) => (
+  state = defaultState,
+  action
+) => {
+  const updater = updaters[action.type];
+  return updater ? Object.assign({}, state, updater(state, action)) : state;
+};
 
 // Creates a reducer based on the default state
 // Assumes each action has one key which matches the action.type
 // That key's value will be placed into the state using the same key
-export const generateReducer = defaultState => (
+export const generateReducer = defaultState =>
   createReducer(
     mapObject(
-      type => (state, action) => (
-        { [type]: action[type] }
-      ),
+      type => (state, action) => ({ [type]: action[type] }),
       defaultState
     ),
     defaultState
-  )
-)
+  );
