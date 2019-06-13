@@ -1,25 +1,28 @@
 {
   "parser": "babel-eslint",
-  "extends": [
-    "standard",
-    "plugin:react/recommended"
-  ],
-  "plugins": [
-    "standard",
-    "promise",
-    "react"
-  ],
+  "extends": ["standard", "plugin:react/recommended"],
+  "plugins": ["standard", "promise", "react"],
   "rules": {
+    "semi": "off",
+    "quotes": "off",
+    "indent": "off",
     "space-in-parens": "off",
-    "space-before-function-paren": ["error", {
-      "anonymous": "always",
-      "named": "never",
-      "asyncArrow": "always"
-    }],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
     "react/prop-types": "off",
     "spaced-comment": "off",
     "prefer-promise-reject-errors": "off",
-    "operator-linebreak": ["error", "before", { "overrides": { "=": "after" } }],
+    "operator-linebreak": [
+      "error",
+      "before",
+      { "overrides": { "=": "after" } }
+    ],
     "react/no-unescaped-entities": "off",
     "camelcase": "off"
   }
