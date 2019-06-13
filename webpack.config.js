@@ -38,7 +38,7 @@ const html = [
 
 const devServerHtml = [
   new HtmlWebpackPlugin({
-    title: 'Snippets Test Page'
+    template: "./src/panel.html",
     chunks: ["test"],
     filename: "index.html"
   })
