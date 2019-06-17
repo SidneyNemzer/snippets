@@ -11,8 +11,8 @@ import SelectGist from "./SelectGist";
 import Welcome from "./Welcome";
 
 import "typeface-roboto";
-import "../../../style/main.css";
-import "../../../style/settings.css";
+import "../main.css";
+import "../settings.css";
 
 class App extends React.Component {
   componentDidMount() {

@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 
 import { pages } from "../constants";
 
-import logo from "../../../../images/logo-transparent.png";
+import logo from "../../../images/logo-transparent.png";
 
 const Welcome = () => (
   <div style={{ maxWidth: 700, margin: "10vh auto", textAlign: "center" }}>

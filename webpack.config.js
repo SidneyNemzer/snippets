@@ -53,11 +53,11 @@ module.exports = (env, args) => {
   const isDevServer = env && env.devServer;
   const isProduction = args.mode === "production";
   const entry = isDevServer
-    ? { test: "./src/js/test.js" }
+    ? { test: "./src/test.js" }
     : {
-        background: "./src/js/background.js",
-        devtools: "./src/js/devtools.js",
-        panel: "./src/js/panel.js"
+        background: "./src/background.js",
+        devtools: "./src/devtools.js",
+        panel: "./src/panel.js"
       };
 
   return {

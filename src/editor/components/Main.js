@@ -17,7 +17,7 @@ import Editor from "./Editor";
 import Loading from "./Loading";
 import ErrorPage from "./ErrorPage";
 
-import logo from "../../../../images/logo-transparent.png";
+import logo from "../../../images/logo-transparent.png";
 
 const saveStatus = {
   SAVING: "SAVING",

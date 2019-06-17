@@ -22,7 +22,7 @@ import { actions } from "../actions/settings.js";
 import SettingsGroup from "./SettingsGroup";
 import { loadSnippets, loadLegacySnippets } from "../actions/snippets.js";
 
-import logo from "../../../../images/logo-transparent.png";
+import logo from "../../../images/logo-transparent.png";
 
 // TODO Move these to ../constants
 const themes = {
