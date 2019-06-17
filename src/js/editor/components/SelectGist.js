@@ -1,5 +1,4 @@
 import React from "react";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -74,14 +73,10 @@ const mapStateToProps = state => ({
   settingsGistId: state.settings.gistId
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      gistId: settingsActions.gistId,
-      loadSnippets
-    },
-    dispatch
-  );
+const mapDispatchToProps = {
+  gistId: settingsActions.gistId,
+  loadSnippets
+};
 
 export default connect(
   mapStateToProps,

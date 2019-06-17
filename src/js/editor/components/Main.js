@@ -1,5 +1,4 @@
 import React from "react";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import { pages, SNIPPETS_ISSUES_URL } from "../constants";
@@ -333,20 +332,16 @@ const mapStateToProps = (state, props) => ({
     : saveStatus.SAVED
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      createSnippet,
-      renameSnippet,
-      updateSnippet,
-      deleteSnippet,
-      saveSnippets,
-      loadSnippets,
-      accessToken: settingsActions.accessToken,
-      gistId: settingsActions.gistId
-    },
-    dispatch
-  );
+const mapDispatchToProps = {
+  createSnippet,
+  renameSnippet,
+  updateSnippet,
+  deleteSnippet,
+  saveSnippets,
+  loadSnippets,
+  accessToken: settingsActions.accessToken,
+  gistId: settingsActions.gistId
+};
 
 export default connect(
   mapStateToProps,

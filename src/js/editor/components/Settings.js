@@ -1,11 +1,5 @@
 import React from "react";
-
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-
-import { pages } from "../constants";
-import { actions } from "../actions/settings.js";
-import { loadSnippets, loadLegacySnippets } from "../actions/snippets.js";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -21,8 +15,12 @@ import Divider from "@material-ui/core/Divider";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
-import SettingsGroup from "./SettingsGroup";
 import Switch from "@material-ui/core/Switch";
+
+import { pages } from "../constants";
+import { actions } from "../actions/settings.js";
+import SettingsGroup from "./SettingsGroup";
+import { loadSnippets, loadLegacySnippets } from "../actions/snippets.js";
 
 import logo from "../../../../images/logo-transparent.png";
 
@@ -43,7 +41,7 @@ const menus = {
 };
 
 // This variable is injected by webpack
-/* eslint-disable no-undef */
+// eslint-disable-next-line no-undef
 const VERSION = SNIPPETS_VERSION;
 
 class Settings extends React.Component {
@@ -333,11 +331,11 @@ const mapStateToProps = (state, props) => ({
   settings: state.settings
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    Object.assign({ loadSnippets, loadLegacySnippets }, actions),
-    dispatch
-  );
+const mapDispatchToProps = {
+  loadSnippets,
+  loadLegacySnippets,
+  ...actions
+};
 
 export default connect(
   mapStateToProps,

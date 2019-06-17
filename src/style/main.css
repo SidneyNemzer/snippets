@@ -34,7 +34,6 @@ body {
 }
 
 div.ace_editor {
-  font-size: 1.0em;
   flex-grow: 1;
 }
 
@@ -153,15 +152,4 @@ button.delete:hover {
 .error a {
   font-size: 0.7em;
   display: block;
-}
-
-.switch-wrapper {
-  position: relative;
-}
-.switch-wrapper > div {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
 }

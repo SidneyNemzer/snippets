@@ -1,14 +1,7 @@
 import React from "react";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import {
-  MemoryRouter as Router,
-  Route,
-  Redirect,
-  Switch
-} from "react-router-dom";
+import { MemoryRouter, Route, Redirect, Switch } from "react-router-dom";
 
-import PropsRoute from "./PropsRoute";
 import { pages } from "../constants";
 import { loadSnippets } from "../actions/snippets";
 import Main from "./Main";
@@ -49,21 +42,25 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <Switch className="switch-wrapper">
+      <MemoryRouter>
+        <Switch>
           <Route path={pages.WELCOME} component={Welcome} />
           <Route path={pages.LOGIN} component={Login} />
           <Route path={pages.SELECT_GIST} component={SelectGist} />
-          <PropsRoute
+          <Route
             path={pages.MAIN}
-            component={Main}
-            runInInspectedWindow={this.props.runInInspectedWindow}
-            editorId={this.props.editorId}
+            render={props => (
+              <Main
+                runInInspectedWindow={this.props.runInInspectedWindow}
+                editorId={this.props.editorId}
+                {...props}
+              />
+            )}
           />
           <Route path={pages.SETTINGS} component={Settings} />
           <Redirect from="/" to={this.choosePage()} exact />
         </Switch>
-      </Router>
+      </MemoryRouter>
     );
   }
 }
@@ -73,13 +70,7 @@ const mapStateToProps = state => ({
   snippets: state.snippets
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      loadSnippets
-    },
-    dispatch
-  );
+const mapDispatchToProps = { loadSnippets };
 
 export default connect(
   mapStateToProps,

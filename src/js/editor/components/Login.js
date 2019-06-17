@@ -1,5 +1,4 @@
 import React from "react";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -81,14 +80,10 @@ const mapStateToProps = ({
   settingsAccessToken
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      accessToken: settingsActions.accessToken,
-      loadSnippets
-    },
-    dispatch
-  );
+const mapDispatchToProps = {
+  accessToken: settingsActions.accessToken,
+  loadSnippets
+};
 
 export default connect(
   mapStateToProps,

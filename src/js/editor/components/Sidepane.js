@@ -1,13 +1,19 @@
 import React from "react";
-
 import Button from "@material-ui/core/Button";
 import SettingsIcon from "@material-ui/icons/Settings";
-import CreateSnippetButton from "./CreateSnippetButton";
+
 import SnippetList from "./SnippetList";
 
 const Sidepane = props => (
   <div className="sidepane">
-    <CreateSnippetButton createSnippet={props.createSnippet} />
+    <Button
+      varient="contained"
+      color="primary"
+      className="create"
+      onClick={() => props.createSnippet("New Snippet")}
+    >
+      Create Snippet
+    </Button>
     <SnippetList
       snippets={props.snippets}
       selectedSnippet={props.selectedSnippet}
