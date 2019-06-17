@@ -34,6 +34,7 @@ body {
 }
 
 div.ace_editor {
+  font-size: 1em;
   flex-grow: 1;
 }
 
@@ -52,7 +53,7 @@ div.ace_editor {
 }
 .sidepane .menu-icon {
   visibility: hidden;
-  transition: visibility 150ms cubic-bezier(0.4, 0.0, 0.2, 1) 0ms;
+  transition: visibility 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 .sidepane li:hover .menu-icon,
 .sidepane .selected + div .menu-icon {
@@ -99,7 +100,7 @@ button.create {
   transition: background-color 0.2s;
 }
 button.create:hover {
-  background-color: #A3B5FF;
+  background-color: #a3b5ff;
 }
 
 button.delete {
