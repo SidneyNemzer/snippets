@@ -7,22 +7,11 @@
     "quotes": "off",
     "indent": "off",
     "space-in-parens": "off",
-    "space-before-function-paren": [
-      "error",
-      {
-        "anonymous": "always",
-        "named": "never",
-        "asyncArrow": "always"
-      }
-    ],
+    "space-before-function-paren": "off",
     "react/prop-types": "off",
     "spaced-comment": "off",
     "prefer-promise-reject-errors": "off",
-    "operator-linebreak": [
-      "error",
-      "before",
-      { "overrides": { "=": "after" } }
-    ],
+    "operator-linebreak": "off",
     "react/no-unescaped-entities": "off",
     "camelcase": "off"
   }
