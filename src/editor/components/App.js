@@ -14,7 +14,95 @@ import "typeface-roboto";
 import "../main.css";
 import "../settings.css";
 
+const previousSnippetName = (snippet, snippets) => {
+  const sorted = Object.keys(snippets)
+    .concat([snippet])
+    .sort();
+  return sorted[sorted.indexOf(snippet) - 1];
+};
+
+const checkSelectedSnippet = (
+  selectedSnippetName,
+  nextSnippets,
+  currentSnippets
+) => {
+  // Select the first snippet on the first load
+  if (!selectedSnippetName && !currentSnippets && nextSnippets) {
+    return { selectedSnippetName: Object.keys(nextSnippets)[0] };
+  }
+
+  if (!selectedSnippetName) {
+    return null;
+  }
+
+  // If there are no snippets, remove the selection
+  if (!nextSnippets) {
+    return { selectedSnippetName: null };
+  }
+
+  // If the selected snippet was deleted or missing for some other reason,
+  // select the previous snippet
+  if (
+    (nextSnippets[selectedSnippetName] &&
+      nextSnippets[selectedSnippetName].deleted) ||
+    !nextSnippets[selectedSnippetName]
+  ) {
+    return {
+      selectedSnippetName: previousSnippetName(
+        selectedSnippetName,
+        nextSnippets
+      )
+    };
+  }
+
+  // If the selected snippet was renamed, select the new name
+  // TODO this assumes a save just occoured, updating redux with the new
+  // name. It's possible another snippet already existed with the new
+  // name, but we can't tell the difference at this point. Should use
+  // IDs for snippets instead of their name in the future.
+  if (
+    currentSnippets[selectedSnippetName].renamed &&
+    nextSnippets[currentSnippets[selectedSnippetName].renamed]
+  ) {
+    return {
+      selectedSnippetName: currentSnippets[selectedSnippetName].renamed
+    };
+  }
+
+  return null;
+};
+
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedSnippetName: null,
+      // Store snippets in state to access from getDerivedStateFromProps
+      snippets: props.snippets
+    };
+
+    this.setSelectedSnippet = this.setSelectedSnippet.bind(this);
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (state.snippets === props.snippets) {
+      return null;
+    }
+
+    return {
+      ...checkSelectedSnippet(
+        state.selectedSnippetName,
+        props.snippets && props.snippets.data,
+        state.snippets && state.snippets.data
+      ),
+      snippets: props.snippets
+    };
+  }
+
+  setSelectedSnippet(name) {
+    this.setState({ selectedSnippetName: name });
+  }
+
   componentDidMount() {
     const {
       settings: { accessToken, gistId },
@@ -53,6 +141,8 @@ class App extends React.Component {
               <Main
                 runInInspectedWindow={this.props.runInInspectedWindow}
                 editorId={this.props.editorId}
+                selectedSnippetName={this.state.selectedSnippetName}
+                setSelectedSnippet={this.setSelectedSnippet}
                 {...props}
               />
             )}

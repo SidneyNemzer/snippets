@@ -29,93 +29,9 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      selectedSnippet: props.snippets.data
-        ? Object.keys(props.snippets.data)[0]
-        : null
-    };
-
-    this.selectSnippet = this.selectSnippet.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
-    this.selectPreviousSnippet = this.selectPreviousSnippet.bind(this);
-    this.deleteSnippet = this.deleteSnippet.bind(this);
     this.runSnippet = this.runSnippet.bind(this);
-  }
-
-  selectPreviousSnippet() {
-    const { selectedSnippet } = this.state;
-    const {
-      snippets: { loading, data }
-    } = this.props;
-
-    if (!loading && data) {
-      const snippetKeys = Object.keys(data);
-
-      if (snippetKeys.length < 2) {
-        return this.selectSnippet(null);
-      }
-
-      if (selectedSnippet === null) {
-        return this.selectSnippet(snippetKeys[0]);
-      }
-
-      const selectedIndex = snippetKeys.findIndex(
-        snippetId => snippetId === selectedSnippet
-      );
-
-      if (selectedIndex > 0) {
-        return this.selectSnippet(snippetKeys[selectedIndex - 1]);
-      } else {
-        return this.selectSnippet(snippetKeys[1]);
-      }
-    } else {
-      return Promise.resolve();
-    }
-  }
-
-  UNSAFE_componentWillReceiveProps({ snippets: { data: newData } }) {
-    const {
-      snippets: { data }
-    } = this.props;
-    const { selectedSnippet } = this.state;
-
-    if (!selectedSnippet) {
-      if (newData) {
-        this.setState({
-          selectedSnippet: Object.keys(newData)[0]
-        });
-      }
-    } else {
-      if (newData && !newData[selectedSnippet]) {
-        if (
-          data[selectedSnippet] &&
-          data[selectedSnippet].renamed &&
-          newData[data[selectedSnippet].renamed]
-        ) {
-          this.setState({
-            selectedSnippet: data[selectedSnippet].renamed
-          });
-        } else {
-          this.setState({
-            selectedSnippet: Object.keys(newData)[0]
-          });
-        }
-      } else if (!newData) {
-        this.setState({ selectedSnippet: null });
-      }
-    }
-  }
-
-  selectSnippet(snippetID) {
-    return new Promise(resolve => {
-      this.setState(
-        {
-          selectedSnippet: snippetID
-        },
-        resolve
-      );
-    });
   }
 
   runSnippet(snippetBody) {
@@ -131,9 +47,9 @@ try {
 
   handleKeyPress(event) {
     if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
-      const { selectedSnippet } = this.state;
+      const { selectedSnippetName } = this.props;
       const { snippets } = this.props;
-      const snippet = snippets.data[selectedSnippet];
+      const snippet = snippets.data[selectedSnippetName];
       if (snippet) {
         this.runSnippet(snippet.content.local);
       }
@@ -142,24 +58,14 @@ try {
 
   handleEditorChange(newValue) {
     this.props.updateSnippet(
-      this.state.selectedSnippet,
+      this.props.selectedSnippetName,
       newValue,
       this.props.editorId
     );
   }
 
-  deleteSnippet(snippetID) {
-    if (snippetID === this.state.selectedSnippet) {
-      this.selectPreviousSnippet().then(() =>
-        this.props.deleteSnippet(snippetID)
-      );
-    } else {
-      this.props.deleteSnippet(snippetID);
-    }
-  }
-
   renderEditor(snippets) {
-    const { selectedSnippet: snippetId } = this.state;
+    const { selectedSnippetName: snippetId } = this.props;
 
     if (snippetId !== null) {
       const snippet = snippets[snippetId];
@@ -215,11 +121,11 @@ try {
       <div className="home" onKeyDown={this.handleKeyPress}>
         <Sidepane
           snippets={snippets}
-          selectedSnippet={this.state.selectedSnippet}
-          selectSnippet={this.selectSnippet}
+          selectedSnippet={this.props.selectedSnippetName}
+          selectSnippet={this.props.setSelectedSnippet}
           renameSnippet={this.props.renameSnippet}
           createSnippet={this.props.createSnippet}
-          deleteSnippet={this.deleteSnippet}
+          deleteSnippet={this.props.deleteSnippet}
           runSnippet={this.runSnippet}
           handleOpenSettings={() => this.props.history.push(pages.SETTINGS)}
         />
