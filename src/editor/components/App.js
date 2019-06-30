@@ -56,7 +56,7 @@ const checkSelectedSnippet = (
   }
 
   // If the selected snippet was renamed, select the new name
-  // TODO this assumes a save just occoured, updating redux with the new
+  // TODO this assumes a save just occurred, updating redux with the new
   // name. It's possible another snippet already existed with the new
   // name, but we can't tell the difference at this point. Should use
   // IDs for snippets instead of their name in the future.
