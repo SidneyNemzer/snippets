@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "Snippets",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Create and edit JavaScript code snippets, which are synced to all your computers",
   "scripts": {
     "build:prod": "webpack --mode=production --progress",
