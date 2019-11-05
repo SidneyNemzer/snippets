@@ -230,6 +230,23 @@ class Settings extends React.Component {
                 </ListItemSecondaryAction>
               </ListItem>
               <Divider />
+              <ListItem>
+                <ListItemText primary="Font Size" />
+                <ListItemSecondaryAction>
+                  <TextField
+                      className="settings-input small-number-input"
+                      type="number"
+                      value={this.props.settings.fontSize}
+                      onChange={event => {
+                        const inputInt = parseInt(event.target.value)
+                        if (!Number.isNaN(inputInt)) {
+                          this.props.fontSize(inputInt)
+                        }
+                      }}
+                  />
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Divider />
               <ListItem
                 button
                 onClick={event =>

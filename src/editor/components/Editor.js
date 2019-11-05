@@ -34,6 +34,7 @@ class Editor extends React.Component {
         width="100%"
         height="auto"
         theme={this.props.settings.theme}
+        fontSize={this.props.settings.fontSize}
         value={this.state.value}
         onChange={this.handleChange}
         highlightActiveLine={false}
