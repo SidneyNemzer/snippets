@@ -9,8 +9,9 @@ const typeNames = {
   linter: true,
   accessToken: true,
   gistId: true,
-  autosaveTimer: true
-}
+  autosaveTimer: true,
+  fontSize: true
+};
 
-export const types = generateTypes(typeNames)
-export const actions = generateActions(typeNames)
+export const types = generateTypes(typeNames);
+export const actions = generateActions(typeNames);

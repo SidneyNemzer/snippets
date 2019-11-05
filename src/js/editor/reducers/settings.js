@@ -10,7 +10,8 @@ export const defaultState = {
   [types.linter]: true,
   [types.accessToken]: false,
   [types.gistId]: false,
-  [types.autosaveTimer]: 5
+  [types.autosaveTimer]: 5,
+  [types.fontSize]: 12
 }
 
 export const reducer = generateReducer(defaultState)
