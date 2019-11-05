@@ -34,6 +34,8 @@ This file documents how Snippets stores data
     linter: true,       // Boolean
     accessToken: 'abcd', // false or String
     gistId: 'abcd',     // false or String
+    autosaveTimer: 5,   // number
+    fontSize: 12,       // number
   }
 }
 ```
