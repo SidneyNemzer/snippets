@@ -27,7 +27,8 @@ const html = [
   new HtmlWebpackPlugin({
     chunks: ["panel"],
     filename: "panel.html",
-    title: "Snippets"
+    title: "Snippets",
+    template: "./src/panel.html"
   }),
   new HtmlWebpackPlugin({
     chunks: ["devtools"],
