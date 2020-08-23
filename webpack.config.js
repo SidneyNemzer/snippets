@@ -121,7 +121,7 @@ module.exports = (env, args) => {
         "process.env.NODE_ENV": JSON.stringify(args.mode || "development")
       }),
       new CleanWebpackPlugin(),
-      new CopyWebpackPlugin([{ from: "static", to: "./" }]),
+      new CopyWebpackPlugin({ patterns: [{ from: "static", to: "./" }] }),
       AfterEmitPlugin(buildManifest),
       isProduction && new MiniCssExtractPlugin(),
       ...(isDevServer ? devServerHtml : html)
