@@ -112,7 +112,7 @@ class Settings extends React.Component {
         id="menu"
         anchorEl={this.state.menuAnchor}
         open={this.state.menu !== null}
-        onRequestClose={this.handleMenuClose}
+        onClose={this.handleMenuClose}
       >
         {this.renderMenuContent()}
       </Menu>
