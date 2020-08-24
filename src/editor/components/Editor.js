@@ -1,11 +1,16 @@
+// ace-builds must be imported before react-ace
+// See https://github.com/securingsincity/react-ace/issues/725
+import 'ace-builds'
+
 import React from "react";
 import AceEditor from "react-ace";
 import { connect } from "react-redux";
 
-import "brace/ext/language_tools";
-import "brace/mode/javascript";
-import "brace/theme/github";
-import "brace/theme/tomorrow_night";
+import 'ace-builds/webpack-resolver'
+import 'ace-builds/src-noconflict/ext-language_tools'
+import 'ace-builds/src-noconflict/mode-javascript'
+import 'ace-builds/src-noconflict/theme-github'
+import 'ace-builds/src-noconflict/theme-tomorrow_night'
 
 class Editor extends React.Component {
   constructor(props) {
