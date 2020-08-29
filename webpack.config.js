@@ -54,11 +54,12 @@ module.exports = (env, args) => {
   const isDevServer = env && env.devServer;
   const isProduction = args.mode === "production";
   const entry = isDevServer
-    ? { test: "./src/test.js" }
+    ? { test: "./src/test.js", 'worker-javascript-eslint': './src/editor/components/ace-modes/worker-javascript-eslint.js' }
     : {
         background: "./src/background.js",
         devtools: "./src/devtools.js",
-        panel: "./src/panel.js"
+        panel: "./src/panel.js",
+        'worker-javascript-eslint': './src/editor/components/ace-modes/worker-javascript-eslint.js'
       };
 
   return {
@@ -133,6 +134,22 @@ module.exports = (env, args) => {
 
     performance: {
       hints: false
+    },
+
+    resolve: {
+      extensions: [".js", ".jsx"],
+      mainFields: ["browser", "main", "module"]
+    },
+
+    node: {
+      module: 'empty',
+      dgram: 'empty',
+      dns: 'mock',
+      fs: 'empty',
+      http2: 'empty',
+      net: 'empty',
+      tls: 'empty',
+      child_process: 'empty'
     }
   };
 };
