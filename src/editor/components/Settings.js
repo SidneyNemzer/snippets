@@ -12,10 +12,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Divider from "@material-ui/core/Divider";
-import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import Switch from "@material-ui/core/Switch";
+import Select from "@material-ui/core/Select";
 
 import { pages } from "../constants";
 import { actions } from "../actions/settings.js";
@@ -35,90 +35,11 @@ const tabTypes = {
   false: "Tabs"
 };
 
-const menus = {
-  THEME: "THEME",
-  TAB_CHAR: "TAB_CHAR"
-};
-
 // This variable is injected by webpack
 // eslint-disable-next-line no-undef
 const VERSION = SNIPPETS_VERSION;
 
 class Settings extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      menuAnchor: null,
-      menu: null,
-      selectedThemeIndex: 0
-    };
-
-    this.handleMenuClose = this.handleMenuClose.bind(this);
-    this.handleMenuItemClick = this.handleMenuItemClick.bind(this);
-  }
-
-  handleMenuClose() {
-    this.setState({
-      menu: null
-    });
-  }
-
-  handleMenuItemClick(event, newValue) {
-    switch (this.state.menu) {
-      case menus.THEME:
-        this.props.theme(newValue);
-        break;
-      case menus.TAB_CHAR:
-        this.props.softTabs(newValue);
-        break;
-      default:
-        throw new Error("Unknown menu");
-    }
-    this.setState({
-      menu: null
-    });
-  }
-
-  renderMenuContent() {
-    switch (this.state.menu) {
-      case menus.THEME:
-        return Object.keys(themes).map((option, index) => (
-          <MenuItem
-            key={option}
-            selected={option === this.props.settings.theme}
-            onClick={event => this.handleMenuItemClick(event, option)}
-          >
-            {themes[option]}
-          </MenuItem>
-        ));
-      case menus.TAB_CHAR:
-        return Object.keys(tabTypes).map((tabType, index) => (
-          <MenuItem
-            key={tabType}
-            selected={tabType === this.props.settings.softTabs}
-            onClick={event => this.handleMenuItemClick(event, tabType)}
-          >
-            {tabTypes[tabType]}
-          </MenuItem>
-        ));
-      default:
-    }
-  }
-
-  renderMenu() {
-    return (
-      <Menu
-        id="menu"
-        anchorEl={this.state.menuAnchor}
-        open={this.state.menu !== null}
-        onClose={this.handleMenuClose}
-      >
-        {this.renderMenuContent()}
-      </Menu>
-    );
-  }
-
   render() {
     return (
       <div className="settings">
@@ -258,8 +179,25 @@ class Settings extends React.Component {
               >
                 <ListItemText
                   primary="Tab Character"
-                  secondary={tabTypes[this.props.settings.softTabs]}
                 />
+                <ListItemSecondaryAction>
+                  <Select
+                    value={this.props.settings.softTabs}
+                    onChange={(event) => this.props.softTabs(event.target.value)}
+                    className="settings-input"
+                  >
+                    {
+                      Object.keys(tabTypes).map((tabType) => (
+                        <MenuItem
+                          key={tabType}
+                          value={tabType}
+                        >
+                          {tabTypes[tabType]}
+                        </MenuItem>
+                      ))
+                    }
+                  </Select>
+                </ListItemSecondaryAction>
               </ListItem>
               <Divider />
               <ListItem
@@ -273,8 +211,25 @@ class Settings extends React.Component {
               >
                 <ListItemText
                   primary="Theme"
-                  secondary={themes[this.props.settings.theme]}
                 />
+                <ListItemSecondaryAction>
+                  <Select
+                    value={this.props.settings.theme}
+                    onChange={(event) => this.props.theme(event.target.value)}
+                    className="settings-input"
+                  >
+                    {
+                      Object.keys(themes).map((theme) => (
+                        <MenuItem
+                          key={theme}
+                          value={theme}
+                        >
+                          {themes[theme]}
+                        </MenuItem>
+                      ))
+                    }
+                  </Select>
+                </ListItemSecondaryAction>
               </ListItem>
               <Divider />
               <ListItem>
@@ -316,7 +271,6 @@ class Settings extends React.Component {
                 </ListItemSecondaryAction>
               </ListItem>
             </List>
-            {this.renderMenu()}
           </SettingsGroup>
           <SettingsGroup label="Legacy">
             <List>
