@@ -1,7 +1,6 @@
 // This defines `window.ace`
 // import 'ace-builds'
 
-
 if (!window.ace) {
   throw new Error('`window.ace` is not defined')
 }

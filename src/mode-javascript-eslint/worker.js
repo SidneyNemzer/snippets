@@ -157,8 +157,6 @@ window.define = function(id, deps, factory) {
             return module;
         }
     };
-
-    debugger;
 };
 window.define.amd = {};
 window.require.tlns = {};
