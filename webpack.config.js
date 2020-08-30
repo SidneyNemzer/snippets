@@ -54,12 +54,12 @@ module.exports = (env, args) => {
   const isDevServer = env && env.devServer;
   const isProduction = args.mode === "production";
   const entry = isDevServer
-    ? { test: "./src/test.js", 'worker-javascript-eslint': './src/editor/components/ace-modes/worker-javascript-eslint.js' }
+    ? { test: "./src/test.js", 'worker-javascript-eslint': './src/mode-javascript-eslint/worker-javascript-eslint.js' }
     : {
         background: "./src/background.js",
         devtools: "./src/devtools.js",
         panel: "./src/panel.js",
-        'worker-javascript-eslint': './src/editor/components/ace-modes/worker-javascript-eslint.js'
+        'worker-javascript-eslint': './src/mode-javascript-eslint/worker-javascript-eslint.js'
       };
 
   return {

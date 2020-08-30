@@ -1,3 +1,7 @@
+// This defines `window.ace`
+// import 'ace-builds'
+
+
 if (!window.ace) {
   throw new Error('`window.ace` is not defined')
 }
@@ -16,7 +20,6 @@ ace.define('ace/mode/javascript-eslint', function(require, exports, module) {
 
   (function() {
     this.createWorker = function (session) {
-      console.log("create worker")
       var worker = new WorkerClient(["ace"], "ace/mode/javascript_worker_eslint", "JavaScriptWorkerEslint");
       worker.attachToDocument(session.getDocument());
 

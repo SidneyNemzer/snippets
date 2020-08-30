@@ -1,7 +1,8 @@
-// copied from ace
-// lib/ace/worker/worker.js
-
 /* eslint-disable */
+
+// In Ace, this code sets up globals in web workers. doesn't exist as a
+// stand-alone module in ace-builds, copied from (with minor changes)
+// https://github.com/ajaxorg/ace/blob/3ebb0c34dc023aff3b6a951dd116a702510369fe/lib/ace/worker/worker.js
 
 "no use strict";
 !(function(window) {
@@ -156,6 +157,8 @@ window.define = function(id, deps, factory) {
             return module;
         }
     };
+
+    debugger;
 };
 window.define.amd = {};
 window.require.tlns = {};
@@ -199,11 +202,7 @@ window.initSender = function initSender() {
 var main = window.main = null;
 var sender = window.sender = null;
 
-console.log('window.onmessage =')
-console.log('window', window)
-
 window.onmessage = function(e) {
-    console.log('onmessage', e)
     var msg = e.data;
     if (msg.event && sender) {
         sender._signal(msg.event, msg.data);
@@ -218,7 +217,6 @@ window.onmessage = function(e) {
     }
     else if (msg.init) {
         window.initBaseUrls(msg.tlns);
-        // window.require("ace/lib/es5-shim");
         sender = window.sender = window.initSender();
         var clazz = window.require(msg.module)[msg.classname];
         main = window.main = new clazz(sender);

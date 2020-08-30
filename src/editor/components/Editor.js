@@ -11,7 +11,9 @@ import 'ace-builds/src-noconflict/ext-language_tools'
 import 'ace-builds/src-noconflict/mode-javascript'
 import 'ace-builds/src-noconflict/theme-github'
 import 'ace-builds/src-noconflict/theme-tomorrow_night'
-window.ace.config.setModuleUrl('ace/mode/javascript-eslint', require('file-loader?esModule=false!./ace-modes/mode-javascript-eslint.js'))
+
+// Define the path to our custom ESLint worker
+ace.config.setModuleUrl('ace/mode/javascript-eslint', require('file-loader?esModule=false!../../mode-javascript-eslint/mode-javascript-eslint.js'))
 
 class Editor extends React.Component {
   constructor(props) {
