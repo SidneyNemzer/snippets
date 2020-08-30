@@ -1,11 +1,4 @@
-// This defines `window.ace`
-// import 'ace-builds'
-
-if (!window.ace) {
-  throw new Error('`window.ace` is not defined')
-}
-
-const ace = window.ace
+/* global ace */
 
 ace.define('ace/mode/javascript-eslint', function(require, exports, module) {
   const oop = require("ace/lib/oop");
