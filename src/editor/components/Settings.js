@@ -45,8 +45,16 @@ class Settings extends React.Component {
     super(props)
 
     this.state = {
-      showAccessToken: false
+      showAccessToken: false,
+      initialAccessToken: props.settings.accessToken
     }
+  }
+
+  handleBackButton = () => {
+    if (this.state.initialAccessToken !== this.props.settings.accessToken) {
+      this.props.loadSnippets()
+    }
+    this.props.history.push(pages.MAIN)
   }
 
   handleToggleAccessToken = () => {
@@ -58,7 +66,7 @@ class Settings extends React.Component {
       <div className="settings">
         <AppBar position="static">
           <Toolbar>
-            <IconButton onClick={() => this.props.history.push(pages.MAIN)}>
+            <IconButton onClick={this.handleBackButton}>
               <ArrowBackIcon />
             </IconButton>
             <h1 className="title">Snippets Settings</h1>
