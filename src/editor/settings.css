@@ -66,3 +66,16 @@
 .settings .small-number-input input {
   text-align: center;
 }
+
+.settings .toggle-access-token-button {
+  padding: 5px;
+  margin: 0 8px;
+}
+
+.settings .access-token-input-large {
+  width: 354px;
+}
+
+.settings .access-token-input-small {
+  width: 218px;
+}

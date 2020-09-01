@@ -16,6 +16,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import Switch from "@material-ui/core/Switch";
 import Select from "@material-ui/core/Select";
+import VisibilityIcon from '@material-ui/icons/Visibility'
 
 import { pages } from "../constants";
 import { actions } from "../actions/settings.js";
@@ -40,6 +41,18 @@ const tabTypes = {
 const VERSION = SNIPPETS_VERSION;
 
 class Settings extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      showAccessToken: false
+    }
+  }
+
+  handleToggleAccessToken = () => {
+    this.setState({ showAccessToken: !this.state.showAccessToken })
+  }
+
   render() {
     return (
       <div className="settings">
@@ -69,17 +82,24 @@ class Settings extends React.Component {
               <ListItem>
                 <ListItemText
                   primary="Github Access Token"
-                  secondary="Token is hidden for security"
                 />
                 <ListItemSecondaryAction>
-                  <Button
-                    onClick={() => {
-                      this.props.accessToken(false);
-                      this.props.history.push(pages.LOGIN);
-                    }}
+                  <IconButton
+                    className="toggle-access-token-button"
+                    onClick={this.handleToggleAccessToken}
                   >
-                    Reset
-                  </Button>
+                    <VisibilityIcon />
+                  </IconButton>
+                  <TextField
+                    className={
+                      this.state.showAccessToken
+                        ? "settings-input access-token-input-large"
+                        : "settings-input access-token-input-small"
+                    }
+                    value={this.props.settings.accessToken}
+                    onChange={event => this.props.accessToken(event.target.value)}
+                    type={this.state.showAccessToken ? "text" : "password"}
+                  />
                 </ListItemSecondaryAction>
               </ListItem>
               <Divider />
