@@ -196,15 +196,7 @@ class Settings extends React.Component {
                 </ListItemSecondaryAction>
               </ListItem>
               <Divider />
-              <ListItem
-                button
-                onClick={event =>
-                  this.setState({
-                    menu: menus.TAB_CHAR,
-                    menuAnchor: event.currentTarget
-                  })
-                }
-              >
+              <ListItem>
                 <ListItemText
                   primary="Tab Character"
                 />
@@ -228,15 +220,7 @@ class Settings extends React.Component {
                 </ListItemSecondaryAction>
               </ListItem>
               <Divider />
-              <ListItem
-                button
-                onClick={event =>
-                  this.setState({
-                    menu: menus.THEME,
-                    menuAnchor: event.currentTarget
-                  })
-                }
-              >
+              <ListItem>
                 <ListItemText
                   primary="Theme"
                 />
