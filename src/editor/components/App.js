@@ -15,9 +15,7 @@ import "../main.css";
 import "../settings.css";
 
 const previousSnippetName = (snippet, snippets) => {
-  const sorted = Object.keys(snippets)
-    .concat([snippet])
-    .sort();
+  const sorted = Object.keys(snippets).concat([snippet]).sort();
   return sorted[sorted.indexOf(snippet) - 1];
 };
 
@@ -51,7 +49,7 @@ const checkSelectedSnippet = (
       selectedSnippetName: previousSnippetName(
         selectedSnippetName,
         nextSnippets
-      )
+      ),
     };
   }
 
@@ -65,7 +63,7 @@ const checkSelectedSnippet = (
     nextSnippets[currentSnippets[selectedSnippetName].renamed]
   ) {
     return {
-      selectedSnippetName: currentSnippets[selectedSnippetName].renamed
+      selectedSnippetName: currentSnippets[selectedSnippetName].renamed,
     };
   }
 
@@ -78,7 +76,7 @@ class App extends React.Component {
     this.state = {
       selectedSnippetName: null,
       // Store snippets in state to access from getDerivedStateFromProps
-      snippets: props.snippets
+      snippets: props.snippets,
     };
 
     this.setSelectedSnippet = this.setSelectedSnippet.bind(this);
@@ -95,7 +93,7 @@ class App extends React.Component {
         props.snippets && props.snippets.data,
         state.snippets && state.snippets.data
       ),
-      snippets: props.snippets
+      snippets: props.snippets,
     };
   }
 
@@ -106,7 +104,7 @@ class App extends React.Component {
   componentDidMount() {
     const {
       settings: { accessToken, gistId },
-      snippets: { data }
+      snippets: { data },
     } = this.props;
     if (!data && accessToken && gistId) {
       this.props.loadSnippets();
@@ -137,7 +135,7 @@ class App extends React.Component {
           <Route path={pages.SELECT_GIST} component={SelectGist} />
           <Route
             path={pages.MAIN}
-            render={props => (
+            render={(props) => (
               <Main
                 runInInspectedWindow={this.props.runInInspectedWindow}
                 editorId={this.props.editorId}
@@ -155,14 +153,11 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   settings: state.settings,
-  snippets: state.snippets
+  snippets: state.snippets,
 });
 
 const mapDispatchToProps = { loadSnippets };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

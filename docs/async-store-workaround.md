@@ -46,13 +46,13 @@ Events start in a devtools panel, content script, or popup. In Snippets, this is
 
 Between step 5 and 9, the devtools panel is able to process new DOM events.
 
-*In the background page*
+_In the background page_
 
 6. Receive dispatch message from devtools panel
 7. update store state via reducer
 8. webext-redux broadcasts the new state
 
-*Back in the devtools panel*
+_Back in the devtools panel_
 
 9. Receive state update message from runtime API
 10. react-redux re-renders editor component
@@ -90,7 +90,7 @@ Difficulty to implement: easy\*
 Pros: easy\*  
 Cons: \*unless we have multiple editors
 
-This is easy to implement, but comes with a problem: if we have editors in different devtool panels, we need some way to sync them up. This could be worked around by using a single editor. Otherwise we need to identify which editor caused the updates, and update the value of all *other* editors.
+This is easy to implement, but comes with a problem: if we have editors in different devtool panels, we need some way to sync them up. This could be worked around by using a single editor. Otherwise we need to identify which editor caused the updates, and update the value of all _other_ editors.
 
 ### Fire 'versioned' state updates
 
@@ -116,7 +116,7 @@ Difficulty to implement: really hard
 Pros: Who doesn't want a pure(1) Ace implementation?  
 Cons: see difficulty
 
-The only reason this is a problem is because there are two sources of truth: redux and Ace. If Ace only uses the provided value, instead of using internal state, we can avoid Ace getting ahead of Redux. However, this *could* cause a noticeable lag while typing. I'm not sure though.
+The only reason this is a problem is because there are two sources of truth: redux and Ace. If Ace only uses the provided value, instead of using internal state, we can avoid Ace getting ahead of Redux. However, this _could_ cause a noticeable lag while typing. I'm not sure though.
 
 It's "really hard" because you would need to rip out ALL of Ace's internal state and move it to the redux store. Technically possible, but Ace is not designed to allow that.
 

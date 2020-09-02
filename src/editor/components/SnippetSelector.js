@@ -18,7 +18,7 @@ class SnippetSelector extends React.Component {
       isRenaming: false,
       startingRename: false,
       menuAnchor: null,
-      menuOpen: false
+      menuOpen: false,
     };
 
     this.startRename = this.startRename.bind(this);
@@ -34,14 +34,14 @@ class SnippetSelector extends React.Component {
       isRenaming: true,
       startingRename: true,
       currentInput: this.props.name,
-      menuOpen: false
+      menuOpen: false,
     });
   }
 
   handleChange(event) {
     this.setState({
       currentInput: event.target.value,
-      startingRename: false
+      startingRename: false,
     });
   }
 
@@ -49,7 +49,7 @@ class SnippetSelector extends React.Component {
     const { currentInput } = this.state;
     this.setState(
       {
-        isRenaming: false
+        isRenaming: false,
       },
       () => {
         this.props.updateName(currentInput);
@@ -67,13 +67,13 @@ class SnippetSelector extends React.Component {
   handleMenuOpen(event) {
     this.setState({
       menuAnchor: event.currentTarget,
-      menuOpen: true
+      menuOpen: true,
     });
   }
 
   handleMenuClose() {
     this.setState({
-      menuOpen: false
+      menuOpen: false,
     });
   }
 
@@ -96,7 +96,7 @@ class SnippetSelector extends React.Component {
       // TODO use material ui input
       return (
         <input
-          ref={input => {
+          ref={(input) => {
             this.nameInput = input;
           }}
           value={this.state.currentInput}
@@ -124,7 +124,7 @@ class SnippetSelector extends React.Component {
         <ListItemSecondaryAction>
           <IconButton
             className="menu-icon"
-            onClick={event => {
+            onClick={(event) => {
               if (!selected) {
                 this.props.selectSnippet();
               }

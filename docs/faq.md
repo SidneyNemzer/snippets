@@ -1,6 +1,6 @@
 # FAQ
 
-*If your question isn't answered here, you can [open an issue](https://github.com/SidneyNemzer/snippets/issues/new)*
+_If your question isn't answered here, you can [open an issue](https://github.com/SidneyNemzer/snippets/issues/new)_
 
 ## How do I use this extension?
 
@@ -14,7 +14,7 @@ Unfortunately, Chrome doesn't allow extensions to access the built-in snippets, 
 
 The interface uses [React](https://facebook.github.io/react/) and [Material UI](https://material-ui.com/). The code editor is [react-ace](https://github.com/securingsincity/react-ace). [Redux](https://redux.js.org/) and [webext-redux](https://github.com/tshaddix/webext-redux) are used to sync all panels.
 
-## Can you add *[insert feature here]*
+## Can you add _[insert feature here]_
 
 See [the Github Project](https://github.com/SidneyNemzer/snippets/projects/1) for planned features. [Open an issue](https://github.com/SidneyNemzer/snippets/issues) if you'd like to suggest a feature.
 

@@ -7,7 +7,7 @@ const logInInspected = (level, message) => {
   );
 };
 
-const evalInInspected = content => {
+const evalInInspected = (content) => {
   chrome.devtools.inspectedWindow.eval(content, {}, (result, exceptionInfo) => {
     if (exceptionInfo.isException && exceptionInfo.value) {
       logInInspected("error", exceptionInfo.value);

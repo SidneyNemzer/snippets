@@ -5,11 +5,11 @@ import { types } from "../actions/settings";
    it's localStorage
  */
 
-const isSettingAction = action => Object.keys(types).includes(action.type);
+const isSettingAction = (action) => Object.keys(types).includes(action.type);
 
-const settingActionPayload = action => action[types[action.type]];
+const settingActionPayload = (action) => action[types[action.type]];
 
-export default storage => store => next => action => {
+export default (storage) => (store) => (next) => (action) => {
   if (isSettingAction(action)) {
     storage.set(action.type, settingActionPayload(action));
   }

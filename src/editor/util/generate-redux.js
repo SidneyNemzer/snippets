@@ -70,15 +70,15 @@ export const mapObject = (callback, obj) =>
 //   reducer: generateReducer(description)
 // })
 
-export const generateTypes = typeDescription =>
-  mapObject(type => type, typeDescription);
+export const generateTypes = (typeDescription) =>
+  mapObject((type) => type, typeDescription);
 
-export const generateActions = typeDescription =>
+export const generateActions = (typeDescription) =>
   mapObject(
     (type, { action }) =>
       action
         ? (...args) => Object.assign({ type: type }, action(...args))
-        : arg => ({ type: type, [type]: arg }),
+        : (arg) => ({ type: type, [type]: arg }),
     typeDescription
   );
 
@@ -103,10 +103,10 @@ export const createReducer = (updaters, defaultState) => (
 // Creates a reducer based on the default state
 // Assumes each action has one key which matches the action.type
 // That key's value will be placed into the state using the same key
-export const generateReducer = defaultState =>
+export const generateReducer = (defaultState) =>
   createReducer(
     mapObject(
-      type => (state, action) => ({ [type]: action[type] }),
+      (type) => (state, action) => ({ [type]: action[type] }),
       defaultState
     ),
     defaultState

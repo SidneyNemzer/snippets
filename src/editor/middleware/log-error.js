@@ -1,4 +1,4 @@
-export default store => next => action => {
+export default (store) => (next) => (action) => {
   if (action.error) {
     if (action.error.context) {
       console.error("Error: failed to " + action.error.context);

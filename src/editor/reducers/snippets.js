@@ -7,7 +7,7 @@ import {
   LOADED_SNIPPETS,
   SAVING_SNIPPETS,
   SAVED_SNIPPETS,
-  LOADED_LEGACY_SNIPPETS
+  LOADED_LEGACY_SNIPPETS,
 } from "../actions/snippets";
 import * as settingsActions from "../actions/settings";
 import { mergeDeep as merge } from "../util/deep-merge";
@@ -59,10 +59,10 @@ const nextUniqueName = (name, existingNames, append = 0) =>
 const defaultState = {
   loading: true,
   error: null,
-  data: null
+  data: null,
 };
 
-const mergeState = oldState => newState => merge({}, oldState, newState);
+const mergeState = (oldState) => (newState) => merge({}, oldState, newState);
 
 const snippets = (state = defaultState, action) => {
   const update = mergeState(state);
@@ -76,10 +76,10 @@ const snippets = (state = defaultState, action) => {
                 renamed: false,
                 content: {
                   local: "",
-                  remote: false
-                }
-              }
-            }
+                  remote: false,
+                },
+              },
+            },
           })
         : state;
     case RENAME_SNIPPET:
@@ -91,9 +91,9 @@ const snippets = (state = defaultState, action) => {
             data: {
               [action.oldName]: {
                 renamed:
-                  action.newName === action.oldName ? false : action.newName
-              }
-            }
+                  action.newName === action.oldName ? false : action.newName,
+              },
+            },
           })
         : state;
     case UPDATE_SNIPPET:
@@ -103,10 +103,10 @@ const snippets = (state = defaultState, action) => {
               [action.name]: {
                 lastUpdatedBy: action.editorId,
                 content: {
-                  local: action.newBody
-                }
-              }
-            }
+                  local: action.newBody,
+                },
+              },
+            },
           })
         : state;
     case DELETE_SNIPPET:
@@ -114,9 +114,9 @@ const snippets = (state = defaultState, action) => {
         ? update({
             data: {
               [action.name]: {
-                deleted: true
-              }
-            }
+                deleted: true,
+              },
+            },
           })
         : state;
     case LOADING_SNIPPETS:
@@ -135,13 +135,13 @@ const snippets = (state = defaultState, action) => {
                   renamed: false,
                   content: {
                     local: body,
-                    remote: body
-                  }
+                    remote: body,
+                  },
                 };
                 return snippets;
               },
               {}
-            )
+            ),
           };
     case SAVING_SNIPPETS:
       return update({ saving: true, error: null });
@@ -151,7 +151,7 @@ const snippets = (state = defaultState, action) => {
             loading: false,
             saving: false,
             error: action.error,
-            data: state.data
+            data: state.data,
           }
         : {
             loading: false,
@@ -165,14 +165,14 @@ const snippets = (state = defaultState, action) => {
                     deleted: false,
                     content: {
                       local: snippet.content.local,
-                      remote: snippet.content.local
-                    }
+                      remote: snippet.content.local,
+                    },
                   };
                 }
                 return accum;
               },
               {}
-            )
+            ),
           };
     case LOADED_LEGACY_SNIPPETS:
       return action.error
@@ -180,7 +180,7 @@ const snippets = (state = defaultState, action) => {
             loading: false,
             saving: false,
             error: action.error,
-            data: state.data
+            data: state.data,
           }
         : {
             loading: false,
@@ -193,13 +193,13 @@ const snippets = (state = defaultState, action) => {
                   deleted: false,
                   content: {
                     local: body,
-                    remote: snippets[name] && snippets[name].content.remote
-                  }
+                    remote: snippets[name] && snippets[name].content.remote,
+                  },
                 };
                 return snippets;
               },
               state.data
-            )
+            ),
           };
     case settingsActions.types.gistId:
     case settingsActions.types.accessToken:

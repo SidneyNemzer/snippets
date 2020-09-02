@@ -4,7 +4,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 
 import SnippetList from "./SnippetList";
 
-const Sidepane = props => (
+const Sidepane = (props) => (
   <div className="sidepane">
     <Button
       varient="contained"

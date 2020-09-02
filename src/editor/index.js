@@ -6,7 +6,7 @@ import {
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
-  Button
+  Button,
 } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/ErrorOutline";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -32,7 +32,7 @@ class ErrorBoundry extends React.Component {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            padding: 20
+            padding: 20,
           }}
         >
           <ErrorIcon style={{ color: "#ececec", fontSize: 150 }} />
@@ -42,7 +42,7 @@ class ErrorBoundry extends React.Component {
               maxWidth: 600,
               width: "100%",
               textAlign: "left",
-              margin: "0 auto 20px"
+              margin: "0 auto 20px",
             }}
           >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -79,7 +79,7 @@ class ErrorBoundry extends React.Component {
 
 const chromeReduxStore = () =>
   new Store({
-    portName: "SNIPPETS"
+    portName: "SNIPPETS",
   });
 
 export default (runInInspectedWindow, editorId, store = chromeReduxStore()) => {

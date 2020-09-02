@@ -9,12 +9,12 @@ import { loadSnippets } from "../actions/snippets";
 
 class Login extends React.Component {
   state = {
-    accessTokenInput: ""
+    accessTokenInput: "",
   };
 
-  handleChange = name => event => {
+  handleChange = (name) => (event) => {
     this.setState({
-      [name]: event.target.value
+      [name]: event.target.value,
     });
   };
 
@@ -51,7 +51,7 @@ class Login extends React.Component {
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           <TextField
@@ -74,18 +74,15 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = ({
-  settings: { gistId, accessToken: settingsAccessToken }
+  settings: { gistId, accessToken: settingsAccessToken },
 }) => ({
   gistId,
-  settingsAccessToken
+  settingsAccessToken,
 });
 
 const mapDispatchToProps = {
   accessToken: settingsActions.accessToken,
-  loadSnippets
+  loadSnippets,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

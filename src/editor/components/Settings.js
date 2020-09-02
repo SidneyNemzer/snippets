@@ -16,7 +16,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import Switch from "@material-ui/core/Switch";
 import Select from "@material-ui/core/Select";
-import VisibilityIcon from '@material-ui/icons/Visibility'
+import VisibilityIcon from "@material-ui/icons/Visibility";
 
 import { pages } from "../constants";
 import { actions } from "../actions/settings.js";
@@ -28,12 +28,12 @@ import logo from "../../../images/logo-transparent.png";
 // TODO Move these to ../constants
 const themes = {
   github: "Github",
-  tomorrow_night: "Tomorrow Night"
+  tomorrow_night: "Tomorrow Night",
 };
 
 const tabTypes = {
   true: "Spaces",
-  false: "Tabs"
+  false: "Tabs",
 };
 
 // This variable is injected by webpack
@@ -42,24 +42,24 @@ const VERSION = SNIPPETS_VERSION;
 
 class Settings extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       showAccessToken: false,
-      initialAccessToken: props.settings.accessToken
-    }
+      initialAccessToken: props.settings.accessToken,
+    };
   }
 
   handleBackButton = () => {
     if (this.state.initialAccessToken !== this.props.settings.accessToken) {
-      this.props.loadSnippets()
+      this.props.loadSnippets();
     }
-    this.props.history.push(pages.MAIN)
-  }
+    this.props.history.push(pages.MAIN);
+  };
 
   handleToggleAccessToken = () => {
-    this.setState({ showAccessToken: !this.state.showAccessToken })
-  }
+    this.setState({ showAccessToken: !this.state.showAccessToken });
+  };
 
   render() {
     return (
@@ -88,9 +88,7 @@ class Settings extends React.Component {
           <SettingsGroup label="Sync">
             <List>
               <ListItem>
-                <ListItemText
-                  primary="Github Access Token"
-                />
+                <ListItemText primary="Github Access Token" />
                 <ListItemSecondaryAction>
                   <IconButton
                     className="toggle-access-token-button"
@@ -105,7 +103,9 @@ class Settings extends React.Component {
                         : "settings-input access-token-input-small"
                     }
                     value={this.props.settings.accessToken}
-                    onChange={event => this.props.accessToken(event.target.value)}
+                    onChange={(event) =>
+                      this.props.accessToken(event.target.value)
+                    }
                     type={this.state.showAccessToken ? "text" : "password"}
                   />
                 </ListItemSecondaryAction>
@@ -117,7 +117,7 @@ class Settings extends React.Component {
                   <TextField
                     className="settings-input gist-id-input"
                     value={this.props.settings.gistId}
-                    onChange={event => this.props.gistId(event.target.value)}
+                    onChange={(event) => this.props.gistId(event.target.value)}
                   />
                 </ListItemSecondaryAction>
               </ListItem>
@@ -149,7 +149,7 @@ class Settings extends React.Component {
                     className="settings-input small-number-input"
                     type="number"
                     value={this.props.settings.autosaveTimer}
-                    onChange={event => {
+                    onChange={(event) => {
                       const inputInt = parseInt(event.target.value);
                       if (!Number.isNaN(inputInt)) {
                         this.props.autosaveTimer(inputInt);
@@ -169,7 +169,7 @@ class Settings extends React.Component {
                     className="settings-input small-number-input"
                     type="number"
                     value={this.props.settings.tabSize}
-                    onChange={event => {
+                    onChange={(event) => {
                       const inputInt = parseInt(event.target.value);
                       if (!Number.isNaN(inputInt)) {
                         this.props.autosaveTimer(inputInt);
@@ -186,7 +186,7 @@ class Settings extends React.Component {
                     className="settings-input small-number-input"
                     type="number"
                     value={this.props.settings.fontSize}
-                    onChange={event => {
+                    onChange={(event) => {
                       const inputInt = parseInt(event.target.value);
                       if (!Number.isNaN(inputInt)) {
                         this.props.fontSize(inputInt);
@@ -197,49 +197,37 @@ class Settings extends React.Component {
               </ListItem>
               <Divider />
               <ListItem>
-                <ListItemText
-                  primary="Tab Character"
-                />
+                <ListItemText primary="Tab Character" />
                 <ListItemSecondaryAction>
                   <Select
                     value={this.props.settings.softTabs}
-                    onChange={(event) => this.props.softTabs(event.target.value)}
+                    onChange={(event) =>
+                      this.props.softTabs(event.target.value)
+                    }
                     className="settings-input"
                   >
-                    {
-                      Object.keys(tabTypes).map((tabType) => (
-                        <MenuItem
-                          key={tabType}
-                          value={tabType}
-                        >
-                          {tabTypes[tabType]}
-                        </MenuItem>
-                      ))
-                    }
+                    {Object.keys(tabTypes).map((tabType) => (
+                      <MenuItem key={tabType} value={tabType}>
+                        {tabTypes[tabType]}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </ListItemSecondaryAction>
               </ListItem>
               <Divider />
               <ListItem>
-                <ListItemText
-                  primary="Theme"
-                />
+                <ListItemText primary="Theme" />
                 <ListItemSecondaryAction>
                   <Select
                     value={this.props.settings.theme}
                     onChange={(event) => this.props.theme(event.target.value)}
                     className="settings-input"
                   >
-                    {
-                      Object.keys(themes).map((theme) => (
-                        <MenuItem
-                          key={theme}
-                          value={theme}
-                        >
-                          {themes[theme]}
-                        </MenuItem>
-                      ))
-                    }
+                    {Object.keys(themes).map((theme) => (
+                      <MenuItem key={theme} value={theme}>
+                        {themes[theme]}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </ListItemSecondaryAction>
               </ListItem>
@@ -311,16 +299,13 @@ class Settings extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  settings: state.settings
+  settings: state.settings,
 });
 
 const mapDispatchToProps = {
   loadSnippets,
   loadLegacySnippets,
-  ...actions
+  ...actions,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

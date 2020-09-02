@@ -2,20 +2,23 @@
 
 // ace-builds must be imported before react-ace
 // See https://github.com/securingsincity/react-ace/issues/725
-import 'ace-builds'
+import "ace-builds";
 
 import React from "react";
 import AceEditor from "react-ace";
 import { connect } from "react-redux";
 
-import 'ace-builds/webpack-resolver'
-import 'ace-builds/src-noconflict/ext-language_tools'
-import 'ace-builds/src-noconflict/mode-javascript'
-import 'ace-builds/src-noconflict/theme-github'
-import 'ace-builds/src-noconflict/theme-tomorrow_night'
+import "ace-builds/webpack-resolver";
+import "ace-builds/src-noconflict/ext-language_tools";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/theme-tomorrow_night";
 
 // Define the path to our custom ESLint worker
-ace.config.setModuleUrl('ace/mode/javascript-eslint', require('file-loader?esModule=false!../../mode-javascript-eslint/mode-javascript-eslint.js'))
+ace.config.setModuleUrl(
+  "ace/mode/javascript-eslint",
+  require("file-loader?esModule=false!../../mode-javascript-eslint/mode-javascript-eslint.js")
+);
 
 class Editor extends React.Component {
   constructor(props) {
@@ -31,7 +34,7 @@ class Editor extends React.Component {
     }
   }
 
-  handleChange = value => {
+  handleChange = (value) => {
     this.setState({ value });
     this.props.onChange(value);
   };
@@ -54,13 +57,13 @@ class Editor extends React.Component {
         wrapEnabled={this.props.settings.lineWrap}
         editorProps={{
           $blockScrolling: Infinity,
-          useSoftTabs: this.props.settings.softTabs
+          useSoftTabs: this.props.settings.softTabs,
         }}
         setOptions={{
-          useWorker: this.props.settings.linter
+          useWorker: this.props.settings.linter,
         }}
-        onLoad={ace => {
-          ace.container.addEventListener("keydown", event => {
+        onLoad={(ace) => {
+          ace.container.addEventListener("keydown", (event) => {
             if (event.key === "?") {
               event.stopPropagation();
             }
@@ -71,8 +74,8 @@ class Editor extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  settings: state.settings
+const mapStateToProps = (state) => ({
+  settings: state.settings,
 });
 
 export default connect(mapStateToProps)(Editor);

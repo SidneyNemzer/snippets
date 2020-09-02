@@ -4,5 +4,5 @@ import { reducer as settings } from "./settings";
 
 export default combineReducers({
   settings,
-  snippets
+  snippets,
 });

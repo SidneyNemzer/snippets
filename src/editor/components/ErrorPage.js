@@ -11,7 +11,7 @@ const renderTitle = (context, title) => {
   }
 };
 
-const renderError = error => {
+const renderError = (error) => {
   if (!error) {
     return false;
   }
@@ -39,9 +39,9 @@ const renderAction = (action, actionButton, onClick) => {
   }
 };
 
-const renderLink = link => link && <a href={link}>{link}</a>;
+const renderLink = (link) => link && <a href={link}>{link}</a>;
 
-const ErrorPage = props => (
+const ErrorPage = (props) => (
   <div className="error">
     {renderTitle(props.context, props.title)}
     {props.message && <p>{props.message}</p>}

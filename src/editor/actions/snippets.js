@@ -12,46 +12,46 @@ export const LOAD_LEGACY_SNIPPETS = "LOAD_LEGACY_SNIPPETS";
 export const LOADED_LEGACY_SNIPPETS = "LOADED_LEGACY_SNIPPETS";
 
 export const createSnippet = () => ({
-  type: CREATE_SNIPPET
+  type: CREATE_SNIPPET,
 });
 
 export const renameSnippet = (oldName, newName) => ({
   type: RENAME_SNIPPET,
   oldName,
-  newName
+  newName,
 });
 
 export const updateSnippet = (name, newBody, editorId) => ({
   type: UPDATE_SNIPPET,
   name,
   newBody,
-  editorId
+  editorId,
 });
 
-export const deleteSnippet = name => ({
+export const deleteSnippet = (name) => ({
   type: DELETE_SNIPPET,
-  name
+  name,
 });
 
 export const loadSnippets = () => ({
-  type: LOAD_SNIPPETS
+  type: LOAD_SNIPPETS,
 });
 
 export const loadLegacySnippets = () => ({
-  type: LOAD_LEGACY_SNIPPETS
+  type: LOAD_LEGACY_SNIPPETS,
 });
 
 export const loadedSnippets = (error, snippets = {}) => ({
   type: LOADED_SNIPPETS,
   snippets,
-  error
+  error,
 });
 
 export const saveSnippets = () => ({
-  type: SAVE_SNIPPETS
+  type: SAVE_SNIPPETS,
 });
 
-export const savedSnippets = error => ({
+export const savedSnippets = (error) => ({
   type: SAVED_SNIPPETS,
-  error
+  error,
 });

@@ -7,7 +7,7 @@ const Loading = () => (
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      marginTop: "10vh"
+      marginTop: "10vh",
     }}
   >
     <h1 style={{ marginRight: "10px" }}>Loading</h1>

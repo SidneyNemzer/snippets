@@ -7,7 +7,7 @@
  * @param item
  * @returns {boolean}
  */
-export const isObject = item =>
+export const isObject = (item) =>
   item && typeof item === "object" && !Array.isArray(item);
 
 /**

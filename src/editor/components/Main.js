@@ -8,7 +8,7 @@ import {
   updateSnippet,
   deleteSnippet,
   saveSnippets,
-  loadSnippets
+  loadSnippets,
 } from "../actions/snippets.js";
 import { actions as settingsActions } from "../actions/settings";
 import Sidepane from "./Sidepane";
@@ -22,7 +22,7 @@ import logo from "../../../images/logo-transparent.png";
 const saveStatus = {
   SAVING: "SAVING",
   SAVED: "SAVED",
-  UNSAVED: "UNSAVED"
+  UNSAVED: "UNSAVED",
 };
 
 class Main extends React.Component {
@@ -90,7 +90,7 @@ try {
 
   renderSaveMessage(snippets) {
     const {
-      snippets: { error }
+      snippets: { error },
     } = this.props;
     if (error) {
       return (
@@ -215,7 +215,7 @@ const mapStateToProps = (state, props) => ({
           },
           {}
         )
-      : state.snippets.data
+      : state.snippets.data,
   },
   saveStatus: state.snippets.saving
     ? saveStatus.SAVING
@@ -226,8 +226,8 @@ const mapStateToProps = (state, props) => ({
           {
             content: { local, remote },
             deleted,
-            renamed
-          }
+            renamed,
+          },
         ]) => {
           const unsaved = local !== remote || deleted || renamed;
           return unsaved;
@@ -235,7 +235,7 @@ const mapStateToProps = (state, props) => ({
       )
       ? saveStatus.UNSAVED
       : saveStatus.SAVED
-    : saveStatus.SAVED
+    : saveStatus.SAVED,
 });
 
 const mapDispatchToProps = {
@@ -246,10 +246,7 @@ const mapDispatchToProps = {
   saveSnippets,
   loadSnippets,
   accessToken: settingsActions.accessToken,
-  gistId: settingsActions.gistId
+  gistId: settingsActions.gistId,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -24,7 +24,7 @@ const LOCAL_STORAGE_PREFIX = "snippets-settings:";
 const storage = {
   set: (path, data) => {
     localStorage[LOCAL_STORAGE_PREFIX + path] = JSON.stringify(data);
-  }
+  },
 };
 
 // TODO the interaction between octokit and the store is weird, can we untangle
@@ -32,7 +32,7 @@ const storage = {
 let store;
 const octokit = new Octokit({
   userAgent: "snippets",
-  auth: () => store.getState().settings.accessToken
+  auth: () => store.getState().settings.accessToken,
 });
 
 store = createStore(
@@ -48,7 +48,7 @@ store = createStore(
           storageValue === null ? defaultSettings[key] : storageValue;
         return accum;
       }, {})
-    )
+    ),
   },
   applyMiddleware(
     alias(createAliases(octokit)),
@@ -67,7 +67,7 @@ const fakeStore = {
     setTimeout(() => {
       store.dispatch(...args);
     }, 0);
-  }
+  },
 };
 
 createEditor(
@@ -81,7 +81,7 @@ createEditor(
       } else {
         return target[key];
       }
-    }
+    },
   })
 );
 // Simulate webext-redux store load event

@@ -3,7 +3,7 @@ export const pages = {
   SETTINGS: "/settings",
   LOGIN: "/login",
   SELECT_GIST: "/select-gist",
-  WELCOME: "/welcome"
+  WELCOME: "/welcome",
 };
 
 export const CREATE_ACCESS_TOKEN_URL =

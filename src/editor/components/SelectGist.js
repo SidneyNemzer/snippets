@@ -11,12 +11,12 @@ const usersGists = "https://gist.github.com/";
 
 class SelectGist extends React.Component {
   state = {
-    gistIdInput: ""
+    gistIdInput: "",
   };
 
-  handleChange = name => event => {
+  handleChange = (name) => (event) => {
     this.setState({
-      [name]: event.target.value
+      [name]: event.target.value,
     });
   };
 
@@ -44,7 +44,7 @@ class SelectGist extends React.Component {
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           <TextField
@@ -68,17 +68,14 @@ class SelectGist extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   accessToken: state.settings.accessToken,
-  settingsGistId: state.settings.gistId
+  settingsGistId: state.settings.gistId,
 });
 
 const mapDispatchToProps = {
   gistId: settingsActions.gistId,
-  loadSnippets
+  loadSnippets,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SelectGist);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectGist);

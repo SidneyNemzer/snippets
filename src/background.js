@@ -12,15 +12,15 @@ import createAliases from "./editor/aliases";
 import Octokit from "@octokit/rest";
 
 const chromeSyncStorageGet = () =>
-  new Promise(resolve => {
-    chrome.storage.sync.get(storage => {
+  new Promise((resolve) => {
+    chrome.storage.sync.get((storage) => {
       resolve(storage);
     });
   });
 
-const chromeSyncStorageSetMerge = newStorage =>
+const chromeSyncStorageSetMerge = (newStorage) =>
   chromeSyncStorageGet().then(
-    oldStorage =>
+    (oldStorage) =>
       new Promise((resolve, reject) => {
         const mergedValue = R.mergeDeepRight(oldStorage, newStorage);
         chrome.storage.sync.set(mergedValue, () => {
@@ -37,9 +37,9 @@ const settingsStorage = {
   set: (key, data) =>
     chromeSyncStorageSetMerge({
       settings: {
-        [key]: data
-      }
-    })
+        [key]: data,
+      },
+    }),
 };
 
 // TODO the interaction between octokit and the store is weird, can we untangle
@@ -47,15 +47,15 @@ const settingsStorage = {
 let store;
 const octokit = new Octokit({
   userAgent: "snippets",
-  auth: () => store.getState().settings.accessToken
+  auth: () => store.getState().settings.accessToken,
 });
 
-chromeSyncStorageGet().then(storage => {
+chromeSyncStorageGet().then((storage) => {
   console.log("loaded storage:", storage);
   store = createStore(
     rootReducer,
     {
-      settings: Object.assign(defaultSettings, storage.settings)
+      settings: Object.assign(defaultSettings, storage.settings),
     },
     applyMiddleware(
       alias(createAliases(octokit)),

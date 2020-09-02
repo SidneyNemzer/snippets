@@ -10,7 +10,7 @@ const typeNames = {
   accessToken: true,
   gistId: true,
   autosaveTimer: true,
-  fontSize: true
+  fontSize: true,
 };
 
 export const types = generateTypes(typeNames);
