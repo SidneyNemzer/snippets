@@ -1,3 +1,5 @@
+/* global ace */
+
 // ace-builds must be imported before react-ace
 // See https://github.com/securingsincity/react-ace/issues/725
 import 'ace-builds'

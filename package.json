@@ -7,7 +7,9 @@
     "build:prod": "webpack --mode=production --progress",
     "build:dev": "webpack --progress",
     "start": "webpack-dev-server --progress --env.devServer",
-    "format": "prettier --write \"./src/**/*.js\""
+    "format": "prettier --write \"./src/**/*.js\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "license": "MIT",
   "devDependencies": {

@@ -1,4 +1,4 @@
-/* global ace */
+/* eslint-disable */
 
 // This doesn't exist as a stand-alone module in ace-builds, copied from
 // https://github.com/ajaxorg/ace/blob/3ebb0c34dc023aff3b6a951dd116a702510369fe/lib/ace/worker/mirror.js

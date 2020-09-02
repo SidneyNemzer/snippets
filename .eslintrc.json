@@ -2,6 +2,11 @@
   "parser": "babel-eslint",
   "extends": ["standard", "plugin:react/recommended"],
   "plugins": ["standard", "promise", "react"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "semi": "off",
     "quotes": "off",
@@ -13,6 +18,7 @@
     "prefer-promise-reject-errors": "off",
     "operator-linebreak": "off",
     "react/no-unescaped-entities": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "import/no-webpack-loader-syntax": "off"
   }
 }
