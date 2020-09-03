@@ -8,13 +8,33 @@ import React from "react";
 import AceEditor from "react-ace";
 import { connect } from "react-redux";
 
-import "ace-builds/webpack-resolver";
 import "ace-builds/src-noconflict/ext-language_tools";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-tomorrow_night";
 
-// Define the path to our custom ESLint worker
+// Tell webpack to include these files in the build. file-loader replaces
+// these `require`'s with a string, the path to the file in the build output.
+// Ace loads these dynamically at runtime. We don't use ace-builds/webpack-resolver
+// because that pulls in the files for EVERY mode, theme, etc.
+ace.config.setModuleUrl(
+  "ace/ext/language_tools",
+  require("file-loader?esModule=false!ace-builds/src-noconflict/ext-language_tools.js")
+);
+ace.config.setModuleUrl(
+  "ace/mode/javascript",
+  require("file-loader?esModule=false!ace-builds/src-noconflict/mode-javascript.js")
+);
+ace.config.setModuleUrl(
+  "ace/theme/github",
+  require("file-loader?esModule=false!ace-builds/src-noconflict/theme-github.js")
+);
+ace.config.setModuleUrl(
+  "ace/theme/tomorrow_night",
+  require("file-loader?esModule=false!ace-builds/src-noconflict/theme-tomorrow_night.js")
+);
+
+// Custom mode that uses ESLint
 ace.config.setModuleUrl(
   "ace/mode/javascript-eslint",
   require("file-loader?esModule=false!../../mode-javascript-eslint/mode-javascript-eslint.js")
