@@ -1,3 +1,11 @@
+## 2.3.0
+
+- Switched to ESLint for better support of new JavaScript syntax. ESLint will check for syntax errors, and I've enabled a few rules that I think are relevant for Snippets. [View the rules here][eslint-rules]. These could be configurable in the future.
+- In the settings, dropdowns are now used where applicable
+- Added an input field to view your access token (hidden by default)
+
+[eslint-rules]: https://github.com/SidneyNemzer/snippets/blob/4541e82082ac49070c338abba6c3298f96523665/src/mode-javascript-eslint/worker-javascript-eslint.js#L19-L33
+
 ## 2.2.0
 
 - Editor font size is now configurable in the settings, thanks @mighty-sparrow!
