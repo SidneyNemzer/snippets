@@ -36,10 +36,6 @@ const tabTypes = {
   false: "Tabs",
 };
 
-// This variable is injected by webpack
-// eslint-disable-next-line no-undef
-const VERSION = SNIPPETS_VERSION;
-
 class Settings extends React.Component {
   constructor(props) {
     super(props);
@@ -75,7 +71,7 @@ class Settings extends React.Component {
         <main>
           <SettingsGroup label="About" className="about">
             <img className="logo" src={logo} />
-            <p className="version">{VERSION}</p>
+            <p className="version">{process.env.SNIPPETS_VERSION}</p>
             <p className="author">By Sidney Nemzer</p>
             <a
               href="https://github.com/SidneyNemzer/snippets"

@@ -31,7 +31,7 @@ const storage = {
 // this somehow?
 let store;
 const octokit = new Octokit({
-  userAgent: "snippets",
+  userAgent: `github.com/sidneynemzer/snippets ${process.env.SNIPPETS_VERSION}`,
   auth: () => store.getState().settings.accessToken,
 });
 

@@ -123,7 +123,7 @@ module.exports = (env, args) => {
 
     plugins: [
       new webpack.DefinePlugin({
-        SNIPPETS_VERSION: JSON.stringify(package_.version),
+        "process.env.SNIPPETS_VERSION": JSON.stringify(package_.version),
         "process.env.NODE_ENV": JSON.stringify(args.mode || "development"),
       }),
       new CleanWebpackPlugin(),
