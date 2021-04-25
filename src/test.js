@@ -17,7 +17,9 @@ import settingsMiddleware from "./editor/middleware/settings";
 import saveMiddleware from "./editor/middleware/save-when-inactive";
 import errorMiddleware from "./editor/middleware/log-error";
 import createAliases from "./editor/aliases";
-import Octokit from "@octokit/rest";
+import { Octokit } from "@octokit/rest";
+import { createCallbackAuth } from "@octokit/auth-callback";
+import { OCTOKIT_USER_AGENT } from "./editor/constants";
 
 const LOCAL_STORAGE_PREFIX = "snippets-settings:";
 
@@ -30,9 +32,13 @@ const storage = {
 // TODO the interaction between octokit and the store is weird, can we untangle
 // this somehow?
 let store;
+
 const octokit = new Octokit({
-  userAgent: `github.com/sidneynemzer/snippets ${process.env.SNIPPETS_VERSION}`,
-  auth: () => store.getState().settings.accessToken,
+  userAgent: OCTOKIT_USER_AGENT,
+  authStrategy: createCallbackAuth,
+  auth: {
+    callback: () => store.getState().settings.accessToken,
+  },
 });
 
 store = createStore(

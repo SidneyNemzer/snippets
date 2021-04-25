@@ -9,7 +9,9 @@ import errorMiddleware from "./editor/middleware/log-error";
 import { defaultState as defaultSettings } from "./editor/reducers/settings";
 import rootReducer from "./editor/reducers";
 import createAliases from "./editor/aliases";
-import Octokit from "@octokit/rest";
+import { Octokit } from "@octokit/rest";
+import { createCallbackAuth } from "@octokit/auth-callback";
+import { OCTOKIT_USER_AGENT } from "./editor/constants";
 
 const chromeSyncStorageGet = () =>
   new Promise((resolve) => {
@@ -45,9 +47,13 @@ const settingsStorage = {
 // TODO the interaction between octokit and the store is weird, can we untangle
 // this somehow?
 let store;
+
 const octokit = new Octokit({
-  userAgent: "snippets",
-  auth: () => store.getState().settings.accessToken,
+  userAgent: OCTOKIT_USER_AGENT,
+  authStrategy: createCallbackAuth,
+  auth: {
+    callback: () => store.getState().settings.accessToken,
+  },
 });
 
 chromeSyncStorageGet().then((storage) => {

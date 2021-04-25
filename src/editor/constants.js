@@ -11,3 +11,5 @@ export const CREATE_ACCESS_TOKEN_URL =
 
 export const SNIPPETS_ISSUES_URL =
   "https://github.com/SidneyNemzer/snippets/issues/new";
+
+export const OCTOKIT_USER_AGENT = `github.com/sidneynemzer/snippets ${process.env.SNIPPETS_VERSION}`;
