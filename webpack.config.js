@@ -70,7 +70,7 @@ module.exports = (env, args) => {
   return {
     mode: args.mode || "development",
 
-    devtool: !isProduction && "cheap-module-eval-source-map",
+    devtool: !isProduction && "cheap-source-map",
 
     entry,
 
