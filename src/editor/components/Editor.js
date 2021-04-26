@@ -19,25 +19,17 @@ import "ace-builds/src-noconflict/theme-tomorrow_night";
 // because that pulls in the files for EVERY mode, theme, etc.
 ace.config.setModuleUrl(
   "ace/ext/language_tools",
-  require("file-loader?esModule=false!ace-builds/src-noconflict/ext-language_tools.js")
+  require("file-loader?esModule=false&name=[name].[ext]!ace-builds/src-noconflict/ext-language_tools.js")
 );
 ace.config.setModuleUrl(
   "ace/mode/javascript",
-  require("file-loader?esModule=false!ace-builds/src-noconflict/mode-javascript.js")
-);
-ace.config.setModuleUrl(
-  "ace/theme/github",
-  require("file-loader?esModule=false!ace-builds/src-noconflict/theme-github.js")
-);
-ace.config.setModuleUrl(
-  "ace/theme/tomorrow_night",
-  require("file-loader?esModule=false!ace-builds/src-noconflict/theme-tomorrow_night.js")
+  require("file-loader?esModule=false&name=[name].[ext]!ace-builds/src-noconflict/mode-javascript.js")
 );
 
 // Custom mode that uses ESLint
 ace.config.setModuleUrl(
   "ace/mode/javascript-eslint",
-  require("file-loader?esModule=false!../../mode-javascript-eslint/mode-javascript-eslint.js")
+  require("file-loader?esModule=false&name=[name].[ext]!../../mode-javascript-eslint/mode-javascript-eslint.js")
 );
 
 class Editor extends React.Component {
