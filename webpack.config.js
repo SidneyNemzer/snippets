@@ -1,11 +1,13 @@
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
 const fs = require("fs");
+const path = require("path");
+
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const package_ = require("./package.json");
-const path = require("path");
 const webpack = require("webpack");
+
+const package_ = require("./package.json");
 
 const AfterEmitPlugin = (fn) => ({
   apply: (compiler) => {
@@ -55,14 +57,14 @@ module.exports = (env, args) => {
   const isProduction = args.mode === "production";
   const entry = isDevServer
     ? {
-        test: "./src/test.js",
+        test: "./src/test.ts",
         "worker-javascript-eslint":
           "./src/mode-javascript-eslint/worker-javascript-eslint.js",
       }
     : {
-        background: "./src/background.js",
-        devtools: "./src/devtools.js",
-        panel: "./src/panel.js",
+        background: "./src/background.ts",
+        devtools: "./src/devtools.ts",
+        panel: "./src/panel.ts",
         "worker-javascript-eslint":
           "./src/mode-javascript-eslint/worker-javascript-eslint.js",
       };
@@ -93,7 +95,7 @@ module.exports = (env, args) => {
               },
             },
             {
-              test: /\.(js|jsx)$/,
+              test: /\.(jsx?|tsx?)$/,
               loader: "babel-loader",
               options: { cacheDirectory: true },
             },
@@ -142,7 +144,7 @@ module.exports = (env, args) => {
     },
 
     resolve: {
-      extensions: [".js", ".jsx"],
+      extensions: [".js", ".jsx", ".ts", ".tsx"],
       mainFields: ["browser", "main", "module"],
     },
 
