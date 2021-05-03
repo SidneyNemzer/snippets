@@ -3,6 +3,7 @@ const path = require("path");
 
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
@@ -133,6 +134,7 @@ module.exports = (env, args) => {
       AfterEmitPlugin(buildManifest),
       isProduction && new MiniCssExtractPlugin(),
       ...(isDevServer ? devServerHtml : html),
+      isDevServer && new ForkTsCheckerWebpackPlugin(),
     ].filter(Boolean),
 
     optimization: {
