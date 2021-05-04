@@ -52,12 +52,12 @@ div.ace_editor {
   cursor: default;
 }
 .sidepane .menu-icon {
-  visibility: hidden;
-  transition: visibility 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  opacity: 0;
+  transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 .sidepane li:hover .menu-icon,
 .sidepane .selected + div .menu-icon {
-  visibility: visible;
+  opacity: 1;
 }
 
 .snippet-list {
@@ -72,7 +72,7 @@ div.ace_editor {
   font-size: 1.2em;
   margin-left: 20px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 300ms;
 }
 .snippet-row.selected {
   background-color: #d8d8d8;
