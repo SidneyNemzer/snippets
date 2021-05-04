@@ -18,8 +18,8 @@ type State = {
 };
 
 class ErrorBoundry extends React.Component<{}, State> {
-  constructor() {
-    super({});
+  constructor(props: any) {
+    super(props);
 
     this.state = { caughtError: null };
   }
