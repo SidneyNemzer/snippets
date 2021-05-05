@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { MemoryRouter, Route, Redirect, Switch } from "react-router-dom";
+import { MemoryRouter, Route, Redirect } from "react-router-dom";
+import { AnimatedSwitch } from "react-router-transition";
 
 import { loadSnippets } from "../actions/snippets";
 import { pages } from "../constants";
@@ -150,7 +151,12 @@ class App extends React.Component<Props, State> {
   render() {
     return (
       <MemoryRouter>
-        <Switch>
+        <AnimatedSwitch
+          atEnter={{ opacity: 0 }}
+          atLeave={{ opacity: 0 }}
+          atActive={{ opacity: 1 }}
+          className="switch-wrapper"
+        >
           <Route path={pages.WELCOME} component={Welcome} />
           <Route path={pages.LOGIN} component={Login} />
           <Route path={pages.SELECT_GIST} component={SelectGist} />
@@ -168,7 +174,7 @@ class App extends React.Component<Props, State> {
           />
           <Route path={pages.SETTINGS} component={Settings} />
           <Redirect from="/" to={this.choosePage()} exact />
-        </Switch>
+        </AnimatedSwitch>
       </MemoryRouter>
     );
   }
