@@ -22,8 +22,18 @@ const previousSnippetName = (
   name: string,
   snippets: { [name: string]: Snippet }
 ) => {
-  const sorted = Object.keys(snippets).concat([name]).sort();
-  return sorted[sorted.indexOf(name) - 1];
+  const sorted = Array.from(
+    new Set(Object.keys(snippets).concat([name]))
+  ).sort();
+  const index = sorted.indexOf(name);
+
+  // Assumes there will be at least one remaining snippet
+  if (index > 0) {
+    return sorted[index - 1];
+  }
+
+  // sorted[0] === name, select the next snippet
+  return sorted[1];
 };
 
 const checkSelectedSnippet = (
@@ -32,7 +42,12 @@ const checkSelectedSnippet = (
   currentSnippets: { [name: string]: Snippet } | null
 ) => {
   // Select the first snippet on the first load
-  if (!selectedSnippetName && !currentSnippets && nextSnippets) {
+  if (
+    !selectedSnippetName &&
+    !currentSnippets &&
+    nextSnippets &&
+    Object.values(nextSnippets).length
+  ) {
     return { selectedSnippetName: Object.keys(nextSnippets)[0] };
   }
 
@@ -41,7 +56,11 @@ const checkSelectedSnippet = (
   }
 
   // If there are no snippets, remove the selection
-  if (!nextSnippets) {
+  if (
+    !nextSnippets ||
+    !Object.values(nextSnippets).length ||
+    !Object.values(nextSnippets).find((s) => !s.deleted)
+  ) {
     return { selectedSnippetName: null };
   }
 
