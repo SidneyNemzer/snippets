@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { RouteComponentProps } from "react-router-dom";
+import { Redirect, RouteComponentProps } from "react-router-dom";
 
 import logo from "../../../images/logo-transparent.png";
 import { actions as settingsActions } from "../actions/settings";
@@ -220,6 +220,12 @@ class Main extends React.Component<Props & RouteComponentProps> {
     } else if (snippetsState.error && !snippetsState.data) {
       return this.renderError(snippetsState.error);
     } else if (!snippetsState.data) {
+      if (!this.props.settings.accessToken) {
+        return <Redirect to={pages.LOGIN} />;
+      }
+      if (!this.props.settings.gistId) {
+        return <Redirect to={pages.SELECT_GIST} />;
+      }
       return (
         <ErrorPage
           title="No snippets are loaded"
