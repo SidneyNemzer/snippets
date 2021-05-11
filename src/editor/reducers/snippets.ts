@@ -102,15 +102,22 @@ const snippets = (state = defaultState, action: AnyAction): SnippetsState => {
           })
         : state;
     case DELETE_SNIPPET:
-      return !state.loading && state.data
-        ? update({
-            data: {
-              [action.name]: {
-                deleted: true,
-              },
-            },
-          })
-        : state;
+      if (state.loading || !state.data) {
+        return state;
+      }
+
+      const snippet = state.data[action.name];
+      if (!snippet || snippet.content.remote === false) {
+        return state;
+      }
+
+      return update({
+        data: {
+          [action.name]: {
+            deleted: true,
+          },
+        },
+      });
     case LOADING_SNIPPETS:
       return update({ loading: true, error: null });
     case LOADED_SNIPPETS:
