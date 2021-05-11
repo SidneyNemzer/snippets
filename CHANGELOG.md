@@ -1,3 +1,14 @@
+## 2.4.0
+
+- Added the option to create a new Gist during setup instead of using an existing Gist
+- Resolved an issue where the <kbd>Esc</kbd> shortcut did not open the devtools console
+- Fixed an error that occured when deleting the first snippet in the list ([#26](https://github.com/SidneyNemzer/snippets/issues/26))
+- Resolved an error that occured deleting a snippet that had never been saved
+- Re-implemented a fade animation for the settings page
+- Rewrote the extension with TypeScript
+- Updated packages
+- Minor animation changes
+
 ## 2.3.0
 
 - Switched to ESLint for better support of new JavaScript syntax. ESLint will check for syntax errors, and I've enabled a few rules that I think are relevant for Snippets. [View the rules here][eslint-rules]. These could be configurable in the future.
