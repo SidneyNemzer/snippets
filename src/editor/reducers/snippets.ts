@@ -107,8 +107,14 @@ const snippets = (state = defaultState, action: AnyAction): SnippetsState => {
       }
 
       const snippet = state.data[action.name];
-      if (!snippet || snippet.content.remote === false) {
+      if (!snippet) {
         return state;
+      }
+
+      if (snippet.content.remote === false) {
+        const snippets = { ...state.data };
+        delete snippets[action.name];
+        return { ...state, data: snippets };
       }
 
       return update({
