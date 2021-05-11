@@ -57,7 +57,7 @@ const octokit = new Octokit({
 });
 
 chromeSyncStorageGet().then((storage) => {
-  const store = createStore(
+  store = createStore(
     rootReducer,
     {
       settings: Object.assign(defaultSettings, storage.settings),
