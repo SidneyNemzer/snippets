@@ -92,6 +92,17 @@ class Editor extends React.Component<Props, State> {
         }}
         onLoad={(ace) => {
           ace.container.addEventListener("keydown", (event) => {
+            // Allow Esc to open the devtools console. Internally, the devtools
+            // ignore the event if a textarea or input is focused
+            if (
+              event.key === "Escape" &&
+              document.activeElement instanceof HTMLElement
+            ) {
+              document.activeElement.blur();
+            }
+
+            // Prevent devtools from handling question marks, otherwise typing
+            // a question mark would not be possible.
             if (event.key === "?") {
               event.stopPropagation();
             }
