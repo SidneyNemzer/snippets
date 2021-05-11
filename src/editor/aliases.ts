@@ -23,13 +23,15 @@ type Snippet = {
   body: string;
 };
 
-// TODO state
 const loadSnippets = (octokit: Octokit) => () => (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {
   const gistId = getState().settings.gistId;
   if (!gistId) {
+    const error: any = new Error("Missing Gist ID");
+    error.context = "load snippets";
+    dispatch(loadedSnippets(error));
     return;
   }
 
