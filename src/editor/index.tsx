@@ -17,7 +17,7 @@ type State = {
   caughtError: Error | null;
 };
 
-class ErrorBoundry extends React.Component<{}, State> {
+class ErrorBoundary extends React.Component<{}, State> {
   constructor(props: any) {
     super(props);
 
@@ -42,7 +42,7 @@ class ErrorBoundry extends React.Component<{}, State> {
           }}
         >
           <ErrorIcon style={{ color: "#ececec", fontSize: 150 }} />
-          <h1 style={{ margin: "0 0 20px" }}>An error occured</h1>
+          <h1 style={{ margin: "0 0 20px" }}>An error occurred</h1>
           <ExpansionPanel
             style={{
               maxWidth: 600,
@@ -98,14 +98,14 @@ export default (
     unsubscribe();
     const root = document.querySelector(".root");
     ReactDOM.render(
-      <ErrorBoundry>
+      <ErrorBoundary>
         <Provider store={store}>
           <App
             runInInspectedWindow={runInInspectedWindow}
             editorId={editorId}
           />
         </Provider>
-      </ErrorBoundry>,
+      </ErrorBoundary>,
       root
     );
   });
