@@ -8,6 +8,7 @@
     "build:dev": "webpack --progress",
     "start": "webpack-dev-server --progress --env.devServer",
     "format": "prettier . --write",
+    "tsc": "tsc --noEmit",
     "lint": "eslint . --ext js,ts,tsx",
     "lint:fix": "eslint . --ext js,ts,tsx --fix"
   },
