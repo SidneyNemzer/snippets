@@ -53,7 +53,8 @@ const loadSnippets = (octokit: Octokit) => () => (
 
               snippets[fileName] = {
                 name: fileName,
-                body: truncated ? "(Truncated)" : content || "", // TODO handle truncated files
+                // TODO handle truncated files
+                body: truncated ? "(Truncated)" : content || "",
               };
               return snippets;
             },
@@ -114,31 +115,27 @@ const saveSnippets = (octokit: Octokit) => () => (
     });
 };
 
-const loadLegacySnippets = () => (
-  dispatch: Dispatch,
-  getState: () => RootState
-) => {
-  chrome.storage.sync.get((storage) => {
-    const snippets: {
-      [name: string]: { content?: string; body?: string; name: string };
-    } = storage.snippets;
+const loadLegacySnippets = () => async (dispatch: Dispatch) => {
+  const storage = await chrome.storage.sync.get();
+  const snippets: Record<
+    string,
+    { content?: string; body?: string; name: string }
+  > = storage.snippets;
+  const processedSnippets = Object.entries(snippets).reduce(
+    (snippets, [id, value]) => {
+      const { content, body, name } = value;
+      if (body || content) {
+        snippets[name] = body || content || "";
+      }
+      return snippets;
+    },
+    {} as { [name: string]: string }
+  );
 
-    const processedSnippets = Object.entries(snippets).reduce(
-      (snippets, [id, value]) => {
-        const { content, body, name } = value;
-        if (body || content) {
-          snippets[name] = body || content || "";
-        }
-        return snippets;
-      },
-      {} as { [name: string]: string }
-    );
-
-    dispatch({
-      type: LOADED_LEGACY_SNIPPETS,
-      error: null,
-      snippets: processedSnippets,
-    });
+  dispatch({
+    type: LOADED_LEGACY_SNIPPETS,
+    error: null,
+    snippets: processedSnippets,
   });
 };
 
