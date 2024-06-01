@@ -13,27 +13,11 @@ import settingsMiddleware from "./editor/middleware/settings";
 import rootReducer, { RootState } from "./editor/reducers";
 import { defaultState as defaultSettings } from "./editor/reducers/settings";
 
-const chromeSyncStorageGet = () =>
-  new Promise<any>((resolve) => {
-    chrome.storage.sync.get((storage) => {
-      resolve(storage);
-    });
-  });
-
-const chromeSyncStorageSetMerge = (newStorage: any) =>
-  chromeSyncStorageGet().then(
-    (oldStorage) =>
-      new Promise<void>((resolve, reject) => {
-        const mergedValue = R.mergeDeepRight(oldStorage, newStorage);
-        chrome.storage.sync.set(mergedValue, () => {
-          if (chrome.runtime.lastError) {
-            reject(chrome.runtime.lastError);
-          } else {
-            resolve();
-          }
-        });
-      })
-  );
+const chromeSyncStorageSetMerge = async (newStorage: any) => {
+  const storage = await chrome.storage.sync.get();
+  const mergedValue = R.mergeDeepRight(storage, newStorage);
+  await chrome.storage.sync.set(mergedValue);
+};
 
 const settingsStorage = {
   set: (key: string, data: any) =>
@@ -56,7 +40,7 @@ const octokit = new Octokit({
   },
 });
 
-chromeSyncStorageGet().then((storage) => {
+chrome.storage.sync.get().then((storage) => {
   store = createStore(
     rootReducer,
     {

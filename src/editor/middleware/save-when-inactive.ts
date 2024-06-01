@@ -18,18 +18,25 @@ const modifyActions = [
   LOADED_LEGACY_SNIPPETS,
 ];
 
-let timer: number | undefined;
+let timer: ReturnType<typeof setTimeout> | undefined;
 
 const restartSaveTimer = (delay: number, save: () => void) => {
-  window.clearTimeout(timer);
+  if (timer) {
+    clearTimeout(timer);
+  }
+
   if (delay > 0) {
-    timer = window.setTimeout(save, delay);
+    timer = setTimeout(save, delay);
+  } else {
+    save();
   }
 };
 
 const stopSaveTimer = () => {
-  clearTimeout(timer);
-  timer = undefined;
+  if (timer) {
+    clearTimeout(timer);
+    timer = undefined;
+  }
 };
 
 const saveWhenInactive: Middleware = (store) => (next) => (action) => {
