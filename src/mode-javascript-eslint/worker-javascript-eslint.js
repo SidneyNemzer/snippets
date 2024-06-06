@@ -110,7 +110,7 @@ ace.define(
           annotations.push({
             row: 0,
             column: 0,
-            text: `An error occured while linting:\n${error.stack}`,
+            text: `An error occurred while linting:\n${error.stack}`,
             type: "error",
           });
         }
