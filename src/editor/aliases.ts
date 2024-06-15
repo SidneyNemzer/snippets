@@ -35,6 +35,11 @@ const loadSnippets = (octokit: Octokit) => () => (
     return;
   }
 
+  const loading = getState().snippets.loading;
+  if (loading) {
+    return;
+  }
+
   dispatch({ type: LOADING_SNIPPETS });
 
   octokit.gists
