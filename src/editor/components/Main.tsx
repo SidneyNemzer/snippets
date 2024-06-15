@@ -98,9 +98,9 @@ class Main extends React.Component<Props & RouteComponentProps> {
 
   renderEditor(snippets: { [name: string]: Snippet }) {
     const { selectedSnippetName: snippetId } = this.props;
+    const snippet = snippetId && snippets[snippetId];
 
-    if (snippetId !== null) {
-      const snippet = snippets[snippetId];
+    if (snippet) {
       return (
         <Editor
           key={snippetId}
