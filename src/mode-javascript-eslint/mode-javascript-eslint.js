@@ -4,6 +4,12 @@ ace.define("ace/mode/javascript-eslint", function (require, exports, module) {
   const oop = require("ace/lib/oop");
   const WorkerClient = require("ace/worker/worker_client").WorkerClient;
   const JavaScriptMode = require("ace/mode/javascript").Mode;
+  const config = require("ace/config");
+
+  // loadWorkerFromBlob is true by default. It's disabled here because loading
+  // from a blob is blocked by Chrome's CSP. The CSP must have changed since the
+  // eslint mode was introduced (it used to work fine).
+  config.set("loadWorkerFromBlob", false);
 
   const Mode = function () {
     JavaScriptMode.call(this);
