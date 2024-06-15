@@ -1,4 +1,6 @@
 {
+  "name": "Snippets",
+  "description": "Create and edit JavaScript code snippets, which are synced to all your computers",
   "manifest_version": 3,
 
   "background": {
