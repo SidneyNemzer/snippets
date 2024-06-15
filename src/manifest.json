@@ -8,7 +8,7 @@
   },
   "devtools_page": "devtools.html",
 
-  "permissions": ["storage"],
+  "permissions": ["storage", "alarms"],
 
   "icons": {
     "16": "icons/icon_16.png",

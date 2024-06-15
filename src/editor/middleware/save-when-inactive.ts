@@ -1,5 +1,6 @@
 import { Middleware } from "redux";
 
+import { createTimer } from "../../lib/timer";
 import {
   CREATE_SNIPPET,
   RENAME_SNIPPET,
@@ -18,36 +19,22 @@ const modifyActions = [
   LOADED_LEGACY_SNIPPETS,
 ];
 
-let timer: ReturnType<typeof setTimeout> | undefined;
+const timer = createTimer("save");
 
-const restartSaveTimer = (delay: number, save: () => void) => {
-  if (timer) {
-    clearTimeout(timer);
-  }
+const saveWhenInactive: Middleware = (store) => {
+  timer.setCallback(() => store.dispatch(saveSnippets()));
 
-  if (delay > 0) {
-    timer = setTimeout(save, delay);
-  } else {
-    save();
-  }
-};
+  return (next) => (action) => {
+    const enabled = store.getState().settings.autosaveTimer > 0;
 
-const stopSaveTimer = () => {
-  if (timer) {
-    clearTimeout(timer);
-    timer = undefined;
-  }
-};
-
-const saveWhenInactive: Middleware = (store) => (next) => (action) => {
-  if (modifyActions.includes(action.type)) {
-    restartSaveTimer(store.getState().settings.autosaveTimer * 1000, () =>
-      store.dispatch(saveSnippets())
-    );
-  } else if (action.type === SAVING_SNIPPETS) {
-    stopSaveTimer();
-  }
-  next(action);
+    if (modifyActions.includes(action.type) && enabled) {
+      const delayMs = store.getState().settings.autosaveTimer * 1000;
+      timer.set(delayMs);
+    } else if (action.type === SAVING_SNIPPETS) {
+      timer.cancel();
+    }
+    next(action);
+  };
 };
 
 export default saveWhenInactive;
