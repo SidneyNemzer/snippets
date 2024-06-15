@@ -3,9 +3,9 @@
   "version": "2.4.0",
   "description": "Create and edit JavaScript code snippets, which are synced to all your computers",
   "scripts": {
-    "build:prod": "webpack --mode=production --progress",
-    "build:dev": "webpack --progress",
-    "start": "webpack-dev-server --progress --env.devServer",
+    "build:prod": "NODE_OPTIONS='--openssl-legacy-provider' webpack --mode=production --progress",
+    "build:dev": "NODE_OPTIONS='--openssl-legacy-provider' webpack --progress",
+    "start": "NODE_OPTIONS='--openssl-legacy-provider' webpack-dev-server --progress --env.devServer",
     "format": "prettier . --write",
     "tsc": "tsc --noEmit",
     "lint": "eslint . --ext js,ts,tsx",
