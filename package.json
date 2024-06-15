@@ -66,6 +66,6 @@
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
     "typeface-roboto": "0.0.54",
-    "webext-redux": "^2.1.7"
+    "webext-redux": "3.0.0-mv3.0"
   }
 }

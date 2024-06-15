@@ -3,7 +3,7 @@ import { Octokit } from "@octokit/rest";
 import * as R from "ramda";
 import { createStore, applyMiddleware, Store } from "redux";
 import thunk from "redux-thunk";
-import { wrapStore, alias } from "webext-redux";
+import { createWrapStore, alias } from "webext-redux";
 
 import createAliases from "./editor/aliases";
 import { OCTOKIT_USER_AGENT } from "./editor/constants";
@@ -28,6 +28,8 @@ const settingsStorage = {
     }),
 };
 
+const wrapStore = createWrapStore();
+
 // TODO the interaction between octokit and the store is weird, can we untangle
 // this somehow?
 let store: Store<RootState> | undefined;
@@ -40,12 +42,15 @@ const octokit = new Octokit({
   },
 });
 
-chrome.storage.sync.get().then((storage) => {
+Promise.all([
+  chrome.storage.sync.get({ settings: {} }),
+  chrome.storage.session.get({ state: {} }),
+]).then(([{ settings }, { state }]) => {
   store = createStore(
     rootReducer,
-    {
-      settings: Object.assign(defaultSettings, storage.settings),
-    },
+    Object.assign(state, {
+      settings: Object.assign({}, defaultSettings, settings),
+    }),
     applyMiddleware(
       alias(createAliases(octokit)),
       thunk,
@@ -55,4 +60,8 @@ chrome.storage.sync.get().then((storage) => {
     )
   );
   wrapStore(store, { portName: "SNIPPETS" });
+
+  store.subscribe(() => {
+    chrome.storage.session.set({ state: store!.getState() });
+  });
 });

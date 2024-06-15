@@ -152,6 +152,16 @@ class App extends React.Component<Props, State> {
     }
   }
 
+  componentDidUpdate() {
+    const {
+      settings: { accessToken, gistId },
+      snippets: { data, loading },
+    } = this.props;
+    if (!data && !loading && accessToken && gistId) {
+      this.props.loadSnippets();
+    }
+  }
+
   // Choose a page based whether or not a Gist ID and token have
   // been entered
   choosePage() {

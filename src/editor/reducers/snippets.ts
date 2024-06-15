@@ -46,7 +46,7 @@ export type SnippetsState = {
 };
 
 const defaultState: SnippetsState = {
-  loading: true,
+  loading: false,
   saving: false,
   error: null,
   data: null,
