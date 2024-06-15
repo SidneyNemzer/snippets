@@ -8,7 +8,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 
-const package_ = require("./package.json");
+const packageJson = require("./package.json");
+const manifestJson = require("./src/manifest.json");
 
 const AfterEmitPlugin = (fn) => ({
   apply: (compiler) => {
@@ -17,11 +18,8 @@ const AfterEmitPlugin = (fn) => ({
 });
 
 const buildManifest = () => {
-  const { name, description, version } = package_;
-  const manifest = Object.assign(require("./src/manifest.json"), {
-    name,
-    description,
-    version,
+  const manifest = Object.assign(manifestJson, {
+    version: packageJson.version,
   });
   fs.writeFileSync("build/manifest.json", JSON.stringify(manifest, null, 2));
 };
@@ -126,7 +124,7 @@ module.exports = (env, args) => {
 
     plugins: [
       new webpack.DefinePlugin({
-        "process.env.SNIPPETS_VERSION": JSON.stringify(package_.version),
+        "process.env.SNIPPETS_VERSION": JSON.stringify(packageJson.version),
         "process.env.NODE_ENV": JSON.stringify(args.mode || "development"),
       }),
       new CleanWebpackPlugin(),
