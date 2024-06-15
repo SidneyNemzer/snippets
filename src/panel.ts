@@ -7,11 +7,22 @@ const logInInspected = (level: string, message: unknown) => {
 };
 
 const evalInInspected = (content: string) => {
-  chrome.devtools.inspectedWindow.eval(content, {}, (result, exceptionInfo) => {
-    if (exceptionInfo.isException && exceptionInfo.value) {
-      logInInspected("error", exceptionInfo.value);
+  chrome.devtools.inspectedWindow.eval(
+    content,
+    {},
+    (
+      result: unknown,
+      // exceptionInfo is undefined if an exception was not thrown, but
+      // @types/chrome does not reflect this.
+      exceptionInfo:
+        | chrome.devtools.inspectedWindow.EvaluationExceptionInfo
+        | undefined
+    ) => {
+      if (exceptionInfo?.isException && exceptionInfo.value) {
+        logInInspected("error", exceptionInfo.value);
+      }
     }
-  });
+  );
 };
 
 createEditor(evalInInspected, String(chrome.devtools.inspectedWindow.tabId));
