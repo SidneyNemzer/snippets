@@ -100,7 +100,7 @@ class Main extends React.Component<Props & RouteComponentProps> {
     const { selectedSnippetName: snippetId } = this.props;
     const snippet = snippetId && snippets[snippetId];
 
-    if (snippet) {
+    if (snippetId && snippet) {
       return (
         <Editor
           key={snippetId}
