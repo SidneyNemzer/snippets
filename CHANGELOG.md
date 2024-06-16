@@ -1,3 +1,9 @@
+## 2.5.0
+
+- Updated extension for manifest v3, related to APIs and environment exposed by Chrome. [More details in #32](https://github.com/SidneyNemzer/snippets/issues/32).
+- Resolved an issue that prevented the linter from working.
+- Fixed an error related to renaming or deleting a snippet.
+
 ## 2.4.0
 
 - Added the option to create a new Gist during setup instead of using an existing Gist
