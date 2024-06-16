@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "2.4.0",
+  "version": "2.5.0",
   "scripts": {
     "build:prod": "NODE_OPTIONS='--openssl-legacy-provider' webpack --mode=production --progress",
     "build:dev": "NODE_OPTIONS='--openssl-legacy-provider' webpack --progress",
