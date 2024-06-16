@@ -2,8 +2,8 @@
 
 - Added the option to create a new Gist during setup instead of using an existing Gist
 - Resolved an issue where the <kbd>Esc</kbd> shortcut did not open the devtools console
-- Fixed an error that occured when deleting the first snippet in the list ([#26](https://github.com/SidneyNemzer/snippets/issues/26))
-- Resolved an error that occured deleting a snippet that had never been saved
+- Fixed an error that occurred when deleting the first snippet in the list ([#26](https://github.com/SidneyNemzer/snippets/issues/26))
+- Resolved an error that occurred deleting a snippet that had never been saved
 - Re-implemented a fade animation for the settings page
 - Rewrote the extension with TypeScript
 - Updated packages
@@ -21,7 +21,7 @@
 
 - Editor font size is now configurable in the settings, thanks @mighty-sparrow!
 - Fixed a bug where the selected snippet reset when opening settings
-- Lots of code refactoring, React error boundry
+- Lots of code refactoring, React error boundary
 
 ## 2.1.1
 
